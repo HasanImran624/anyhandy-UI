@@ -1,0 +1,45 @@
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-logo-container img {
+    width: 187px;
+    height: 33px;
+  }
+
+  .navbar-links-container a {
+    margin-right: 40px;
+    font-family: Onest;
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .navbar-links-container a.home-link {
+    color: #00CF91;
+    font-family: Onest;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    position: relative; /* Ensure the anchor is a positioned element */
+  }
+  
+  .navbar-links-container a.home-link::after {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute;
+    left: 0;
+    bottom: -4px; /* Adjust this value to control the distance of the underline from the text */
+    width: 100%; /* Extend the underline across the width of the anchor */
+    height: 3px; /* Height of the underline */
+    background-color: #00CF91; /* Green color for the underline */
+  }
+  
+  /* Additional rule to target only the "Sign Up" link */
+  .navbar-links-container a.home-link:hover {
+    text-decoration: underline;
+  }
