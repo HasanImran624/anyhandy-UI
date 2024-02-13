@@ -1,5 +1,6 @@
-import React from 'react'
-import Logo from '../Assets/logo.svg'
+import React from 'react';
+import './Navbar.css';
+import Logo from '../../Assets/logo.svg'
 export const Navbar = () => {
   return (
 
@@ -15,7 +16,10 @@ export const Navbar = () => {
           <a href="">Blog</a>
           <a href="">Contact</a>
         </div>
-        
+        <div className="navbar-links-container">
+          <a href="">Sign In</a>
+          <a href="" className="home-link">Sign Up</a>
+        </div>
       </div>
     </>
   )

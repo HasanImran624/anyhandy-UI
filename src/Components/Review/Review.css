@@ -1,0 +1,32 @@
+.review-container{
+display: flex;
+justify-content: center;
+flex-direction: column;
+margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.review-container .top-heading{
+font-family: Onest;
+font-size: 36px;
+font-weight: 700;
+letter-spacing: 0em;
+text-align: center;
+color: #0D0B01;
+
+}
+.reviews-row {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+    margin-top: 20px; /* Add margin between rows */
+  }
+.review-container .heading-text{
+font-family: Onest;
+font-size: 18px;
+font-weight: 400;
+letter-spacing: 0em;
+text-align: center;
+color: #868580;
+
+}

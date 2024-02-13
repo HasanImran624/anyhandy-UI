@@ -1,0 +1,82 @@
+.reviewBox_container {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+  }
+  
+  .subreviewBox {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+  }
+  
+  .reviewBox_layout {
+    /* Add styles for your review box layout */
+  }
+.reviewBox_heading{
+    font-family: Onest;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+        
+    }
+  .reviewBox_structure {
+    position: relative; /* Set position to relative */
+  }
+  
+  .image-container {
+    position: relative; /* Set position to relative */
+  }
+  
+  .rectangle-image {
+    /* Add styles for your rectangle image */
+  }
+  
+  .review-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Add any additional styles for your review image */
+  }
+  
+  .text-over-image {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 30px; /* Add padding to create space around the text */
+    color: white; /* Set text color */
+  }
+
+   .para_detail{
+    font-family: Onest;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: white;
+    
+}
+
+.reviewBox_heading_price{
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    color: #9A9A9A; 
+}
+
+.para_heading{
+    font-family: Onest;
+font-size: 20px;
+font-weight: 700;
+line-height: 25px;
+letter-spacing: 0em;
+text-align: left;
+color: #0D0B01;
+
+}
+
+
+  

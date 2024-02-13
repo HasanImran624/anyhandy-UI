@@ -1,0 +1,119 @@
+.category_container{
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.category_container .subcategory{
+height: 450px;
+gap: 30px;
+display: flex;
+
+}
+.category_container .subcategory .category_layout{
+padding-left: 50px;
+padding-right:50px;
+border-radius: 50px;
+border: 1px;
+justify-content: space-between;
+background-color: white;
+border: 1px solid #E1DFD7;
+}
+.category_container .subcategory .category_layout .category_structure{
+display: flex;
+width: 250px;
+flex-direction: column;
+}
+.category_container .subcategory .category_layout .category_structure .category_heading{
+font-family: Onest;
+font-size: 40px;
+font-weight: 700;
+line-height: 51px;
+letter-spacing: 0em;
+text-align: left;
+
+
+}
+.category_container .subcategory .category_layout .category_structure .category_heading_price{
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    color: #9A9A9A; 
+}
+
+.category_container .subcategory .category_layout .category_structure .para_heading{
+    font-family: Onest;
+font-size: 20px;
+font-weight: 700;
+line-height: 25px;
+letter-spacing: 0em;
+text-align: left;
+color: #0D0B01;
+
+}
+.category_container .subcategory .category_layout .category_structure .para_detail{
+    font-family: Onest;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #868580;
+    
+}
+
+.category_container .subcategory .category_layout .category_structure .avatar-group{
+    width: 188px;
+height: 44px;
+gap: 12px;
+display: flex;
+}
+.category_container .subcategory .category_layout .category_structure .avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 200px;
+    background: #E0E0E0;
+    width: 40px;
+    height: 40px;
+    border-radius: 200px;
+    border: 0.75px;
+    opacity: 0.08px;
+    
+
+}
+
+.category_container .subcategory .category_layout .category_structure .avatar-text-group{
+display: flex;
+flex-direction: column;
+gap:7px
+}
+.avatar-text{
+    font-family: Onest;
+font-size: 14px;
+font-weight: 600;
+margin: 0px;
+text-align: left;
+color: #101828;
+
+}
+.avatar-rating{
+    width: 24px;
+height: 24px;
+padding: 2px 2px 2.98px 2px;
+
+}
+
+.category_container .subcategory .category_layout .category_structure  .button_layout{
+border-radius: 4px;
+border: 1px;
+margin-top: 20px;
+color: #E1DFD7;
+border: 1px solid #E1DFD7;
+}
+.category_container .subcategory .category_layout .category_structure .button_layout .button_text{
+font-family: Onest;
+font-size: 16px;
+font-weight: 600;
+text-align: center;
+color: #00CF91;
+
+}
