@@ -1,16 +1,16 @@
 import React from 'react';
 import './Filter.css';
 
-export const Filter = ({ name }) => { 
+const Filter = ({ name, backgroundColor, textColor }) => {
   return (
-    <>
-        <div className="filter-container">
-            <div className='filter'>
-                <p className='filter-text'>
-                    {name} 
-                </p>
-            </div>
-        </div>
-    </>
-  )
+    <div className="filter-container">
+      <div className='filter' style={{ background: backgroundColor }}>
+        <p className='filter-text' style={{ color: textColor }}>
+          {name}
+        </p>
+      </div>
+    </div>
+  );
 }
+
+export default Filter;

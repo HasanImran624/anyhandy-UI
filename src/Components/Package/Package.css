@@ -1,7 +1,5 @@
 .package-container{
-    width: 440px;
-    height: 774px;
-    top: 1930px;
+    background-color: #F2F2F2;
     display:flex;
     flex-direction: column;
 }

@@ -1,12 +1,11 @@
 .category_container{
-    height: 344px;
     gap: 30px;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
 }
 .category_container .subcategory{
-height: 428px;
+height: 450px;
 gap: 30px;
 display: flex;
 
@@ -17,7 +16,7 @@ padding-right:50px;
 border-radius: 50px;
 border: 1px;
 justify-content: space-between;
-
+background-color: white;
 border: 1px solid #E1DFD7;
 }
 .category_container .subcategory .category_layout .category_structure{
@@ -85,14 +84,13 @@ display: flex;
 .category_container .subcategory .category_layout .category_structure .avatar-text-group{
 display: flex;
 flex-direction: column;
-gap:5px
+gap:7px
 }
 .avatar-text{
     font-family: Onest;
 font-size: 14px;
 font-weight: 600;
-line-height: 20px;
-letter-spacing: 0em;
+margin: 0px;
 text-align: left;
 color: #101828;
 
@@ -101,5 +99,21 @@ color: #101828;
     width: 24px;
 height: 24px;
 padding: 2px 2px 2.98px 2px;
+
+}
+
+.category_container .subcategory .category_layout .category_structure  .button_layout{
+border-radius: 4px;
+border: 1px;
+margin-top: 20px;
+color: #E1DFD7;
+border: 1px solid #E1DFD7;
+}
+.category_container .subcategory .category_layout .category_structure .button_layout .button_text{
+font-family: Onest;
+font-size: 16px;
+font-weight: 600;
+text-align: center;
+color: #00CF91;
 
 }

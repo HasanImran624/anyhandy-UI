@@ -1,6 +1,6 @@
 import React from 'react';
 import './Package.css';
-import { Filter } from '../Filter/Filter';
+import Filter from '../Filter/Filter';
 import { Category } from './Category';
 
 export const Package = () => {
@@ -15,13 +15,13 @@ export const Package = () => {
           </div>
         </div>
         <div className='filters'>
-          <Filter name="Home Cleaning" />
-          <Filter name="Electrical" />
-          <Filter name="Painting" />
-          <Filter name="Plumbing" />
-          <Filter name="Pest Control" />
-          <Filter name="HVAC" />
-          <Filter name="Carpentary Services" />
+          <Filter name="Home Cleaning" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="Electrical" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="Painting" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="Plumbing" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="Pest Control" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="HVAC" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="Carpentary Services" backgroundColor="#00CF91" textColor="white" />
         </div>
         <div>
       {/* First row */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Category.css';
 import Avatar from '../../Assets/Avatar.png';
-import Rating from '../../Assets/Rating.png';
+import { RatingStars } from '../Rating/RatingStars';
 
 export const Category = () => {
   return (
@@ -17,7 +17,11 @@ export const Category = () => {
                     <img className='avatar' src={Avatar} />
                     <div className='avatar-text-group'>
                         <p className='avatar-text'> Olivia Rhye</p>
+                        <RatingStars />
                     </div>
+                </div>
+                <div className='button_layout'>
+                  <p className='button_text'>Get Started</p>
                 </div>
 
             </div>
