@@ -5,6 +5,7 @@ import { About } from '../Components/About/About';
 import { Package } from '../Components/Package/Package';
 import { Footer } from '../Components/Footer/Footer';
 import { Review } from '../Components/Review/Review';
+import { FAQs } from '../Components/FAQs/FAQs';
 
 export const Main = () => {
     return (
@@ -12,9 +13,10 @@ export const Main = () => {
             <Navbar /> 
             <Home /> 
             <About />     
-            <Package /> 
+             <Package /> 
             <Review />
-            <Footer /> 
+            <FAQs />
+            <Footer />
             
         </div>
       )

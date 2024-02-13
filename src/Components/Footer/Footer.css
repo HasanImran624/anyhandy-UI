@@ -2,12 +2,10 @@
     justify-content: space-between;
     background-color: #12006C;
     color: white;
-    width: 1440px; /* Fixed width */
-    height: 406px; /* Fixed height */
-    padding: 60px 120px 30px 120px; /* Padding values */
-    gap: 30px; /* Gap between items */
+    margin-top: 20px;
+    padding: 60px 120px 30px 120px; 
+    gap: 30px; 
     position: relative;
-    top: 4443px; /* Distance from the top */
   }
 
   .footer-content {
