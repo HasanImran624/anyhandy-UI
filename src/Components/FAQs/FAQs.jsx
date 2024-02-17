@@ -8,7 +8,7 @@ export const FAQs = () => {
         <p className='heading-text'>Lorem ipsum dolor sit amet consectetur. Proin donec pulvinar malesuada consequat purus integer congue. Pulvinar tincidunt.</p>
         <div className='FAQs-questions'>
             <div className='question-portion'>
-                    <div class="circle">
+                <div class="circle">
                     <div class="question-mark">?</div>
                 </div>
                 <div class="content">

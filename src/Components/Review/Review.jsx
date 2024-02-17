@@ -12,11 +12,6 @@ export const Review = () => {
           <ReviewBox/>
           <ReviewBox/>
         </div>
-        <div className="reviews-row">
-          <ReviewBox/>
-          <ReviewBox/>
-          <ReviewBox/>
-        </div>
       </div>
     );
   };
