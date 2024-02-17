@@ -16,15 +16,15 @@ export const ReviewBox = () => {
                             <img src={Rectangle_1} className='rectangle-image' />
                             <img src={Review_img_1} className='review-image' />
                             <div className='text-over-image'>
-                            <RatingStars />
+                                <RatingStars />
                                 <div className='reviewBox_heading'>John Doe</div>
                                 <Filter name="Plumber" backgroundColor="white" textColor="#00CF91" />
                                 <div className='para_detail'>Lorem ipsum dolor sit amet consectetur. Nunc in commodo.</div>
                                 <div className='para_detail'>
-                                <FaMapMarkerAlt /> Location
-                                <span style={{ marginLeft: '10px' }}>
-                                    <FaClock /> 10AED/hr
-                                </span>
+                                    <FaMapMarkerAlt /> Location
+                                    <span style={{ marginLeft: '10px' }}>
+                                        <FaClock /> 10AED/hr
+                                    </span>
                                 </div>
                             </div>
                         </div>

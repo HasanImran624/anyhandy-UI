@@ -15,34 +15,36 @@ export const Package = () => {
           </div>
         </div>
         <div className='filters'>
-          <Filter name="Home Cleaning" backgroundColor="#00CF91" textColor="white" />
+          {/* <Filter name="Home Cleaning" backgroundColor="#00CF91" textColor="white" />
           <Filter name="Electrical" backgroundColor="#00CF91" textColor="white" />
           <Filter name="Painting" backgroundColor="#00CF91" textColor="white" />
           <Filter name="Plumbing" backgroundColor="#00CF91" textColor="white" />
           <Filter name="Pest Control" backgroundColor="#00CF91" textColor="white" />
           <Filter name="HVAC" backgroundColor="#00CF91" textColor="white" />
-          <Filter name="Carpentary Services" backgroundColor="#00CF91" textColor="white" />
+          <Filter name="Carpentary Services" backgroundColor="#00CF91" textColor="white" /> */}
+          <Filter name="Home Cleaning" /*className="filter-text"*/ />
+          <Filter name="Electrical"   />
+          <Filter name="Painting" /*backgroundColor="#00CF91" textColor="white"*/ />
+          <Filter name="Plumbing" /*backgroundColor="#00CF91" textColor="white"*/ />
+          <Filter name="Carpentry Services" /*backgroundColor="#00CF91" textColor="white"*/ />
+          <Filter name="Pest control" /*backgroundColor="#00CF91" textColor="white"*/ />
+          <Filter name="HVAC" /*backgroundColor="#00CF91" textColor="white"*/ />
+          <Filter name="Landscaping and Lawn Care" /*backgroundColor="#00CF91" textColor="white"*/ />
+          <Filter name="Appliance Repairs" /*backgroundColor="#00CF91" textColor="white"*/ />
+
         </div>
-        <div>
-      {/* First row */}
-      <div className="category-row">
-        <Category />
-        <Category />
-        <Category />
-      </div>
-      {/* Second row */}
-      <div className="category-row">
-        <Category />
-        <Category />
-        <Category />
-      </div>
-      {/* Third row */}
-      <div className="category-row">
-        <Category />
-        <Category />
-        <Category />
-      </div>
-      </div>
+        <div id='categories_con' >
+          <div className="category-row">
+            <Category />
+            <Category />
+            <Category />
+          </div>
+          <div className="category-row">
+            <Category />
+            <Category />
+            <Category />
+          </div>
+        </div>
       </div>
     </>
   )

@@ -13,9 +13,8 @@ export const Home = () => {
                     <h1>Your Home, Your Way</h1>  
                     <h1>Request, Relax, Reveal</h1> 
                 </div>
-                <div className='content'>
-                    Your handy man hero hassle free & a Click Away!
-                    
+                <div >
+                    <p className='content' id='content'> Your handy man hero hassle free & a Click Away! </p>
                 </div>
                 <div className='button-container'>
                     <p className='button-text'>Request a Hero</p>
@@ -24,11 +23,11 @@ export const Home = () => {
             <div className='home-container-right'>
                 <div className='vector-images'>
                     <div className='vector'>
-                    <img src={Vector_75} />
-                        <img src={Vector_2} />
+                        <img src={Vector_75} alt='v7' />
+                        <img src={Vector_2} alt='v2' />
                     </div>
                     <div className='vector'>
-                        <img src={Vector_1} />
+                        <img src={Vector_1} alt='v1' />
                     </div>
                 </div>
                 <div className='paras'>
@@ -59,7 +58,7 @@ export const Home = () => {
                     </div>
                 </div>
                 <div className='vector'>
-                        <img src={Vector_3} />
+                    <img src={Vector_3} />
                 </div>
             </div>
         </div>

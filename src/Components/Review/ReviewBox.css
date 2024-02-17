@@ -46,7 +46,8 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    margin: 30px; /* Add padding to create space around the text */
+    margin-bottom: 60px; /* Add padding to create space around the text */
+    margin-left: 30px;
     color: white; /* Set text color */
   }
 
@@ -79,4 +80,34 @@ color: #0D0B01;
 }
 
 
+
+
+/* responsive code */
+
+@media screen and (max-width: 350px) and (min-width: 300px) {
+  .rectangle-image {
+    width: 85vw;
+    height: 70vh;
+  }
+  .review-image {
+    top: 5%;
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 420px) and (min-width: 351px) {
+  .rectangle-image {
+    width: 85vw;
+    height: 40vh;
+  }
+  .review-image {
+    top: 5%;
+    width: 80px;
+    height: 80px;
+  }
+  .text-over-image {
+    margin-bottom: 35px;
+  }
   
+}
