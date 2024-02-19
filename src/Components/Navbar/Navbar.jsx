@@ -4,6 +4,7 @@ import Ham from '../../Assets/menu.png'
 import Cross from '../../Assets/cross.png'
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <nav id='navbar' className=' flex items-center justify-between py-5 px-[5%] bg-opacity-90'>

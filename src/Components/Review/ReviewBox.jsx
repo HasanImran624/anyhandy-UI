@@ -22,6 +22,11 @@ export const ReviewBox = ({rectangleImage, heroImage}) => {
                                     <h4 className='text-sm font-semibold'>Plumber</h4>
                                 </span>
                                 <div className='para_detail'>Lorem ipsum dolor sit amet consectetur. Nunc in commodo.</div>
+                                <div className='para_detail'>
+                                    <FaMapMarkerAlt /> Location
+                                    <span style={{ marginLeft: '10px' }}>
+                                        <FaClock /> 10AED/hr
+                                    </span>
                                 <div className='para_detail flex items-center gap-3'>
                                     <span className='flex items-center gap-1'>
                                         <FaMapMarkerAlt /> 
