@@ -1,25 +1,25 @@
 .about-container {
     width: 100%;
-    top: 983px;
-    left: 120px;
     display: flex;
     justify-content: space-between;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-  }
+    padding: 10% 5%;
+
+    background: radial-gradient(circle at 30% -7%, rgba(135, 206, 250, 0.5) 0%, rgba(255, 255, 255, 0) 66%);
+}
   
 .about-container-left{
+    width: 35%;
     width: 35%;
 }
 .about-container-left .group{
     display: flex;
     flex-direction: column;
     width: 100%;
+    width: 100%;
     gap: 20px;
 }
 .about-container-left .group .detail-section{
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -36,14 +36,21 @@
     line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
+}    
+.about-container-left .group .detail-section .detail-section-content .text {
+    width: 100%;
+    font-family: Onest;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
 }
 .about-container-left .group .detail-section .content{
     font-family: Onest;
     font-size: 18px;
     font-weight: 400;
-    line-height: 30px;
     letter-spacing: 0em;
-    text-align: left;
     color:#868580;
 }
 .about-container-left .group .detail-section .detail-section-content .image{
@@ -60,70 +67,22 @@
     color: #0D0B01;    
 }
 
-.about-container-right{
-    width: 65%;
-    display: flex;
-    gap: 30px;
-    position: relative;
-}
-.services-group > .services {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    gap: 20px;
-}
-.about-container-right .services-group .services .service-container {
-    display: flex;
-    width: 170px;
-    height: 120px;
-    padding: 30px;
-    border-radius: 30px;
-    background: #F2F2F2;
-}
-
-.about-container-right .services-group .services .service-container .group {
-    display: flex;
-    flex-direction: column;
-    width: 75px;
-}
-
-.about-container-right .services-group .services .service-container .group .image {
-    width: 75px;
-    height: 74.01px;
-}
-
-.about-container-right .services-group .services .service-container .group .text {
-    font-family: Onest;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 20px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #0D0B01;
-    width: 139px;
-}
-
-
-
   /* responsive code */
 
-  @media only screen and (max-width: 350px) {
-    .about-container {
+  @media only screen and (max-width: 350px) and (min-width: 300px) {
+    #about_wrapper {
+        display: flex;
         flex-direction: column;
-        height: fit-content;
+        justify-content: center;
+        gap: 40px;
     }
-    .about-container-left{
+    .about-container-left,
+    .about-container-right {
         width: 100%;
         height: 100%;
     }
-    .about-container-right{
-        width: 100%;
-        height: 100%;
-    } 
     .about-container-right .services-group .services .service-container {
         display: flex;
-        width: 22vw !important;
-        height: 80px !important;
         border-radius: 30px;
     }
     .about-container-right .services-group .services .service-container .group .image {
@@ -133,7 +92,6 @@
     .about-container-right .services-group .services .service-container .group .text {
         font-size: 12px;
         line-height: 12px;
-        width: 36px;
     }
     #aboutMan-img {
         margin-right: 7vw;
@@ -152,10 +110,6 @@
         width: 100%;
         height: 100%;
     }
-    .about-container-right {
-        width: 100%;
-        height: 100%;
-    }
     .heading > p {
         text-align: center;
         margin-right: 30px;
@@ -184,7 +138,6 @@
     .about-container-right .services-group .services .service-container .group .text {
         font-size: 12px;
         line-height: 12px;
-        width: 36px;
     }
 }
 
@@ -201,10 +154,6 @@
         width: 100%;
         height: 100%;
     }
-    .about-container-right {
-        width: 100%;
-        height: 100%;
-    }
     .heading > p {
         text-align: center;
         margin-right: 30px;
@@ -219,22 +168,6 @@
     #aboutMan-img {
         margin-right: 7vw;
     }
-    .about-container-right .services-group .services .service-container {
-        display: flex;
-        width: 22vw !important;
-        height: 70px ;
-        padding: 30px;
-        border-radius: 30px;
-    }
-    .about-container-right .services-group .services .service-container .group .image {
-        width: 40px;
-        height: 40px;
-    }
-    .about-container-right .services-group .services .service-container .group .text {
-        font-size: 12px;
-        line-height: 12px;
-    }
-    
   }
   
   @media screen and (max-width: 770px) {
@@ -249,10 +182,6 @@
         width: 100%;
         height: 100%;
     }
-    .about-container-right {
-        width: 100%;
-        height: 100%;
-    }
     .heading > p {
         text-align: center;
         margin-right: 30px;
@@ -266,23 +195,7 @@
     }
     #aboutMan-img {
         margin-right: 7vw;
-    }
-    .about-container-right .services-group .services .service-container {
-        display: flex;
-        width: 140px;
-        height: 80px ;
-        padding: 30px;
-        border-radius: 30px;
-    }
-    .about-container-right .services-group .services .service-container .group .image {
-        width: 40px;
-        height: 40px;
-    }
-    .about-container-right .services-group .services .service-container .group .text {
-        font-size: 12px;
-        line-height: 12px;
-    }
-    
+    }    
   }
   
   @media screen and (max-width: 992px) {
@@ -297,10 +210,6 @@
         width: 100%;
         height: 100%;
     }
-    .about-container-right {
-        width: 100%;
-        height: 100%;
-    }
     .heading > p {
         text-align: center;
         margin-right: 30px;
@@ -314,20 +223,5 @@
     }
     #aboutMan-img {
         margin-right: 7vw;
-    }
-    .about-container-right .services-group .services .service-container {
-        display: flex;
-        width: 150px ;
-        height: 90px;
-        padding: 30px;
-        border-radius: 30px;
-    }
-    .about-container-right .services-group .services .service-container .group .image {
-        width: 40px;
-        height: 40px;
-    }
-    .about-container-right .services-group .services .service-container .group .text {
-        font-size: 12px;
-        line-height: 12px;
     }
   }

@@ -34,9 +34,9 @@ export const Home = () => {
                     <div className='para-one'>
                         <div className='point-layout'> 
                             <div className='point'> 
-                                <p className='text'>1</p>
+                                <h2 className='text'>1</h2>
                             </div> 
-                            <p className='content'>Submit a Job & Request a Hero</p>
+                            <p className='content_block'>Submit a Job & Request a Hero</p>
                         </div>  
                     </div>
 
@@ -45,7 +45,7 @@ export const Home = () => {
                             <div className='point'> 
                                 <p className='text'>2</p>
                             </div> 
-                            <p className='content'>Choose The Right Hero & Accept A Proposal</p>
+                            <p className='content_block'>Choose The Right Hero & Accept A Proposal</p>
                         </div> 
                     </div>
                     <div className='para-three'>
@@ -53,7 +53,7 @@ export const Home = () => {
                             <div className='point'> 
                                 <p className='text'>3</p>
                             </div> 
-                            <p className='content'>Get the Service You Need Done & Pay</p>
+                            <p className='content_block'>Get the Service You Need Done & Pay</p>
                         </div> 
                     </div>
                 </div>

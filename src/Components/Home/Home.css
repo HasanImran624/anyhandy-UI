@@ -1,25 +1,28 @@
 .home-container {
     display: flex;
     justify-content: space-between;
-    height: 600px;
+    min-height: 600px;
     padding-top: 200px;
     position: relative;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    padding: 10% 5%;
     width: 100vw;
     max-width: 100vw;
     overflow-x: hidden;
+
+
+    background: radial-gradient(circle at 30% 107%, rgba(135,206,250,0.5) 0%, rgba(255,255,255,0) 66%);
   }
   
 .home-container-left{
     width: 50%;
-    height: 306px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 .home-container-right{
     display: flex;
     height: 447.3px;
+    width: 50%;
     width: 50%;
     position: relative;
 }
@@ -35,102 +38,112 @@
     width: 400px;
 }
 
-.home-container-right .paras .para-one{
+.para-one,
+.para-two,
+.para-three {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 350px;
     height: 100px;
     border-radius: 50px;
     margin-left: 50px;
+    padding: 20px;
+    box-shadow: 20px 20px 50px 0px #70707029;
+}
+.para-one {
     background: #EFA82A;
-    box-shadow: 20px 20px 50px 0px #70707029;
-}
-
-.home-container-right .paras .para-two{
-    width: 350px;
-    height: 100px;
-    border-radius: 50px;
-    background: #00CF91;
-    box-shadow: 20px 20px 50px 0px #70707029;
-}
-.home-container-right .paras .para-three{
-    width: 350px;
-    height: 100px;
     margin-left: 50px;
-    border-radius: 50px;
+}
+.para-two {
+    background: #00CF91;
+    margin: 0%;
+}
+.para-three {
     background: #7979FF;
-    box-shadow: 20px 20px 50px 0px #70707029;
+    margin-left: 100px;
+}
+.point-layout {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.point {
+    min-width: 75px;
+    min-height: 75px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #FFFFFF;
+}
+.point-layout > .content_block {
+    color: #FFFFFF;
 }
 
 .home-container-left .heading{
     border-radius: 8px 8px 0px 8px;
     /* background-color: #EAFFF9; */
     font-family: Onest;
-    font-size: 20px;
+    font-size: 3rem;
+    line-height: 3rem;
     font-weight: 700;
     letter-spacing: 0em;
     text-align: left;
-    line-height: 30px;
 }
 .home-container-left .content{
     font-family: Onest;
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 30px;
+    line-height: 1rem;
     letter-spacing: 0em;
     text-align: left;
     padding-top: 30px;
     padding-bottom: 30px;
 }
+.content_block {
+    font-family: Onest;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1rem;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #FFFFFF;
+}
 .button-container{
     width: 160px;
-height: 40px;
-padding:5px;
-border-radius: 4px;
-background: #00CF91;
-
+    height: 40px;
+    padding:5px;
+    border-radius: 5px;
+    background: #00CF91;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 10px 10px 20px 0px rgba(0, 207, 145, 0.2) ;
+    transition: background 0.3s ease; /* Added transition property */
+     &:hover {
+        background: #fff;
+        .button-text {
+            color: #00CF91;
+        }
+    }
 }
 .button-text{
+    color: white;    
     font-family: Onest;
     font-size: 16px;
     font-weight: 600;
     line-height: 10px;
-    letter-spacing: 0em;
-    text-align: center;
-color: white;    
 }
 
-.home-container-right .paras .point-layout{
-    display: flex;
-    align-items: center;
-    gap: 0px;
-}
-.home-container-right .paras .point{
-    border-radius: 1000px;
-    height: 75px;
-    width: 75px;
-    margin: 4%;
-    border: 1px solid #FFFFFF;
-}
 .home-container-right .paras .text{
+    color: #FFFFFF;
     font-family: Inter;
     font-size: 22px;
     font-weight: 700;
-    text-align: center;
-    color: #FFFFFF;
-    margin: 25%;
 }
-.home-container-right .paras .point-layout .content{
-    width: 200px;
-height: 52px;
-font-family: Onest;
-font-size: 18px;
-font-weight: 500;
-line-height: 25px;
-letter-spacing: 0em;
-text-align: left;
-color: #FFFFFF;
-
-}
-
 .home-container-right .vector75 {
     position: absolute;
     width: 8.14px;
@@ -152,12 +165,12 @@ color: #FFFFFF;
 
 /* responsive code */
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 350px) and (min-width: 300px) {
     .home-container {
         flex-direction: column;
         justify-content: space-between;
+        gap: 0px;
         width: 100%;
-        height: 1200px;
         padding-top: 50px;
     }
     .home-container-left {
@@ -167,6 +180,10 @@ color: #FFFFFF;
         justify-content: center;
         flex-direction: column;
     }  
+    .home-container-right{
+        width: 100%;
+        margin-top: 0%;
+    }
     .home-container-right ,
     .paras {
         /* display: none; */
@@ -176,18 +193,45 @@ color: #FFFFFF;
         flex-direction: column;
         gap: 30px;
     }
+    .button-container {
+        padding: 20px 5px;
+        border-radius: 5px;
+    }
     .vector  {
         display: none;
     }
     .heading h1 {
         text-align: center;
-        line-height: 1rem;
         font-size: 2rem;
     }
+    #content {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+    .para-one,
+    .para-two,
+    .para-three {
+        padding: 10px;
+        width: 250px;
+        height: 70px;
+    }
+    .para-three {
+        margin-left: 60px;
+    }
+
+    .content_block {
+        font-size: 0.7rem;
+    }
+    .point {
+        min-width: 50px;
+        min-height: 50px;
+        border-radius: 50%;
+    }
+
     
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) and (min-width: 351px) {
     .home-container {
         align-items: center;
         flex-direction: column;
@@ -214,62 +258,33 @@ color: #FFFFFF;
         width: 80%;
     }
     .heading h1 {
+        font-size: 2rem;
+        line-height: 1rem;
         text-align: center;
         line-height: 3rem;
         padding-right: 2%;
     }
-    .home-container-right .paras .para-one{
-        width: 210px;
-        height: 80px;
-        border-radius: 50px;
-        background: #EFA82A;
-        box-shadow: 20px 20px 50px 0px #70707029;
-        padding-right: 10px;
+    .para-one,
+    .para-two,
+    .para-three {
+        padding: 10px;
+        width: 230px;
+        height: 70px;
     }
-    .home-container-right .paras .para-two{
-        width: 240px;
-        height: 80px;
-        border-radius: 50px;
-        background: #00CF91;
-        box-shadow: 20px 20px 50px 0px #70707029;
-        padding-right: 10px;
+    .para-one {
+        margin-left: 10px;
     }
-    .home-container-right .paras .para-three{
-        width: 210px;
-        height: 80px;
-        margin-left: 50px;
-        border-radius: 50px;
-        background: #7979FF;
-        box-shadow: 20px 20px 50px 0px #70707029;
-        padding-right: 10px;
+
+    .para-three {
+        margin-left: 20px;
     }
-    .home-container-right .paras .point{
-        border-radius: 1000px;
-        height: 50px;
-        width: 50px;
-        border: 1px solid #FFFFFF;
-    }
-    .home-container-right .paras .text{
-        font-family: Inter;
-        font-size: 0.6;
-        font-weight: 700;
-        text-align: center;
-        color: #FFFFFF;
-        margin: 25%;
-    }
-    .home-container-right .paras .point-layout{
-        gap: 0;
-        align-items: center;
-        justify-content: center;
-    }
-    .home-container-right .paras .point-layout .content {
-        display: flex;
-        align-items: center;
-        justify-items: center;
-        text-align: center;
+    .content_block {
         font-size: 0.8rem;
-        font-weight: 500;
-        line-height: 20px;
+    }
+    .point {
+        min-width: 50px;
+        min-height: 50px;
+        border-radius: 50%;
     }
     #content {
         font-size: 0.9rem;
@@ -284,7 +299,7 @@ color: #FFFFFF;
         flex-direction: column;
         justify-content: space-between;
         width: 100%;
-        height: 900px;
+        min-height: 900px;
         padding-top: 100px; 
         margin: 0%;
     }
@@ -297,6 +312,7 @@ color: #FFFFFF;
     }
     .home-container-right{
         width: 100%;
+        margin-top: 20%;
     }
     .home-container-right .vector-images {
         width: 40%;
@@ -314,6 +330,6 @@ color: #FFFFFF;
         padding-right: 2%;
     }
     .home-container-left .content {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
     }
 }
