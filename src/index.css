@@ -1,13 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Onest", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
+#navbar {
+  background: linear-gradient(180deg, rgba(135,206,250,0.2) 3%, rgba(135,206,250,0.1) 21%, rgba(255,255,255,1) 86%);
+
+}
+#navLinksContainer > ul > li {
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+
+  transition: all 100ms ease-in-out;
+  &:hover {
+    border-bottom: 2px solid #00CF91;
+  }
+}

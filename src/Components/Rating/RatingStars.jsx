@@ -6,7 +6,7 @@ export const RatingStars = () => {
     color: 'yellow', // Set the color to yellow
   };
     return (
-      <div className="rating-stars">
+      <div className="rating-stars flex">
         {[...Array(5)].map((_, index) => (
         <FaStar key={index} style={starStyle} />
         ))}

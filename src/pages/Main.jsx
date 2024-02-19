@@ -9,15 +9,15 @@ import { FAQs } from '../Components/FAQs/FAQs';
 
 export const Main = () => {
     return (
-        <div>
+        <>
             <Navbar /> 
             <Home /> 
             <About />     
-             <Package /> 
+            <Package /> 
             <Review />
             <FAQs />
             <Footer />
             
-        </div>
-      )
+        </>
+    )
 }
