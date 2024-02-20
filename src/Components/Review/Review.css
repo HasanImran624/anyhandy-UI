@@ -12,12 +12,6 @@
   letter-spacing: 0em;
   text-align: center;
   color: #0D0B01;
-  font-family: Onest;
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #0D0B01;
 }
 .reviews-row {
   display: flex;
@@ -49,7 +43,7 @@
   }
   .reviews-row {
     gap: 5rem;
-    justify-content: space-between;
+    justify-content: center ;
   }
 
 }

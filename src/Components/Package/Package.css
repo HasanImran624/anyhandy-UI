@@ -31,7 +31,6 @@
 
 .detail-text-group{
     width: 100%;
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 10px 20px;
@@ -54,12 +53,6 @@
 }
 .detail-text-group .button-group .button-text{
     font-family: Onest;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: 0em;
-    text-align: center;
-    color: black;
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -117,6 +110,7 @@
         align-items: center;
         justify-content: center;
         gap: 0px 30px;
+
     }
  
 }

@@ -70,12 +70,14 @@ color: #0D0B01;
 
 
 
+
 /* responsive code */
 
 @media screen and (max-width: 350px) and (min-width: 300px) {
   .rectangle-image {
     width: 85vw;
     height: 70vh;
+    max-height: 330px;
   }
   .review-image {
     top: 5%;
@@ -104,6 +106,7 @@ color: #0D0B01;
   .rectangle-image {
     width: 300px;
     height: 35vh;
+    max-height: 350px;
   }
   .review-image {
     top: 0%;
