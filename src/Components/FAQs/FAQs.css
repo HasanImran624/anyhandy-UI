@@ -5,7 +5,7 @@
 
     padding: 5%;
 
-    background: radial-gradient(circle at 0% 50%, rgba(135,206,250,0.5) 0%, rgba(255,255,255,0) 66%);
+    /* background: radial-gradient(circle at 0% 50%, rgba(135,206,250,0.5) 0%, rgba(255,255,255,0) 66%); */
 }
 
 .FAQs-container .top-heading{
@@ -21,21 +21,20 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 20px; 
+        /* margin-top: 20px;  */
         flex-direction: column;
       }
       .FAQs-questions .question-portion {
-        width: 90%;
+        width: 100%;
         display: flex;
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically */
+        align-items: center;
         margin-top: 20px; 
         
         padding: 24px 27px;
         border-radius: 20px;
         border: 1px solid #E9E9E9;
         gap: 20px;
-        background-color: white;
+        background-color: #ffffff;
 
         color: black; /* Assuming text color should be black */
     }
@@ -65,9 +64,6 @@
         font-size: 30px;
     }
     
-    .content {
-        flex: 1; /* Take remaining space */
-    }
     
     .bold-text {
         font-family: Onest;
@@ -79,7 +75,8 @@
         color: #0D0B01;
     }
     
-    .long-text {
+
+    .answer {
         font-family: Onest;
         font-size: 14px;
         font-weight: 500;
@@ -87,8 +84,14 @@
         letter-spacing: 0em;
         text-align: left;
         color: #777777;
+      }
+      .answer.active {
+        height: auto;
+        max-height: 300px;
+        transition: all 0.5s linear;
     }
-    
+      
+
     .minus-sign {
         color: #00CF91;
         font-size: 24px;
@@ -106,7 +109,32 @@
             background-color: rgba(0, 207, 145, 0.1);
         }
     }
-
+    .slide-bottom {
+        -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+      @keyframes slide-bottom {
+        0% {
+            max-height: 0;
+        }
+        100% {
+            max-height: 200px;
+        }
+      }
+    
+      .slide-bottom-close {
+        -webkit-animation: slide-top 2s linear both;
+        animation: slide-top 2s linear both;
+      }
+      @keyframes slide-top {
+        0% {
+            max-height: 200px;
+        }
+        100% {
+            max-height: 0;
+        }
+      }      
+      
 
 
 /* responsive code */

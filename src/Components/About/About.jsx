@@ -31,13 +31,13 @@ export const About = () => {
                     </div>
                     <div className='detail-section'>
                         <div className='detail-section-content'>
-                            <img src={Line_1} className='w-[35px] h-[6px] self-center' />
+                            <img src={Line_1} alt='line' className='w-[35px] h-[6px] self-center' />
                             <p className='text'>The Highest Standards</p>
                         </div>
                         <p className='content text-center sm_desktop:text-left sm_desktop:leading-[30px]'>Lorem ipsum dolor sit amet consectetur. Proin donec pulvinar malesuada consequat purus integer congue. </p>
                     </div>
                     <div className='w-full flex items-center justify-center'>
-                        <img src={About_Img_1} id='aboutMan-img'/>
+                        <img src={About_Img_1} alt='about' id='aboutMan-img'/>
                     </div>
                 </div>
             </div>

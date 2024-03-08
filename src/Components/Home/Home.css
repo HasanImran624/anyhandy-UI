@@ -119,15 +119,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    box-shadow: 10px 10px 20px 0px rgba(0, 207, 145, 0.2) ;
-    transition: background 0.3s ease; /* Added transition property */
-     &:hover {
-        background: #fff;
-        .button-text {
-            color: #00CF91;
-        }
-    }
 }
 .button-text{
     color: white;    

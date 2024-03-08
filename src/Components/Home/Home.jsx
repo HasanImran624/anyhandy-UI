@@ -1,9 +1,8 @@
-import React from 'react';
-import './Home.css';
-import Vector_1 from '../../Assets/Vector_1.png';
-import Vector_2 from '../../Assets/Vector_2.png';
-import Vector_75 from '../../Assets/Vector_75.png';
-import Vector_3 from '../../Assets/Vector_3.png';
+import './Home.css'
+import Vector_1 from '../../Assets/Vector_1.png'
+import Vector_2 from '../../Assets/Vector_2.png'
+import Vector_75 from '../../Assets/Vector_75.png'
+import Vector_3 from '../../Assets/Vector_3.png'
 
 export const Home = () => {
     return (
@@ -16,9 +15,7 @@ export const Home = () => {
                 <div >
                     <p className='content' id='content'> Your handy man hero hassle free & a Click Away! </p>
                 </div>
-                <div className='button-container'>
-                    <p className='button-text'>Request a Hero</p>
-                </div>
+                <button className='button-container font-semibold text-white'> Request a Hero </button>
             </div>
             <div className='home-container-right'>
                 <div className='vector-images'>
@@ -39,7 +36,6 @@ export const Home = () => {
                             <p className='content_block'>Submit a Job & Request a Hero</p>
                         </div>  
                     </div>
-
                     <div className='para-two'>
                         <div className='point-layout'> 
                             <div className='point'> 
@@ -57,10 +53,10 @@ export const Home = () => {
                         </div> 
                     </div>
                 </div>
-                <div className='vector'>
-                    <img src={Vector_3} />
+                <div className='vector invisible sm_tablet:visible'>
+                    <img src={Vector_3} alt='vector' className='pointer-events-none'/>
                 </div>
             </div>
         </div>
-      )
+    )
 }

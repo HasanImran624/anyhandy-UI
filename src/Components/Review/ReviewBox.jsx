@@ -4,17 +4,16 @@ import { RatingStars } from '../Rating/RatingStars';
 import { FaMapMarkerAlt, FaClock } from 'react-icons/fa'; // Import the location and clock icons from Font Awesome
 import Rectangle_1 from '../../Assets/Rectangle_1.png';
 import Review_img_1 from '../../Assets/Review_img_1.png'; 
-import Filter from '../Filter/Filter';
 
-export const ReviewBox = ({rectangleImage, heroImage}) => {
+export const ReviewBox = () => {
     return (
         <div className="reviewBox_container">
             <div className='subreviewBox'>
                 <div className='reviewBox_layout'>
                     <div className='reviewBox_structure'>
                         <div className='image-container'>
-                            <img src={rectangleImage} className='rectangle-image' />
-                            <img src={heroImage} className='review-image' />
+                            <img src={Rectangle_1} alt='rect' className='rectangle-image' />
+                            <img src={Review_img_1} alt='user' className='review-image' />
                             <div className='text-over-image px-5'>
                                 <RatingStars />
                                 <div className='reviewBox_heading'>John Doe</div>
