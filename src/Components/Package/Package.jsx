@@ -30,7 +30,7 @@ export const Package = () => {
   const [selectedFilter, setSelectedFilter] = useState(1);
   const [categoryData, setCategoryData] = useState([]);
 
-  const url = `http://54.156.114.12:5000/api/package/GetPackageDetailsByMainCategory/${selectedFilter}`;
+  const url = `https://anyhand.co/package/GetPackageDetailsByMainCategory/${selectedFilter}`;
   
   const handleFilterClick =  (filter) => {
     setSelectedFilter(filter);
