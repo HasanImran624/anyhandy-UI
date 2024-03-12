@@ -47,7 +47,7 @@ export const SignUp = () => {
         "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character"
       )
       .required("Password is required"),
-      agree: yup.boolean().oneOf([true], "You must agree to the Terms & Conditions"),
+      //agree: yup.boolean().oneOf([true], "You must agree to the Terms & Conditions"),
   })
 
   const formik = useFormik({
@@ -56,7 +56,7 @@ export const SignUp = () => {
       email: "",
       number: "",
       password: "",
-      agree: false,
+      //agree: false,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -171,7 +171,7 @@ export const SignUp = () => {
                   </span>
                   {(formik.touched.password && formik.errors.password) && <p className='mt-1 ml-1 text-sm text-red-500'>{formik.errors.password}</p>}
                 </div>
-                <div>
+                {/* <div>
                   <div className='flex items-center gap-2'>
                     <input
                       type="checkbox"
@@ -184,7 +184,7 @@ export const SignUp = () => {
                     <label htmlFor="check" className='text-[#868580] font-medium text-base cursor-pointer'>I agree to the Terms & Conditions</label>
                   </div>
                   {(formik.touched.agree && formik.errors.agree) && <p className='mt-1 ml-1 text-sm text-red-500'>{formik.errors.agree}</p>}
-                </div>
+                </div> */}
                 <button
                   type='submit'
                   className='w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md'

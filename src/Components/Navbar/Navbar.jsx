@@ -62,7 +62,7 @@ export const Navbar = () => {
         "Choose a strong password"
       )
       .required("Password is required"),
-      agree: yup.boolean().oneOf([true], "You must agree to the Terms & Conditions"),
+      //agree: yup.boolean().oneOf([true], "You must agree to the Terms & Conditions"),
   })
 
   const loginValidationSchema = yup.object().shape({
@@ -82,7 +82,7 @@ export const Navbar = () => {
       email: "",
       number: "",
       password: "",
-      agree: false,
+      //agree: false,
     },
     validationSchema: signUpValidationSchema,
     onSubmit: async (values) => {
@@ -92,7 +92,7 @@ export const Navbar = () => {
           Password: values.password,
           Email: values.email,
           MobileNumber: values.number,
-          IsHandyman: false
+          IsHandyman: true
         }
         const response = await axios.post(SIGNUP_URL, userData)
         setSignUp(false)
@@ -299,7 +299,7 @@ export const Navbar = () => {
                     {(signUpFormik.touched.password && signUpFormik.errors.password) && <p className='absolute -bottom-5 left-0 text-sm text-red-500'>{signUpFormik.errors.password}</p>}
                   </span>
                 </div>
-                <div className='relative flex items-center gap-2'>
+                {/* <div className='relative flex items-center gap-2'>
                   <input
                     type="checkbox"
                     id="check"
@@ -310,7 +310,7 @@ export const Navbar = () => {
                   />
                   <label htmlFor="check" className='text-[#868580] font-medium text-base cursor-pointer'>I agree to the Terms & Conditions</label>
                   {(signUpFormik.touched.agree && signUpFormik.errors.agree) && <p className='absolute -bottom-5 left-0 text-sm text-red-500'>{signUpFormik.errors.agree}</p>}
-                </div>
+                </div> */}
                 <button
                   type='submit' 
                   className='w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md'
