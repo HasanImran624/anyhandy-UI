@@ -55,6 +55,7 @@ export const SignIn = () => {
         const response = await axios.post(LOGIN_URL, userData)
         const jwt = response.data.token
         localStorage.setItem('jwt', jwt)
+        localStorage.setItem('name', response.data.username)
         setAuth({
           Email: userData.Email,
           Password: userData.Password,

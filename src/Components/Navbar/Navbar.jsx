@@ -20,6 +20,7 @@ import closeEye from '../../Assets/closeEye.png'
 
 export const Navbar = () => {
   
+  const [fullName, setFullName] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [signIn, setSignIn] = useState(false)
   const [signUp, setSignUp] = useState(false)
@@ -31,6 +32,8 @@ export const Navbar = () => {
   const SIGNUP_URL = '/user/Sign-Up'
 
   useEffect(() => {
+    const userName = localStorage.getItem('name');
+    setFullName(userName);
     if (isOpen || signUp || signIn || swal) { 
       document.body.style.overflowY = 'hidden'
     } else {
@@ -163,6 +166,7 @@ export const Navbar = () => {
         const response = await axios.post(LOGIN_URL, userData)
         const jwt = response.data.token
         localStorage.setItem('jwt', jwt)
+        localStorage.setItem('name', response.data.username)
         // setAuth({
         //   Email: userData.Email,
         //   Password: userData.Password,
@@ -422,9 +426,29 @@ export const Navbar = () => {
         </section>
         <div className='hidden sm_desktop:flex items-center justify-center gap-5'>
           <span className='border border-[#96a0b5] rounded-full w-10 h-10 flex items-center justify-center text-lg font-semibold cursor-pointer hover:text-[#00CF91] transition-colors ease-in-out duration-200'>EN</span>
-          <button id='nav_SignUp' className='w-fit font-semibold font-Onest p-4 text-base text-black hover:text-[#00CF91] hover:shadow-none outline-none border border-transparent rounded-md hover:border-[#E1DFD7] transition-all ease-in-out duration-100 cursor-pointer' onClick={() => {setSignUp(!signUp); setEye(false)}} >Sign Up</button>
+          { fullName ? (
+            <>
+            <button className='w-fit font-semibold font-Onest p-4 text-base text-black hover:text-[#00CF91] hover:shadow-none outline-none border border-transparent rounded-md hover:border-[#E1DFD7] transition-all ease-in-out duration-100 cursor-pointer' onClick={() => { 
+              /* handle signout */ 
+              localStorage.removeItem('jwt'); 
+              localStorage.removeItem('name');
+               setFullName(''); // Reset fullName state
+               navigate('/');
+              }}>Sign Out</button>
+            <p className='text-black font-semibold mr-4'>{fullName}</p>
+              </>
+          ) : (
+          <>
+             <button id='nav_SignUp' className='w-fit font-semibold font-Onest p-4 text-base text-black hover:text-[#00CF91] hover:shadow-none outline-none border border-transparent rounded-md hover:border-[#E1DFD7] transition-all ease-in-out duration-100 cursor-pointer' onClick={() => {setSignUp(!signUp); setEye(false)}} >Sign Up</button>
           <button id='nav_SignIn' className='w-fit font-semibold font-Onest p-4 text-base text-black hover:text-[#00CF91] hover:shadow-none outline-none border border-transparent rounded-md hover:border-[#E1DFD7] transition-all ease-in-out duration-100 cursor-pointer' onClick={() => {setSignIn(!signIn); setEye(false)}} >Sign In</button>
-        </div>
+   
+          </>
+
+          )
+          
+
+          }
+            </div>
         <section className='block sm_desktop:hidden'>
           <img src={Ham} alt="menu" className='w-6 xl_mobile:w-7' onClick={() => setIsOpen(!isOpen)} />
           {isOpen
