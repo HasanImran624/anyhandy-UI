@@ -1,0 +1,1173 @@
+.txt-center {
+    text-align: center;
+}
+
+.containerP {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-conatiner {
+    flex: 1;
+    /* width: 10%; */
+}
+
+.profile-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.txt-time {
+    font-size: 14;
+    text-align: center;
+    margin-top: 10;
+}
+
+.txt-dollar {
+    color: #EFA82A;
+    text-align: center;
+}
+
+.info-container {
+    flex: 9;
+    width: 90%;
+}
+
+.info-button-section {
+    flex: 9;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* .info-button-section p {
+    font-size: medium;
+    text-align: center;
+    width: 100%;
+    color: #96A0B5;
+} */
+
+.ds-flex {
+    display: flex;
+}
+
+.btn-hire {
+    background: #00CF91;
+    color: white;
+    width: 70px;
+    border-radius: 6px;
+}
+
+.btn-accept {
+    background: white;
+    color: #00CF91;
+    width: 70px;
+    border-radius: 6px;
+    border-color: #00CF91;
+    border-width: 1px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.btn-reject {
+    background: white;
+    color: black;
+    width: 70px;
+    border-radius: 6px;
+}
+
+.info-msg {
+    flex: 9;
+    /* width: 10%; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #F2F2F2;
+    padding: 13px;
+    border-radius: 16px;
+    margin-top: 10;
+}
+
+#btn-session-end {
+    display: none;
+}
+
+.btn-session {
+    display: block;
+}
+
+.btn-read-more-container {
+    /* flex-direction: column;
+    flex: 9; */
+    display: block;
+}
+
+.info-msg-btn-container {
+    background: #F2F2F2;
+}
+
+.m-r-f {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.m20 {
+    margin-top: 20px
+}
+
+.btn-wapper-dsh {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.input-container_proposal {
+    display: flex;
+    align-items: center;
+    border-color: #E0E5ED;
+    border-width: 2px;
+    padding: 11px;
+    border-radius: 12px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 88%;
+
+    /* background-color: #00CF91; */
+    /* padding: 10px */
+  }
+  
+  .input-container_proposal .icon {
+    /* Your icon styles */
+    margin-right: 10px; /* Adjust margin as needed */
+    margin-left: 10px;
+  }
+  
+  .input-container_proposal input {
+    flex: 1; /* Input field takes remaining space */
+    /* Other input styles */
+  }
+  
+  .btn-filter-proposal {
+    border-color: #00CF91;
+    border-radius: 12px;
+    border-width: 1px;
+    padding: 11px;
+    background-color: #e3fff6;
+  }
+
+  input:focus {
+    outline: none !important;
+}
+
+/* responsive code */
+
+@media only screen and (max-width: 350px) and (min-width: 299px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: #EFA82A; */
+    }
+
+    #h-scroll {
+        margin: 4px, 4px;
+        padding: 4px;
+        /* background-color: #08c708; */
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
+
+    #dsh-title1 {
+        flex-direction: row-reverse;
+        display: flex;
+    }
+
+    #dsh-title-name {
+        font-size: large;
+        font-weight: bold;
+        color: black;
+    }
+
+    #dsh-title-heading {
+        display: none;
+    }
+
+    #dsh-c-title-h {
+        height: 70px;
+        /* display: inline-flex; */
+    }
+
+    #dsh-title-value {
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+
+    .cus1 {
+        overflow: visible !important;
+    }
+/* //////////////////////////////////////////////////// */
+
+    #container_title {
+        width: 100%;
+    }
+
+    #container_title h2 {
+        font-size: larger;
+    }
+
+    .containerP {
+        width: 113%;
+        display: block;
+    }
+
+    .profile-img,
+    .profile-img img {
+        /* width: 100px; */
+        /* height: 100px; */
+        /* align-items: center; */
+        /* margin-left: 110%; */
+
+        /* display: table-cell; */
+        vertical-align: middle;
+
+    }
+
+    #info-txt {
+        text-align: center;
+        /* width: 280px; */
+        margin-top: 10px;
+    }
+
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2,
+    p {
+        font-size: large;
+        text-align: center;
+        /* width: 300px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 300px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-msg {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .info-msg p {
+        font-size: medium;
+        width: 100%;
+    }
+
+    .info-msg {
+        flex-direction: column;
+        background: #F2F2F2;
+        padding: 13px;
+        border-radius: 16px;
+        margin-top: 10;
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .txt-center {
+        width: 280px;
+    }
+
+    .hideSpan_Dsh {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 420px) and (min-width: 349px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: red; */
+    }
+
+    .hero-dsh-header {
+        display: block !important;
+        justify-content: center;
+    }
+
+    .hero-dsh-headerP {
+        text-align: center;
+        width: 330px;
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-pj {
+        display: flex;
+        justify-content: center !important;
+        margin-top: 10px;
+    }
+
+    .w-2\/4 {
+        width: 100% !important;
+    }
+
+    #h-scroll {
+        margin: 4px, 4px;
+        padding: 4px;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
+
+    #dsh-title1 {
+        flex-direction: row-reverse;
+        display: flex;
+    }
+
+    #dsh-title-name {
+        font-size: large;
+        font-weight: bold;
+        color: black;
+    }
+
+    #dsh-title-heading {
+        display: none;
+    }
+
+    #dsh-c-title-h {
+        height: 70px;
+        /* display: inline-flex; */
+    }
+
+    #dsh-title-value {
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+
+    .cus1 {
+        overflow: visible !important;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title {
+        width: 100%;
+    }
+
+    #container_title h2 {
+        font-size: larger;
+    }
+
+    .containerP {
+        width: 113%;
+        display: block;
+    }
+
+    .profile-img,
+    .profile-img img {
+        /* width: 100px; */
+        /* height: 100px; */
+        /* align-items: center; */
+        /* margin-left: 148%; */
+        vertical-align: middle;
+    }
+
+    /* .profile-img {
+        display: table-cell;
+        vertical-align: middle;
+    } */
+
+    #info-txt {
+        text-align: center;
+        /* width: 365px; */
+        margin-top: 10px;
+    }
+
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2,
+    p {
+        font-size: large;
+        text-align: center;
+        /* width: 365px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 365px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-msg {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .info-msg p {
+        font-size: medium;
+        width: 100%;
+    }
+
+    .info-msg {
+        flex-direction: column;
+        background: #F2F2F2;
+        padding: 13px;
+        border-radius: 16px;
+        margin-top: 10;
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    #serviceTag {
+        background-color: white;
+    }
+
+    .hideSpan_Dsh {
+        display: none;
+    }
+
+}
+
+
+@media screen and (max-width: 601px) and (min-width: 419px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: green; */
+    }
+
+    .hero-dsh-header {
+        display: block !important;
+        justify-content: center;
+    }
+
+    .hero-dsh-headerP {
+        text-align: center;
+        width: 100%;
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-pj {
+        display: flex;
+        justify-content: center !important;
+        margin-top: 10px;
+    }
+
+    .w-2\/4 {
+        width: 100% !important;
+    }
+
+    #h-scroll {
+        margin: 4px, 4px;
+        padding: 4px;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
+
+    #dsh-title1 {
+        flex-direction: row-reverse;
+        display: flex;
+    }
+
+    #dsh-title-name {
+        font-size: large;
+        font-weight: bold;
+        color: black;
+    }
+
+    #dsh-title-heading {
+        display: none;
+    }
+
+    #dsh-c-title-h {
+        height: 70px;
+        /* display: inline-flex; */
+    }
+
+    #dsh-title-value {
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+
+    .cus1 {
+        overflow: visible !important;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title {
+        width: 100%;
+    }
+
+    #container_title h2 {
+        font-size: x-large;
+    }
+
+    .containerP {
+        width: 113%;
+        display: block;
+    }
+
+    .profile-img {
+        /* width: 100px;
+        height: 100px;
+        line-height: 200px;
+        text-align: center; */
+
+        vertical-align: middle;
+        /* display: table-cell; */
+        /* vertical-align: middle; */
+
+        /* display: block; */
+        /* margin-left: auto; */
+        /* margin-right: auto; */
+        /* width: 50%; */
+        /* margin-left: 150%; */
+    }
+
+    .profile-img img {
+        vertical-align: middle;
+
+    }
+
+    #info-txt {
+        text-align: center;
+        /* width: 380px; */
+        margin-top: 10px;
+    }
+
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+        text-align: center;
+        /* width: 380px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 380px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-msg {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .info-msg p {
+        font-size: medium;
+        width: 100%;
+    }
+
+    .info-msg {
+        flex-direction: column;
+        background: #F2F2F2;
+        padding: 13px;
+        border-radius: 16px;
+        margin-top: 10;
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .hideSpan_Dsh {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 739px) and (min-width: 602px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: yellow; */
+    }
+
+    .hero-dsh-header {
+        display: block !important;
+        justify-content: center;
+    }
+
+    .hero-dsh-headerP {
+        text-align: center;
+        width: 100%;
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-pj {
+        display: flex;
+        justify-content: center !important;
+        margin-top: 10px;
+    }
+
+    .w-2\/4 {
+        width: 100% !important;
+    }
+
+    #h-scroll {
+        margin: 4px, 4px;
+        padding: 4px;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
+
+    #dsh-title1 {
+        flex-direction: row-reverse;
+        display: flex;
+    }
+
+    #dsh-title-name {
+        font-size: large;
+        font-weight: bold;
+        color: black;
+    }
+
+    #dsh-title-heading {
+        display: none;
+    }
+
+    #dsh-c-title-h {
+        height: 70px;
+        /* display: inline-flex; */
+    }
+
+    #dsh-title-value {
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+
+    .cus1 {
+        overflow: visible !important;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 100%;
+        display: block;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        height: 30px;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    #info-txt h1 {
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: medium;
+    }
+
+    .info-button-section p {
+        font-size: small;
+    }
+
+    .ds-flex {
+        width: 300px;
+    }
+
+    .ds-flex .m-r-f {
+        font-size: small;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+        text-align: center;
+        /* width: 380px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 380px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+}
+
+
+@media screen and (max-width: 770px) and (min-width: 600px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: chocolate; */
+    }
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 100%;
+        display: block;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    .profile-img {
+        vertical-align: middle;
+    }
+
+    .profile-img img {
+        vertical-align: middle;
+    }
+
+    #info-txt h1 {
+        /* text-align: center; */
+        /* width: 280px; */
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+    }
+
+    .info-button-section p {
+        font-size: medium;
+    }
+
+    .ds-flex .m-r-f {
+        font-size: medium;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+        text-align: center;
+        /* width: 380px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 380px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .info-container {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 992px) and (min-width: 769px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: brown; */
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 100%;
+        display: block;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    .profile-img {
+        vertical-align: middle;
+    }
+
+    .profile-img img {
+        vertical-align: middle;
+    }
+
+    #info-txt h1 {
+        /* text-align: center; */
+        /* width: 280px; */
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+    }
+
+    .info-button-section p {
+        font-size: medium;
+    }
+
+    .ds-flex .m-r-f {
+        font-size: medium;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+        text-align: center;
+        /* width: 380px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 380px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .info-container {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 1181px) and (min-width: 991px) {
+    #hero-dashboard-wapper {
+        padding-left: 20px;
+        padding-right: 20px;
+        /* background-color: #00CF91; */
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 100%;
+        display: block;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    .profile-img {
+        vertical-align: middle;
+    }
+
+    .profile-img img {
+        vertical-align: middle;
+    }
+
+    #info-txt h1 {
+        /* text-align: center; */
+        /* width: 280px; */
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+    }
+
+    .info-button-section p {
+        font-size: medium;
+    }
+
+    .ds-flex .m-r-f {
+        font-size: medium;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+
+    .btn-session {
+        display: none;
+    }
+    .info-button-section {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+        text-align: center;
+        /* width: 380px; */
+    }
+
+    .info-button-section p {
+        font-size: medium;
+        text-align: center;
+        /* width: 380px; */
+        color: #96A0B5;
+    }
+
+    .ds-flex {
+        display: none;
+    }
+
+    .btn-session {
+        display: none;
+    }
+
+    #btn-session-end {
+        display: flex;
+        flex-direction: column;
+    }
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .info-container {
+        width: 100%;
+    }
+
+}

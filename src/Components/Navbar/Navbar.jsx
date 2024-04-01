@@ -167,6 +167,7 @@ export const Navbar = () => {
         const jwt = response.data.token
         localStorage.setItem('jwt', jwt)
         localStorage.setItem('name', response.data.username)
+        localStorage.setItem('userId', response.data.userId)
         // setAuth({
         //   Email: userData.Email,
         //   Password: userData.Password,
@@ -194,7 +195,8 @@ export const Navbar = () => {
         }).then((result) => {
           setSwal(false)
           if (result.dismiss === Swal.DismissReason.timer) {
-            navigate('/userProfile');
+            // navigate('/userProfile');
+            navigate('/userdashboard');
           }
         })
       } catch(err){

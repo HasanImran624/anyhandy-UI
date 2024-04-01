@@ -1,0 +1,969 @@
+.txt-center_contracts {
+    text-align: center;
+}
+
+.containerP_contracts {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-conatiner_contracts {
+    flex: 1;
+    width: 10%;
+}
+
+.profile-img_contracts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.txt-time_contracts {
+    font-size: 14;
+    text-align: center;
+    margin-top: 10;
+}
+
+.txt-dollar_contracts {
+    color: #EFA82A;
+    text-align: center;
+}
+
+.info-container_contracts {
+    flex: 9;
+    width: 90%;
+}
+
+.info-button-section_contracts {
+    flex: 9;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* .info-button-section p {
+    font-size: medium;
+    text-align: center;
+    width: 100%;
+    color: #96A0B5;
+} */
+
+.ds-flex1_contracts {
+    display: flex;
+    margin-left: 8px;
+}
+
+.btn-hire_contracts {
+    background: #00CF91;
+    color: white;
+    width: 70px;
+    border-radius: 6px;
+}
+
+.btn-pay-now_contracts {
+    background: #00CF91;
+    color: white;
+    width: 100px;
+    border-radius: 6px;
+}
+
+.btn-accept_contracts {
+    background: white;
+    color: #00CF91;
+    width: 70px;
+    border-radius: 6px;
+    border-color: #00CF91;
+    border-width: 1px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.btn-acceped_contracts {
+    background: white;
+    color: #00CF91;
+    width: 100px;
+    border-radius: 6px;
+    border-color: #00CF91;
+    border-width: 1px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.btn-reject_contracts {
+    background: white;
+    color: black;
+    width: 70px;
+    border-radius: 6px;
+}
+
+
+#btn-session-end_contracts {
+    display: none;
+}
+
+
+.btn-read-more-container_contracts {
+    /* flex-direction: column;
+    flex: 9; */
+    display: block;
+}
+
+.info-msg-btn-container1_contracts {
+    background: #F2F2F2;
+    margin-top: 10px;
+    border-radius: 12px;
+}
+
+.m-r-f1_contracts {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.m-t_contracts {
+    margin-top: 3px;
+}
+
+.m-t1_contracts {
+    margin-top: 6px;
+}
+
+.m20_contracts {
+    margin-top: 20px
+}
+
+.txt1_contracts {
+    font-size: small;
+    font-weight: 500;
+}
+
+.dot_contracts {
+    height: 5px;
+    width: 5px;
+    background-color: #00CF91;
+    border-radius: 50%;
+    display: block;
+    margin-top: 10px;
+    margin-left: 4px;
+    position: absolute;
+}
+.txt2_contracts {
+    color: #96A0B5;
+    font-size: small;
+}
+
+.txt-center_contracts {
+    text-align: center;
+}
+
+.txt3_contracts {
+    display: flex;
+}
+
+.txt3_contracts img {
+    margin-right: 5px;
+    margin-left: 10px;
+}
+
+
+/* responsive code */
+
+@media only screen and (max-width: 350px) and (min-width: 299px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: #EFA82A; */
+    }
+
+    #container_title_contracts {
+        width: 100%;
+    }
+
+    #container_title_contracts h2 {
+        font-size: larger;
+    }
+
+    .profile-conatiner_contracts {
+        width: 100%;
+    }
+
+    .containerP_contracts {
+        width: 113%;
+        display: block;
+    }
+
+    .txt3_contracts {
+        display: flex !important;
+        flex-direction: row;
+        justify-content: center;
+        color: black;
+        font-size: large;
+    }
+
+    .profile-img_contracts,
+    .profile-img_contracts img {
+        /* width: 100px; */
+        /* height: 100px; */
+        /* align-items: center; */
+        /* margin-left: 110%; */
+
+        /* display: table-cell; */
+        vertical-align: middle;
+
+    }
+
+    #info-txt_contracts {
+        text-align: center;
+        /* width: 280px; */
+        margin-top: 10px;
+    }
+
+    .info-button-section_contracts {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section_contracts h2,
+    p {
+        font-size: large;
+        text-align: center;
+        /* width: 300px; */
+    }
+
+    .info-button-section_contracts p {
+        font-size: medium;
+        text-align: center;
+        /* width: 300px; */
+        color: #96A0B5;
+    }
+
+    .ds-bl_contracts {
+        display: block;
+    }
+
+    .ds-flex1_contracts {
+        /* background-color: yellow; */
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #btn-session-end_contracts {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-msg_contracts {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .info-msg_contracts p {
+        font-size: medium;
+        width: 100%;
+    }
+
+    .info-msg_contracts {
+        flex-direction: column;
+        background: #F2F2F2;
+        padding: 13px;
+        border-radius: 16px;
+        margin-top: 10;
+    }
+
+    .btn-pay-now_contracts,
+    .btn-acceped-bottom_contracts,
+    .btn-reject_contracts {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .txt-center-about_contracts {
+        width: 280px;
+
+    }
+    
+    .info-container-about_contracts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .about-d1_contracts {
+        width: 50%; 
+    }
+    
+    .about-d_contracts {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px; /* Adjust as needed */
+    }
+    
+    .btn-about-msg_contracts {
+        padding-top: 5px;
+        margin-right: 5px;
+    }
+
+    .a_contracts {
+        padding-top: 5px;
+    }
+
+    .btn-session1_contracts {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 420px) and (min-width: 349px) {
+    #hero-dashboard-wapper_contracts {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: red; */
+    }
+
+    #container_title_contracts {
+        width: 100%;
+    }
+
+    #container_title_contracts h2 {
+        font-size: larger;
+    }
+
+    .profile-conatiner_contracts {
+        width: 100%;
+    }
+
+    .containerP_contracts {
+        width: 113%;
+        display: block;
+    }
+
+    .txt3_contracts {
+        display: flex !important;
+        flex-direction: row;
+        justify-content: center;
+        color: black;
+        font-size: large;
+    }
+
+    .profile-img_contracts,
+    .profile-img_contracts img {
+        /* width: 100px; */
+        /* height: 100px; */
+        /* align-items: center; */
+        /* margin-left: 110%; */
+
+        /* display: table-cell; */
+        vertical-align: middle;
+
+    }
+
+    #info-txt_contracts {
+        text-align: center;
+        /* width: 280px; */
+        margin-top: 10px;
+    }
+
+    .info-button-section_contracts {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section_contracts h2,
+    p {
+        font-size: large;
+        text-align: center;
+        /* width: 300px; */
+    }
+
+    .info-button-section_contracts p {
+        font-size: medium;
+        text-align: center;
+        /* width: 300px; */
+        color: #96A0B5;
+    }
+
+    .ds-bl_contracts {
+        display: block;
+    }
+
+    .ds-flex1_contracts {
+        /* background-color: yellow; */
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #btn-session-end_contracts {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-msg_contracts {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .info-msg_contracts p {
+        font-size: medium;
+        width: 100%;
+    }
+
+    .info-msg_contracts {
+        flex-direction: column;
+        background: #F2F2F2;
+        padding: 13px;
+        border-radius: 16px;
+        margin-top: 10;
+    }
+
+    .btn-pay-now_contracts,
+    .btn-acceped-bottom_contracts,
+    .btn-reject_contracts {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .txt-center-about_contracts {
+        width: 280px;
+
+    }
+    
+    .info-container-about_contracts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .about-d1_contracts {
+        width: 50%; 
+    }
+    
+    .about-d_contracts {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px; /* Adjust as needed */
+    }
+    
+    .btn-about-msg_contracts {
+        padding-top: 5px;
+        margin-right: 5px;
+    }
+
+    .a_contracts {
+        padding-top: 5px;
+    }
+
+    .btn-session1_contracts {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 601px) and (min-width: 419px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: green; */
+    }
+
+    #container_title_contracts {
+        width: 100%;
+    }
+
+    #container_title_contracts h2 {
+        font-size: larger;
+    }
+
+    .profile-conatiner_contracts {
+        width: 100%;
+    }
+
+    .containerP_contracts {
+        width: 113%;
+        display: block;
+    }
+
+    .txt3_contracts {
+        display: flex !important;
+        flex-direction: row;
+        justify-content: center;
+        color: black;
+        font-size: large;
+    }
+
+    .profile-img_contracts,
+    .profile-img_contracts img {
+        /* width: 100px; */
+        /* height: 100px; */
+        /* align-items: center; */
+        /* margin-left: 110%; */
+
+        /* display: table-cell; */
+        vertical-align: middle;
+
+    }
+
+    #info-txt_contracts {
+        text-align: center;
+        /* width: 280px; */
+        margin-top: 10px;
+    }
+
+    .info-button-section_contracts {
+        display: block;
+        width: 100%;
+    }
+
+    .info-button-section_contracts h2,
+    p {
+        font-size: large;
+        text-align: center;
+        /* width: 300px; */
+    }
+
+    .info-button-section_contracts p {
+        font-size: medium;
+        text-align: center;
+        /* width: 300px; */
+        /* color: #96A0B5; */
+    }
+
+    .ds-bl_contracts {
+        display: block;
+    }
+
+    .ds-flex1_contracts {
+        /* background-color: yellow; */
+        flex-direction: row;
+        justify-content: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+    #btn-session-end_contracts {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-msg_contracts {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .info-msg_contracts p {
+        font-size: medium;
+        width: 100%;
+    }
+
+    .info-msg_contracts {
+        flex-direction: column;
+        background: #F2F2F2;
+        padding: 13px;
+        border-radius: 16px;
+        margin-top: 10;
+    }
+
+    .btn-pay-now_contracts,
+    .btn-acceped-bottom_contracts,
+    .btn-reject_contracts {
+        width: 100%;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 0px;
+    }
+
+    .txt-center-about_contracts {
+        width: 280px;
+
+    }
+    
+    .info-container-about_contracts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .about-d1_contracts {
+        width: 50%; 
+    }
+    
+    .about-d_contracts {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px; /* Adjust as needed */
+    }
+    
+    .btn-about-msg_contracts {
+        padding-top: 5px;
+        margin-right: 5px;
+    }
+
+    .a_contracts {
+        padding-top: 5px;
+    }
+
+    .btn-session1_contracts {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 739px) and (min-width: 602px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: yellow; */
+    }
+
+    .hero-dsh-header {
+        display: block !important;
+        justify-content: center;
+    }
+
+    .hero-dsh-header h2,
+    p {
+        text-align: center;
+        width: 100%;
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-pj {
+        display: flex;
+        justify-content: center !important;
+        margin-top: 10px;
+    }
+
+    .w-2\/4 {
+        width: 100% !important;
+    }
+
+    #h-scroll {
+        margin: 4px, 4px;
+        padding: 4px;
+        /* background-color: #08c708; */
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    div::-webkit-scrollbar {
+        display: none;
+    }
+
+    #dsh-title1 {
+        flex-direction: row-reverse;
+        display: flex;
+    }
+
+    #dsh-title-name {
+        font-size: large;
+        font-weight: bold;
+        color: black;
+    }
+
+    #dsh-title-heading {
+        display: none;
+    }
+
+    #dsh-c-title-h {
+        height: 70px;
+        /* display: inline-flex; */
+    }
+
+    #dsh-title-value {
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+
+    .cus1 {
+        overflow: visible !important;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 113%;
+        display: block;
+    }
+
+    .profile-img {
+        width: 100%;
+        vertical-align: middle;
+        /* display: table-cell; */
+        /* vertical-align: middle; */
+
+        /* display: block; */
+        /* margin-left: auto; */
+        /* margin-right: auto; */
+        /* width: 50%; */
+        /* margin-left: 150%; */
+    }
+
+    .profile-img img {
+        vertical-align: middle;
+
+    }
+
+    .btn-hire,
+    .btn-accept,
+    .btn-reject {
+        height: 30px;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    #info-txt h1 {
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: medium;
+    }
+
+    .info-button-section p {
+        font-size: small;
+    }
+
+    .ds-flex1 {
+        width: 300px;
+    }
+
+    .ds-flex1 .m-r-f {
+        font-size: small;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+
+    /* .txt-center {
+        width: 200px;
+    }
+
+    .info-container {
+        width: 10px;
+    } */
+    
+}
+
+
+@media screen and (max-width: 770px) and (min-width: 600px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #container_title_contracts h2 {
+        font-size: medium;
+    }
+
+    .containerP_contracts {
+        display: flex;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    .profile-img_contracts,
+    .profile-img_contracts img {
+        /* width: 50px; */
+        height: 50px;
+        /* margin-left: 10px; */
+    }
+
+    #info-txt h1 {
+        /* text-align: center; */
+        /* width: 280px; */
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+    }
+
+    .info-button-section p {
+        font-size: medium;
+    }
+
+    .ds-flex1 .m-r-f {
+        font-size: medium;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+
+    #btn-session-end_contracts {
+        display: none;
+    }
+
+    .btn-msg_contracts  img{
+        width: 30px;
+        height: 30px;
+    }
+
+    .btn-option_contracts img{
+        width: 30px;
+        height: 30px;
+    }
+
+    .txt2 {
+        /* width: 30px; */
+    }
+
+    .txt3_title_contracts {
+        /* width: 80px; */
+    }
+    .profile-conatiner_contracts {
+        width: 300px !important;
+        /* background-color: #EFA82A; */
+        flex: 2;
+    }
+
+}
+
+@media screen and (max-width: 992px) and (min-width: 769px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: brown; */
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 100%;
+        display: block;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    .profile-img,
+    .profile-img img {
+        /* width: 50px; */
+        height: 50px;
+        margin-left: 10px;
+    }
+
+    #info-txt h1 {
+        /* text-align: center; */
+        /* width: 280px; */
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+    }
+
+    .info-button-section p {
+        font-size: medium;
+    }
+
+    .ds-flex1 .m-r-f {
+        font-size: medium;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+}
+
+@media screen and (max-width: 1181px) and (min-width: 991px) {
+    #hero-dashboard-wapper {
+        padding-left: 20px;
+        padding-right: 20px;
+        /* background-color: #00CF91; */
+    }
+
+    .btn-wapper-dsh {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* //////////////////////////////////////////////////////// */
+
+    #container_title h2 {
+        font-size: medium;
+    }
+
+    .containerP {
+        width: 100%;
+        display: block;
+    }
+
+    .profile-conatiner {
+        width: 100%;
+    }
+
+    .profile-img,
+    .profile-img img {
+        /* width: 50px; */
+        height: 50px;
+        margin-left: 10px;
+    }
+
+    #info-txt h1 {
+        /* text-align: center; */
+        /* width: 280px; */
+        margin-top: 10px;
+        font-size: medium;
+    }
+
+    #info-txt h4 {
+        font-size: medium;
+    }
+
+    .info-button-section h2 {
+        font-size: large;
+    }
+
+    .info-button-section p {
+        font-size: medium;
+    }
+
+    .ds-flex1 .m-r-f {
+        font-size: medium;
+    }
+
+    .info-msg p {
+        font-size: small;
+    }
+}

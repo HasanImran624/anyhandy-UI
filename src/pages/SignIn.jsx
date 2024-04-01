@@ -53,9 +53,11 @@ export const SignIn = () => {
           IsHandyman: false
         }
         const response = await axios.post(LOGIN_URL, userData)
+        // const response = await axios.post('https://localhost:7046/api/user/validate-login', userData)
         const jwt = response.data.token
         localStorage.setItem('jwt', jwt)
         localStorage.setItem('name', response.data.username)
+        localStorage.setItem('userid', response.data.userId)
         setAuth({
           Email: userData.Email,
           Password: userData.Password,
@@ -78,11 +80,13 @@ export const SignIn = () => {
             clearInterval();
           }
         }).then((result) => {
+          debugger;
           if (result.dismiss === Swal.DismissReason.timer) {
-            navigate('/hero-dashboard');
+            navigate('/userdashboard');
           }
         })
       } catch(err){
+        debugger;
         if (!err.response) {
           Swal.fire({
             title: 'Something went wrong!',

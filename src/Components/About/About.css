@@ -64,7 +64,7 @@
         flex-direction: column;
         justify-content: center;
         gap: 40px;
-    }
+    } 
     .about-container-left,
     .about-container-right {
         width: 100%;

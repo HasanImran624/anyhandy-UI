@@ -1,0 +1,348 @@
+
+/* .myJobLst_main_cont {
+    display: block;
+}
+
+.container_job_list {
+    display: block;
+} */
+
+.container_t1_hero {
+    display: flex; 
+    align-items: center; 
+}
+
+.image-div_t1_hero {
+    flex: 0 0 auto; 
+    margin-right: 10px; 
+}
+
+.text-div_t1_hero {
+    flex: 1; 
+}
+
+
+.text-div_t1_hero p {
+    margin: 0;
+}
+
+.t1_main_row {
+    display: flex; 
+    justify-content: space-between;
+}
+
+/* responsive code */
+
+@media only screen and (max-width: 350px) and (min-width: 299px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: #EFA82A; */
+    }
+
+    .myJobLst_main_cont {
+        display: block;
+    }
+
+    .container_job_list {
+        display: block;
+    }
+
+    .t1_profile_ {
+        margin-top: 10px;
+    }
+
+    .t1_img_profile {
+        height: 50px;
+        width: 50px;
+    }
+
+    .t1_name_ {
+        margin-left: 10px;
+    }
+    .t1_service_tag {
+        margin-top: -10px;
+    }
+
+    #t1_status {
+        margin-top: 20px;
+    }
+
+    .t1_header_title {
+        font-size: larger !important;
+    }
+
+    /* ///////// hero  //////////////// */
+    
+    .image-div_t1_hero {
+        flex: 0 0 auto; 
+        margin-right: 10px;
+    }
+    
+    .container_t1_hero{
+        display: flex;
+        align-items: start;
+    }
+
+    #t1_hero_flex {
+        display: block;
+    }
+
+    .t1_hero_rating {
+        margin-top: -10px;
+    }
+
+    .text-div_t1_hero {
+        flex: 1; 
+    }
+    
+    
+    .text-div_t1_hero p {
+        margin: 0;
+    }
+    
+    .t1_main_row {
+        display: flex; 
+        justify-content: space-between;
+    }
+
+    .t1_hero_job_com {
+        width: 160px;
+    }
+
+}
+
+@media only screen and (max-width: 420px) and (min-width: 349px) {
+    #hero-dashboard-wapper_contracts {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: red; */
+    }
+
+    .myJobLst_main_cont {
+        display: block;
+    }
+
+    .container_job_list {
+        display: block;
+    }
+
+    .t1_profile_ {
+        margin-top: 10px;
+    }
+
+    .t1_img_profile {
+        height: 50px;
+        width: 50px;
+    }
+
+    .t1_name_ {
+        margin-left: 10px;
+    }
+    .t1_service_tag {
+        margin-top: -10px;
+    }
+
+    #t1_status {
+        margin-top: 20px;
+    }
+
+    .t1_header_title {
+        font-size: larger !important;
+    }
+
+}
+
+
+@media screen and (max-width: 601px) and (min-width: 419px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: green; */
+    }
+
+    .myJobLst_main_cont {
+        display: block;
+    }
+
+    .t1_profile_ {
+        margin-top: 10px;
+    }
+
+    .t1_img_profile {
+        height: 50px;
+        width: 50px;
+    }
+
+    .t1_name_ {
+        margin-left: 10px;
+    }
+    .t1_service_tag {
+        margin-top: -10px;
+    }
+
+    #t1_status {
+        margin-top: 20px;
+    }
+
+    .t1_header_title {
+        font-size: larger !important;
+    }
+
+    
+
+}
+
+@media screen and (max-width: 768px) and (min-width: 602px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: yellow; */
+    }
+
+    
+    .myJobLst_main_cont {
+        display: flex;
+    }
+
+    .t1_profile_ {
+        margin-top: 10px;
+    }
+
+    .t1_img_profile {
+        height: 50px;
+        width: 50px;
+    }
+
+    .t1_name_ {
+        margin-left: 10px;
+    }
+    .t1_service_tag {
+        margin-top: -10px;
+    }
+
+    #t1_status {
+        margin-top: 20px;
+    }
+
+    .t1_header_title {
+        font-size: larger !important;
+    }
+
+    /* hero */
+
+    .image-div_t1_hero {
+        flex: 0 0 auto; 
+        margin-right: 10px;
+    }
+    
+    .container_t1_hero{
+        display: flex;
+        align-items: start;
+    }
+
+    #t1_hero_flex {
+        display: block;
+    }
+
+    .t1_hero_rating {
+        margin-top: -10px;
+    }
+
+    .text-div_t1_hero {
+        flex: 1; 
+    }
+    
+    
+    .text-div_t1_hero p {
+        margin: 0;
+    }
+    
+    .t1_main_row {
+        display: flex; 
+        justify-content: space-between;
+    }
+
+    .t1_hero_job_com {
+        width: 160px;
+    }
+
+}
+
+
+@media screen and (max-width: 992px) and (min-width: 769px) {
+    #hero-dashboard-wapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        /* background-color: brown; */
+    }
+
+    .myJobLst_main_cont {
+        display: flex;
+    }
+
+    .t1_profile_ {
+        margin-top: 10px;
+    }
+
+    .t1_img_profile {
+        height: 50px;
+        width: 50px;
+    }
+
+    .t1_name_ {
+        margin-left: 10px;
+    }
+    .t1_service_tag {
+        margin-top: -10px;
+    }
+
+    #t1_status {
+        margin-top: 20px;
+    }
+
+    .t1_header_title {
+        font-size: larger !important;
+    }
+}
+
+@media screen and (max-width: 4081px) and (min-width: 991px) {
+    #hero-dashboard-wapper {
+        padding-left: 50px;
+        padding-right: 50px;
+        /* background-color: #00CF91; */
+    }
+
+    .myJobLst_main_cont {
+        display: flex;
+    }
+
+    .container_job_list {
+        display: grid;
+    }
+
+    .t1_profile_ {
+        margin-top: 10px;
+    }
+
+    .t1_img_profile {
+        height: 50px;
+        width: 50px;
+    }
+
+    .t1_name_ {
+        margin-left: 10px;
+    }
+    .t1_service_tag {
+        margin-top: -10px;
+    }
+
+    #t1_status {
+        margin-top: 20px;
+    }
+
+    .t1_header_title {
+        font-size: larger !important;
+    }
+
+}

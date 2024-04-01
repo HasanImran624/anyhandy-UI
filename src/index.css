@@ -61,3 +61,40 @@ input[type="submit"] {
     background-color: #05815c !important;
   }
 }
+
+.hero-dsh-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cus1 {
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 350px) and (min-width: 299px) {
+  .hero-dsh-header {
+    display: block;
+  }
+
+  .hero-dsh-headerP {
+    text-align: center;
+    width: 330px;
+  }
+  .btn-wapper-dsh {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-pj {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .w-2\/4 {
+    width: 100%;
+  }
+
+}
+
+
