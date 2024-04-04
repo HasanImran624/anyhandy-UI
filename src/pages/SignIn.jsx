@@ -2,8 +2,8 @@ import { useContext, useState } from 'react'
 import AuthContext from '../context/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import axios from '../api/axios'
 import * as yup from 'yup'
+import axios from '../api/axios'
 import Swal from 'sweetalert2'
 
 import logo from '../Assets/logo.svg'
@@ -149,7 +149,7 @@ export const SignIn = () => {
                 </div>
                 <button
                   type='submit'
-                  className='w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md'
+                  className='w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md button_global_style'
                 >
                   Login
                 </button>
@@ -190,7 +190,6 @@ export const SignIn = () => {
             <p className='w-full text-lg font-medium text-[#73778B] text-center'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. explre anduering. consectetur adipiscing elit.</p>
           </div>
         </section>
-
       </section>
     </>
   )

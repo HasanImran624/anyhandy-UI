@@ -3,8 +3,10 @@ import Vector_1 from '../../Assets/Vector_1.png'
 import Vector_2 from '../../Assets/Vector_2.png'
 import Vector_75 from '../../Assets/Vector_75.png'
 import Vector_3 from '../../Assets/Vector_3.png'
+import { useNavigate } from 'react-router-dom'
 
 export const Home = () => {
+    const navigate = useNavigate()
     return (
         <div className='home-container'>
             <div className='home-container-left'>
@@ -15,7 +17,12 @@ export const Home = () => {
                 <div >
                     <p className='content' id='content'> Your handy man hero hassle free & a Click Away! </p>
                 </div>
-                <button className='button-container font-semibold text-white'> Request a Hero </button>
+                <button
+                    className='button-container font-semibold text-white button_global_style'
+                    onClick={() => { navigate('/services')}}
+                > 
+                    Request a Hero
+                </button>
             </div>
             <div className='home-container-right'>
                 <div className='vector-images'>

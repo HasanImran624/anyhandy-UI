@@ -187,7 +187,7 @@ export const SignUp = () => {
                 </div> */}
                 <button
                   type='submit'
-                  className='w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md'
+                  className='w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md button_global_style'
                 >
                   Sign Up
                 </button>

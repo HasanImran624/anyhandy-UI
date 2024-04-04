@@ -1,13 +1,16 @@
 import {Main} from './pages/Main'
 import {SignUp} from './pages/SignUp'
 import {SignIn} from './pages/SignIn'
+import Services from './pages/Services'
+import HeroDashboard from './pages/HeroDashboard'
+import UserProfile from './pages/UserProfile'
 
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import {ScrollRestore} from './Components/ScrollRestore'
-import HeroDashboard from './pages/HeroDashboard'
 import HeroProtectedRoutes from './utils/HeroProtectedRoutes'
-import UserProfile from './pages/UserProfile'
 import UserProtectedRoutes from './utils/UserProtectedRoutes'
+import JobPosting from './pages/JobPosting'
+import InviteHandyman from './pages/InviteHandyman'
 
 function App() {
   return (
@@ -16,8 +19,11 @@ function App() {
         <ScrollRestore />
         <Routes>
           <Route path="/" element={<Main />} exact />
+          <Route path="/services" element={<Services />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/signIn" element={<SignIn />} />
+          <Route path="/jobPosting" element={<JobPosting />} />
+          <Route path="/inviteHandyman" element={<InviteHandyman />} />
 
           <Route path="/*" element={ <HeroProtectedRoutes />} >
             <Route path="hero-dashboard" element={ <HeroDashboard />} />

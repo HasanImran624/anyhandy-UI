@@ -235,7 +235,7 @@ export const Navbar = () => {
     <>
       {signUp && 
         <section className='w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10'>
-          <div className='hidden sm_desktop:block w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20' onClick={() => setSignUp(!signUp) }></div>
+          <div className='hidden sm_desktop:block w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20' onClick={() => setSignUp(false) }></div>
           <section className='w-full sm_desktop:w-[50%] bg-white h-screen overflow-y-scroll sm_desktop:h-fit sm_desktop:overflow-y-hidden p-5 sm_tablet:p-10 flex flex-col gap-10 font-Onest rounded-[30px] relative z-30'>
             <div className='flex justify-center gap-2 flex-col'>
               <span className='flex items-center justify-between'>
@@ -342,12 +342,12 @@ export const Navbar = () => {
       }    
       {signIn && 
         <section className='w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10'>
-          <div className='w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20' onClick={() => setSignIn(!signIn) }></div>
+          <div className='w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20' onClick={() => setSignIn(false) }></div>
           <section className='w-full sm_desktop:w-[50%] bg-white h-screen overflow-y-scroll sm_desktop:h-fit sm_desktop:overflow-y-hidden p-5 sm_tablet:p-10 flex flex-col gap-10 font-Onest rounded-[30px] relative z-30'>
             <div className='flex justify-center gap-2 flex-col'>
               <span className='flex items-center justify-between'>
                 <h2 className='text-[#292C38] text-4xl font-bold'>Login</h2>
-                <img src={Cross} alt="x" className='w-4 cursor-pointer' onClick={() => setSignIn(!signIn) } /> 
+                <img src={Cross} alt="x" className='w-4 cursor-pointer' onClick={() => setSignIn(false) } /> 
               </span>
               <h4 className='font-medium text-sm text-[#868580]'>Welcome back! Log in to continue</h4>
             </div>
@@ -412,13 +412,18 @@ export const Navbar = () => {
         style={{ background: 'linear-gradient(180deg, rgba(135,206,250,0.2)3%, rgba(135,206,250,0.1) 21%, rgba(255,255,255,1) 86%)' }}
       >
         <section>
-          <img src={Logo} alt="logo" className='w-24 sm_desktop:w-40 cursor-pointer' />
+          <img 
+            src={Logo} 
+            alt="logo" 
+            onClick={() => { navigate('/')}}
+            className='w-24 sm_desktop:w-40 cursor-pointer' 
+          />
         </section>
         <section id='navLinksContainer' className='hidden sm_desktop:block'>
           <ul className='flex items-center justify-center gap-7 text-[#0D0B01] font-Onest font-semibold text-lg'>
             <li onClick={() => { navigate('/signUp')}}> Home </li>
             <li onClick={() => { navigate('/signIn')}}> Services </li>
-            <li>Portfolio</li>
+            <li onClick={() => { navigate('/jobPosting')}}>Job Posting</li>
             <li>About</li>
             <li>Blog</li>
             <li>Contact</li>

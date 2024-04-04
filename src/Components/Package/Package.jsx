@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import './Package.css'
 import Filter from '../Filter/Filter'
 import { Category } from './Category'
@@ -67,10 +67,10 @@ export const Package = () => {
             return (
             <div key={filter.id} onClick={() => {  handleFilterClick(filter.id) }} >
               <Filter
-            name={filter.name}
-            backgroundColor={selectedFilter === filter.id ? '#00CF91' : '#FFFF'}
-            textColor={selectedFilter === filter.id ? '#FFFF' : '#0D0B01'}
-          />
+                name={filter.name}
+                backgroundColor={selectedFilter === filter.id ? '#00CF91' : '#FFFF'}
+                textColor={selectedFilter === filter.id ? '#FFFF' : '#0D0B01'}
+              />
             </div>
           )})}
         </div>
