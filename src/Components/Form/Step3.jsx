@@ -13,6 +13,8 @@ import openEye from '../../Assets/openEye.png'
 import closeEye from '../../Assets/closeEye.png'
 import arrow from '../../Assets/arrow.png'
 import trash from '../../Assets/trash.png'
+import { LuPen } from "react-icons/lu"
+import { BsTrash } from "react-icons/bs"
 
 import dayjs from 'dayjs'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
@@ -285,112 +287,125 @@ const Step3 = () => {
           </div>
       </section>
       <section className='w-full sm_desktop:w-[45%] h-full flex flex-col gap-7'>
-          <span 
-              className='flex gap-3 w-fit cursor-pointer'
-              onClick={() => {  updateProgress(progress - 1) } }            //progress --
-          >
-              <FaArrowLeft color="#00CF91" fontSize="1.5rem" />
-              <h3 className='font-Onest font-semibold text-lg text-[#00CF91]'>Go Back</h3>
-          </span>
-          <header className="flex flex-col gap-5">
-            <h2 className='font-bold text-2xl text-[#0D0B01]'>Add Job Details</h2>
-            <p className='text-[#868580] font-medium text-[20px]'>This will help a job post stand out</p>
-          </header>
-          <section className="flex w-full gap-5">
-            <div className="flex-1">
-              <h3 className="font-medium text-lg text-[#0D0B01]">Start Date</h3>
-              <button className="w-full text-left text-[#7c7c7c] p-3 relative border rounded-xl cursor-pointer outline-none" onClick={() => {setShowStartDate(prevState => !prevState); setShowEndDate(false)}} >
-                Pick Start Date
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <CalendarMonthIcon />
-                </div>
-              {showStartDate && (
-                <div className=" absolute top-[100%] -left-1 z-20">
-                  <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DemoContainer components={['DateCalendar', 'DateCalendar']}>
-                      <DemoItem>
-                        <DateCalendar className='bg-white border rounded-xl shadow-xl' value={startDate} onChange={(newValue) => setStartDate(newValue)} />
-                      </DemoItem>
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </div>
-              )}
-              </button>
-            </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-lg text-[#0D0B01]">End Date</h3>
-              <button className="w-full text-left text-[#7c7c7c] p-3 relative border rounded-xl cursor-pointer outline-none" onClick={() => {setShowEndDate(prevState => !prevState); setShowStartDate(false)}} >
-                Pick End Date
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <CalendarMonthIcon />
-                </div>
-              {showEndDate && (
-                <div className=" absolute top-[100%] left-0 z-20" >
-                  <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DemoContainer components={['DateCalendar', 'DateCalendar']}>
-                      <DemoItem>
-                        <DateCalendar className='bg-white border rounded-xl' value={endDate} onChange={(newValue) => setEndDate(newValue)} />
-                      </DemoItem>
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </div>
-              )}
-              </button>
-            </div>
-          </section>
-          <span className="flex gap-3 items-center" onClick={() => { setShowStartDate(false); setShowEndDate(false)}} >
-            <input type="checkbox" name="start_immediately" id="start_immediately" className="focus:outline-none w-4 h-4 checked:accent-[#459b81]" />
-            <label htmlFor="start_immediately" className="cursor-pointer">I want to start immediately</label>
-          </span>
-          <section className="flex gap-5">
-            <div
-              className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${rateType === "hourly" ? "bg-green-50 border-[#00CF91]" : "border-[#E1DFD7] bg-white"} cursor-pointer hover:shadow-md transition-all ease-in-out duration-200 `}
-              onClick={() => setRateType("hourly")}
-            >
-              <img src={clock} alt="" className="w-10 h-10" />
-              <h4 className="font-bold text-lg">Hourly rate</h4>
-            </div>
-            <div
-              className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${rateType === "fixed" ? "bg-green-50 border-[#00CF91]" : "border-[#E1DFD7] bg-white"} cursor-pointer hover:shadow-md transition-all ease-in-out duration-200`}
-              onClick={() => setRateType("fixed")}
-            > 
-              <img src={cash} alt=""  className="w-10 h-10"/>
-              <h4 className="font-bold text-lg">Fixed Price</h4>
-            </div>
-          </section>
-          {rateType === "hourly" && (
-            <div className="w-full flex gap-2">
-              <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
-                <h4>From</h4>
-                <div className="w-fit relative flex gap-2 items-center">
-                  <input type="number" className="w-full px-6 py-3 border rounded-xl" />
-                  <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
-                  <h3>/hr</h3>
-                </div>
+        <span 
+            className='flex gap-3 w-fit cursor-pointer'
+            onClick={() => {  updateProgress(progress - 1) } }            //progress --
+        >
+            <FaArrowLeft color="#00CF91" fontSize="1.5rem" />
+            <h3 className='font-Onest font-semibold text-lg text-[#00CF91]'>Go Back</h3>
+        </span>
+        <header className="flex flex-col gap-5">
+          <h2 className='font-bold text-2xl text-[#0D0B01]'>Add Job Details</h2>
+          <p className='text-[#868580] font-medium text-[20px]'>This will help a job post stand out</p>
+        </header>
+        <section className="flex w-full gap-5">
+          <div className="flex-1">
+            <h3 className="font-medium text-lg text-[#0D0B01]">Start Date</h3>
+            <button className="w-full text-left text-[#7c7c7c] p-3 relative border rounded-xl cursor-pointer outline-none" onClick={() => {setShowStartDate(prevState => !prevState); setShowEndDate(false)}} >
+              Pick Start Date
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <CalendarMonthIcon />
               </div>
-              <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
-                <h4>To</h4>
-                <div className="w-fit relative flex gap-2 items-center">
-                  <input type="number" className="w-full px-6 py-3 border rounded-xl" />
-                  <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
-                  <h3>/hr</h3>
-                </div>
+            {showStartDate && (
+              <div className=" absolute top-[100%] -left-1 z-20">
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                  <DemoContainer components={['DateCalendar', 'DateCalendar']}>
+                    <DemoItem>
+                      <DateCalendar className='bg-white border rounded-xl shadow-xl' value={startDate} onChange={(newValue) => setStartDate(newValue)} />
+                    </DemoItem>
+                  </DemoContainer>
+                </LocalizationProvider>
               </div>
-            </div>
-          )}
-          <div>
-            <h3 className="font-light text-base text-[#0D0B01]">Notes</h3>
-            <ul className='list-disc ml-5 font-light text-base text-[#636363] flex flex-col'>
-              <li>Notes Professionals tend to charge $15 - $30 /hour (USD) for full stack development projects like yours. Experts may charge higher rates.</li>
-            </ul>
+            )}
+            </button>
           </div>
-          <span 
-            className="flex gap-3 font-semibold text-base text-[#00CF91] cursor-pointer"
-            onClick={() => setAddLocation(true)} 
+          <div className="flex-1">
+            <h3 className="font-medium text-lg text-[#0D0B01]">End Date</h3>
+            <button className="w-full text-left text-[#7c7c7c] p-3 relative border rounded-xl cursor-pointer outline-none" onClick={() => {setShowEndDate(prevState => !prevState); setShowStartDate(false)}} >
+              Pick End Date
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <CalendarMonthIcon />
+              </div>
+            {showEndDate && (
+              <div className=" absolute top-[100%] left-0 z-20" >
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                  <DemoContainer components={['DateCalendar', 'DateCalendar']}>
+                    <DemoItem>
+                      <DateCalendar className='bg-white border rounded-xl' value={endDate} onChange={(newValue) => setEndDate(newValue)} />
+                    </DemoItem>
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+            )}
+            </button>
+          </div>
+        </section>
+        <span className="flex gap-3 items-center" onClick={() => { setShowStartDate(false); setShowEndDate(false)}} >
+          <input type="checkbox" name="start_immediately" id="start_immediately" className="focus:outline-none w-4 h-4 checked:accent-[#459b81]" />
+          <label htmlFor="start_immediately" className="cursor-pointer">I want to start immediately</label>
+        </span>
+        <section className="flex gap-5">
+          <div
+            className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${rateType === "hourly" ? "bg-green-50 border-[#00CF91]" : "border-[#E1DFD7] bg-white"} cursor-pointer hover:shadow-md transition-all ease-in-out duration-200 `}
+            onClick={() => setRateType("hourly")}
           >
-            <ControlPointRoundedIcon style={{ fill: '#00CF91' }} />
-            <h4>Add Location</h4>
+            <img src={clock} alt="" className="w-10 h-10" />
+            <h4 className="font-bold text-lg">Hourly rate</h4>
+          </div>
+          <div
+            className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${rateType === "fixed" ? "bg-green-50 border-[#00CF91]" : "border-[#E1DFD7] bg-white"} cursor-pointer hover:shadow-md transition-all ease-in-out duration-200`}
+            onClick={() => setRateType("fixed")}
+          > 
+            <img src={cash} alt=""  className="w-10 h-10"/>
+            <h4 className="font-bold text-lg">Fixed Price</h4>
+          </div>
+        </section>
+        {rateType === "hourly" && (
+          <div className="w-full flex gap-2">
+            <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
+              <h4>From</h4>
+              <div className="w-fit relative flex gap-2 items-center">
+                <input type="number" className="w-full px-6 py-3 border rounded-xl" />
+                <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
+                <h3>/hr</h3>
+              </div>
+            </div>
+            <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
+              <h4>To</h4>
+              <div className="w-fit relative flex gap-2 items-center">
+                <input type="number" className="w-full px-6 py-3 border rounded-xl" />
+                <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
+                <h3>/hr</h3>
+              </div>
+            </div>
+          </div>
+        )}
+        <div>
+          <h3 className="font-light text-base text-[#0D0B01]">Notes</h3>
+          <ul className='list-disc ml-5 font-light text-base text-[#636363] flex flex-col'>
+            <li>Notes Professionals tend to charge $15 - $30 /hour (USD) for full stack development projects like yours. Experts may charge higher rates.</li>
+          </ul>
+        </div>
+        <span 
+          className="flex gap-3 font-semibold text-base text-[#00CF91] cursor-pointer"
+          onClick={() => setAddLocation(true)} 
+        >
+          <ControlPointRoundedIcon style={{ fill: '#00CF91' }} />
+          <h4>Add Location</h4>
+        </span>
+        <section className="w-full rounded-[30px] border-2 border-[#00CF91] p-5">
+          <span className="flex items-center justify-between">
+            <h2 className="font-bold text-2xl text-[#0D0B01]">New Location</h2>
+            <span className="flex items-center gap-2">
+              <LuPen size={20} color="#96A0B5" className="cursor-pointer" onClick={() => setAddLocation(true)} />
+              <BsTrash size={20} color="#96A0B5" className="cursor-pointer" />
+            </span>
           </span>
+          <h4 className="font-medium text-base text-[#0D0B01]">Apartment</h4>
+          <h4 className="font-medium text-base text-[#0D0B01]">Number &  Building name</h4>
+          <h4 className="font-medium text-base text-[#0D0B01]">Area</h4>
+        </section>
+
           
       </section>
     </section>

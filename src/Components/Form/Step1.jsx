@@ -13,7 +13,7 @@ import ProgressBar  from "../ProgressBar/ProgressBar"
 const services = [
     { id: 1, name: 'Painting', uid: 'painting' } , { id: 2, name: 'HVAC', uid: 'hvac' },
     { id: 3, name: 'Electrical Service', uid: 'electrical'} , { id: 4, name: 'General Handyman Services', uid: 'general_handyman_services' },
-    { id: 5, name: 'Carpentry Services', uid: 'carpentry_services' } , { id: 6, name: 'Electrical', uid: 'electrical_services'  },
+    { id: 5, name: 'Carpentry Services', uid: 'carpentry_services' } , { id: 6, name: 'Home Cleaning Services', uid: 'home_cleaning_services'  },
     { id: 7, name: 'Pest Control', uid: 'pest_control' } , { id: 8,name: 'Landscaping And Lawn Care', uid: 'landscaping_and_lawn_care' },
     { id: 9, name: 'Appliance Repairs', uid: 'appliances_repairs' },
 ]
@@ -22,10 +22,13 @@ const Step1 = () => {
   const navigate = useNavigate()
 
   const [selectedService, setSelectedService] = useState("")
-  const { progress, updateProgress } = useProgress()
+  const { progress, updateProgress, serviceSelected, updateSeletedService } = useProgress()
 
   const handleNext = () => {
-    updateProgress(progress + 1)
+    console.log(setSelectedService);
+    //navigate(`/step2?selectedService=${selectedService}`);
+    updateProgress(progress + 1);
+    updateSeletedService(selectedService);
   }
   useEffect(() => {
     window.scrollTo(0, 0)

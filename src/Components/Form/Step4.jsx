@@ -24,6 +24,7 @@ const Step4 = () => {
       icon: "success"
     }).then(() => {
       navigate('/')
+      updateProgress(1)
     })
 }
   

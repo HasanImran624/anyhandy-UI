@@ -23,7 +23,7 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/jobPosting" element={<JobPosting />} />
-          <Route path="/inviteHandyman" element={<InviteHandyman />} />
+          <Route path="/jobPosting/inviteHandyman" element={<InviteHandyman />} />
 
           <Route path="/*" element={ <HeroProtectedRoutes />} >
             <Route path="hero-dashboard" element={ <HeroDashboard />} />

@@ -13,10 +13,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import { useNavigate } from "react-router-dom"
+import { useProgress } from "../context/ProgressContext"
+import { useNavigate, Outlet } from "react-router-dom"
+
 
 const JobPosting = () => {
     const navigate = useNavigate()
+    const { progress, updateProgress } = useProgress()
   return (
     <>
         <Navbar />
@@ -91,15 +94,15 @@ const JobPosting = () => {
                     </section> 
                     <section className="w-[5%] flex items-center justify-center"> <div className="w-1 h-full bg-transparent border-r border-[#E3E3E3]"></div> </section> 
                     <section className="w-[15%] flex flex-col gap-3">
-                        <span className="flex items-center gap-2 text-[#00CF91] cursor-pointer">
+                        <span className="flex items-center gap-2 text-[#00CF91] cursor-pointer w-fit pb-1 border-b-2 border-transparent transition ease-in-out duration-200 hover:border-[#E3E3E3] ">
                             <DeleteIcon />
                             Delete
                         </span>
-                        <span className="flex items-center gap-2 text-[#00CF91] cursor-pointer">
+                        <span className="flex items-center gap-2 text-[#00CF91] cursor-pointer w-fit pb-1 border-b-2 border-transparent transition ease-in-out duration-200 hover:border-[#E3E3E3]" onClick={() => {updateProgress(1); navigate('/services')} } >
                             <EditIcon />
                             Edit Details
                         </span>
-                        <span onClick={() => navigate('/inviteHandyman')}  className="flex items-center gap-2 text-[#00CF91] cursor-pointer">
+                        <span onClick={() => navigate('/jobPosting/inviteHandyman')}  className="flex items-center gap-2 text-[#00CF91] cursor-pointer w-fit pb-1 border-b-2 border-transparent transition ease-in-out duration-200 hover:border-[#E3E3E3] ">
                             <ArrowForwardIosIcon color="primary"/>
                             Invite Handyman
                         </span>
