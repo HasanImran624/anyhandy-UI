@@ -1,7 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa"
 import { IoMdInformationCircleOutline } from "react-icons/io"
-import  {useFormik}  from 'formik'
-import * as yup from 'yup'
+import { Tooltip } from 'primereact/tooltip'
 
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -11,22 +10,35 @@ import ProgressBar  from "../ProgressBar/ProgressBar"
 
 
 const services = [
-    { id: 1, name: 'Painting', uid: 'painting' } , { id: 2, name: 'HVAC', uid: 'hvac' },
-    { id: 3, name: 'Electrical Service', uid: 'electrical'} , { id: 4, name: 'General Handyman Services', uid: 'general_handyman_services' },
-    { id: 5, name: 'Carpentry Services', uid: 'carpentry_services' } , { id: 6, name: 'Home Cleaning Services', uid: 'home_cleaning_services'  },
-    { id: 7, name: 'Pest Control', uid: 'pest_control' } , { id: 8,name: 'Landscaping And Lawn Care', uid: 'landscaping_and_lawn_care' },
-    { id: 9, name: 'Appliance Repairs', uid: 'appliances_repairs' },
+    { id: 1, name: 'Painting', uid: 'painting', subServices: ['Interior Home Painting', 'Exterior Home Painting', 'Door Painting', 'Cabinet Painting or Refinishing', 'Fence Painting', 'Pressure Washing'] },
+    { id: 10, name: 'Plumbing', uid: 'plumbing', subServices: ['Fixing Leaks (pipe repairs)', 'Clearing Clogged Drains', 'Installing or Repairing Faucets, Toilets, Water Heaters', 'Others'] },
+    { id: 2, name: 'HVAC', uid: 'hvac',  subServices: ['Regular Maintenance of Heating and Cooling Systems', 'Repairing or Replacing HVAC Units', 'Cleaning and Servicing Air Ducts'] },
+    { id: 3, name: 'Electrical Service', uid: 'electrical', subServices: ['Fixing General Electrical Issues', 'Installing or Repairing Light Fixtures and Ceiling Fans', 'Upgrading Electrical Panels', 'Mounting TVs and Home Theater Systems', 'Wiring for New Construction or Renovations', 'Electrical Troubleshooting', 'Others']},
+    { id: 4, name: 'General Handyman Services', uid: 'general_handyman_services', subServices: ['Miscellaneous Repairs and Maintenance Tasks'] },
+    { id: 5, name: 'Carpentry Services', uid: 'carpentry_services', subServices: ['Installing Shelves, Cabinets or Built-in Furniture', 'Fixing Doors and Windows', 'Others'] }, 
+    { id: 6, name: 'Home Cleaning Services', uid: 'home_cleaning_services', subServices: ['Regular Cleaning and Maintenance of the Home (area/hour)', 'Deep cleaning, Including Carpet Cleaning and Upholstery Cleaning'] },
+    { id: 7, name: 'Pest Control', uid: 'pest_control', subServices: ['Exterminating Pests such as Termites, Ants or Rodents', 'Preventive Pest Control Measures'] },
+    { id: 8,name: 'Landscaping And Lawn Care', uid: 'landscaping_and_lawn_care', subServices: ['Mowing the Lawn', 'Trimming Trees and Shrubs', 'Installing or Repairing Irrigation Systems']},
+    { id: 9, name: 'Appliance Repairs', uid: 'appliances_repairs', subServices: ['Fixing or Servicing Household Appliances'] },
 ]
 
 const Step1 = () => {
   const navigate = useNavigate()
 
-  const [selectedService, setSelectedService] = useState("")
-  const { progress, updateProgress, serviceSelected, updateSeletedService } = useProgress()
+  const [selectedService, setSelectedService] = useState(null)
+  const [jobDescription, setJobDescription] = useState(null)
+  const { progress, updateProgress, updateSeletedService } = useProgress()
+
+  
+    const handleSelectService = (e) => {
+      setSelectedService(e)
+      updateSeletedService(e)
+    }
+
+    // console.log('step1: ',serviceSelected)
 
   const handleNext = () => {
     console.log(setSelectedService);
-    //navigate(`/step2?selectedService=${selectedService}`);
     updateProgress(progress + 1);
     updateSeletedService(selectedService);
   }
@@ -34,33 +46,6 @@ const Step1 = () => {
     window.scrollTo(0, 0)
   }, [])
 
-
-  const handleServiceClick = (name) => {
-      setSelectedService(prevState => name)
-  }
-  console.log(selectedService)
-
-  const validationSchema = yup.object().shape({
-      selectedService: yup
-      .string()
-      .nullable(false)
-      .required("Select a service to continue"),
-      service_des: yup
-      .string()
-      .min(25, "Description is too short")
-      .required("Job description is required")
-  })
-
-  const formik = useFormik({
-    initialValues: {
-    selectedService: "",
-    service_des: ""
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-        console.log(values)
-    }
-  })
 
   return (
     <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
@@ -82,30 +67,38 @@ const Step1 = () => {
                     <FaArrowLeft color="#00CF91" fontSize="1.5rem" />
                     <h3 className='font-Onest font-semibold text-lg text-[#00CF91]'>Go Back</h3>
                 </span>
-                <form onSubmit={formik.handleSubmit} className="h-full flex flex-col gap-7">
+                <section className="h-full flex flex-col gap-7">
                     <h2 className='font-bold text-2xl text-[#0D0B01]'>Select Main Services</h2>
                     <p className='text-[#868580] font-medium text-[20px]'>Select main service of job that needs to be done</p>
                     <section className='w-full flex flex-col gap-3 flex-wrap justify-center sm_desktop:justify-start'>
                         <section className="flex gap-5 flex-wrap justify-center sm_desktop:justify-start">
-                            {services.map((service) => {
-                                return (
-                                    <button
-                                        type="button"
+                            {services.map((service) => (
+                                <section key={service.id}>
+                                    <div
                                         key={service.id}
-                                        name={service.uid} // Set the name attribute to the field name
-                                        onClick={(e) => {setSelectedService(prevState => service.id); e.preventDefault()}} // Remove event parameter
-                                        // value={service.name} // Set the value directly to service.id
-                                        onBlur={formik.handleBlur}
-                                        className={`w-fit flex items-center justify-center gap-3 rounded-[50px] p-2 lg_mobile:p-3 border border-[#E1DFD7] cursor-pointer ${selectedService===service.id ? 'bg-[#00CF91] text-white' : 'bg-white'} transition-colors ease-in-out duration-200 form-services-btn`}
+                                        name={service.uid}
+                                        onClick={() => handleSelectService(service.id)}
+                                        className={`w-fit flex items-center justify-center gap-3 rounded-[50px] p-2 lg_mobile:p-3 border border-[#E1DFD7] cursor-pointer hover:bg-green-300  ${selectedService===service.id ? 'bg-[#00CF91] text-white' : 'bg-white'} transition-colors ease-in-out duration-200 form-services-btn`}
                                     >
                                         <p className='font-medium text-center text-[0.7rem] lg_mobile:text-base xl_mobile:text-lg'>{service.name}</p>
                                         <IoMdInformationCircleOutline color={selectedService===service.id ? '#FFFF' : '#AFAFAF'} className="text-lg lg_mobile:text-3xl" />
-                                    </button>   
-                                )
-                            })}
+                                    </div>   
+
+                                    <Tooltip
+                                        target={`[name="${service.uid}"]`}
+                                        className="bg-white min-w-52 border border-slate-200 rounded-md tooltip-shadow mt-2 text-base font-medium"
+                                        autoHide={false} position={'bottom'} showDelay={100} hideDelay={100} 
+                                    > 
+                                        {service.subServices?.map((subService, index) => (
+                                            <div key={index} className="shadow-2xl" >
+                                                <p data-pr-tooltip="sub-service" className="w-full bg-white hover:bg-green-100 transition ease-out duration-100 p-3" >{subService}</p>
+                                            </div>
+                                        ))}                                            
+                                    </Tooltip>
+                                </section>
+                            ))}
                         </section>
                     </section>
-                    {(formik.touched.selectedService && formik.errors.selectedService) && <p className='mt-1 ml-1 text-sm text-red-500 sm_desktop:text-base' >*{formik.errors.selectedService}</p>}
                     <section className='flex flex-col gap-3 items-start '>
                         <h3 className='font-normal text-lg text-[#0D0B01]'>Notes</h3>
                         <ul className='list-disc ml-5 font-light text-lg text-[#636363] flex flex-col'>
@@ -118,13 +111,10 @@ const Step1 = () => {
                         <span>
                             <textarea 
                                 name="service_des" rows="5 "
-                                className='w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer'
+                                className='w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize cursor-pointer'
                                 placeholder='Please describe a job that needs to be done'
-                                value={formik.values.service_des}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
+                                onInput={(e) => setJobDescription(e.target.value)} 
                             ></textarea>
-                            {(formik.touched.service_des && formik.errors.service_des) && <p className='mt-1 ml-1 text-sm text-red-500 sm_desktop:text-base'>*{formik.errors.service_des}</p>}
                         </span>
                     </section>  
                     <span className='w-full flex items-center justify-end gap-5'>
@@ -135,18 +125,17 @@ const Step1 = () => {
                             Cancel
                         </button>
                         <button
-                            onClick={(e) => { 
-                                e.preventDefault();
-                                handleNext()
-                            }}   
+                            type="button"
+                            onClick={handleNext}   
                             className='font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7]
                             hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100
                             disabled:opacity-50 disabled:cursor-not-allowed'
+                            disabled={jobDescription === null || selectedService === null}
                         >
                             Continue
                         </button>
                     </span>
-                </form>   
+                </section>   
             </section>
         </section>
     </div>

@@ -11,6 +11,7 @@ export const ProgressProvider = ({ children }) => {
   const updateProgress = (newProgress) => {
     setProgress(newProgress);
   };
+  
   const updateSeletedService = (newService) => {
     setServiceSelected(newService);
   };

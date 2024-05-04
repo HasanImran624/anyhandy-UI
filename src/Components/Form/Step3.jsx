@@ -16,12 +16,19 @@ import trash from '../../Assets/trash.png'
 import { LuPen } from "react-icons/lu"
 import { BsTrash } from "react-icons/bs"
 
-import dayjs from 'dayjs'
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar'
+// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import CloseIcon from '@mui/icons-material/Close'
@@ -34,6 +41,7 @@ import ProgressBar  from "../ProgressBar/ProgressBar"
 
 import clock from '../../Assets/clock.png'
 import cash from '../../Assets/cash.png'
+import { BorderAllRounded } from "@mui/icons-material"
 
 const cities = [
   { name: 'New York', code: 'NY' },
@@ -46,12 +54,14 @@ const cities = [
 const Step3 = () => {
   const navigate = useNavigate()
   // const [checked, setChecked] = useState(false)
-  const [startDate, setStartDate] = useState(dayjs('2022-04-17'));
-  const [endDate, setEndDate] = useState(dayjs('2022-04-17'));
+  // const [startDate, setStartDate] = useState(dayjs('2022-04-17'));
+  // const [endDate, setEndDate] = useState(dayjs('2022-04-17'));
+  const [value, setValue] = useState(dayjs('2022-04-17'));
   const [rateType, setRateType] = useState("hourly")
 
-  const [showStartDate, setShowStartDate] = useState(false)
-  const [showEndDate, setShowEndDate] = useState(false)
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+  const [startImmediate, setStartImmediate] = useState(false)
   const [addLocation, setAddLocation] = useState(false)
   const [addLocationMenu, setAddLocationMenu] = useState(false)
   const [locationType, setLocationType] = useState(false)
@@ -277,7 +287,7 @@ const Step3 = () => {
       )}
     <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
     <section className='w-full h-full flex flex-col sm_desktop:gap-[10%] gap-10 sm_desktop:flex-row'>
-      <section className='w-full sm_desktop:w-[45%] flex flex-col gap-10 sm_desktop:flex-row' onClick={() => {setShowStartDate(false); setShowEndDate(false) }} >
+      <section className='w-full sm_desktop:w-[45%] flex flex-col gap-10 sm_desktop:flex-row' >
           <div>
               <ProgressBar progress = { progress } />
           </div>
@@ -298,50 +308,34 @@ const Step3 = () => {
           <h2 className='font-bold text-2xl text-[#0D0B01]'>Add Job Details</h2>
           <p className='text-[#868580] font-medium text-[20px]'>This will help a job post stand out</p>
         </header>
-        <section className="flex w-full gap-5">
-          <div className="flex-1">
-            <h3 className="font-medium text-lg text-[#0D0B01]">Start Date</h3>
-            <button className="w-full text-left text-[#7c7c7c] p-3 relative border rounded-xl cursor-pointer outline-none" onClick={() => {setShowStartDate(prevState => !prevState); setShowEndDate(false)}} >
-              Pick Start Date
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <CalendarMonthIcon />
-              </div>
-            {showStartDate && (
-              <div className=" absolute top-[100%] -left-1 z-20">
-                <LocalizationProvider dateAdapter={AdapterDayjs} >
-                  <DemoContainer components={['DateCalendar', 'DateCalendar']}>
-                    <DemoItem>
-                      <DateCalendar className='bg-white border rounded-xl shadow-xl' value={startDate} onChange={(newValue) => setStartDate(newValue)} />
-                    </DemoItem>
-                  </DemoContainer>
-                </LocalizationProvider>
-              </div>
-            )}
-            </button>
-          </div>
-          <div className="flex-1">
-            <h3 className="font-medium text-lg text-[#0D0B01]">End Date</h3>
-            <button className="w-full text-left text-[#7c7c7c] p-3 relative border rounded-xl cursor-pointer outline-none" onClick={() => {setShowEndDate(prevState => !prevState); setShowStartDate(false)}} >
-              Pick End Date
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <CalendarMonthIcon />
-              </div>
-            {showEndDate && (
-              <div className=" absolute top-[100%] left-0 z-20" >
-                <LocalizationProvider dateAdapter={AdapterDayjs} >
-                  <DemoContainer components={['DateCalendar', 'DateCalendar']}>
-                    <DemoItem>
-                      <DateCalendar className='bg-white border rounded-xl' value={endDate} onChange={(newValue) => setEndDate(newValue)} />
-                    </DemoItem>
-                  </DemoContainer>
-                </LocalizationProvider>
-              </div>
-            )}
-            </button>
-          </div>
-        </section>
-        <span className="flex gap-3 items-center" onClick={() => { setShowStartDate(false); setShowEndDate(false)}} >
-          <input type="checkbox" name="start_immediately" id="start_immediately" className="focus:outline-none w-4 h-4 checked:accent-[#459b81]" />
+        {startImmediate===false &&
+          <section className="flex w-full gap-5">
+            <div className="flex-1">
+              <h3 className="font-medium text-lg text-[#0D0B01]">Start Date</h3>    
+              <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DemoContainer components={['DatePicker']} >
+                  <DatePicker
+                    value={startDate}
+                    onChange={(newValue) => setStartDate(newValue)}
+                  />
+                </DemoContainer>  
+              </LocalizationProvider>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-medium text-lg text-[#0D0B01]">End Date</h3>
+              <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DemoContainer components={['DatePicker']} >
+                  <DatePicker
+                    value={endDate}
+                    onChange={(newValue) => setEndDate(newValue)}
+                  />
+                </DemoContainer>  
+              </LocalizationProvider>
+            </div>
+          </section>
+        }
+        <span className="flex gap-3 items-center w-fit" >
+          <input type="checkbox" name="start_immediately" id="start_immediately" className="focus:outline-none w-4 h-4 checked:accent-[#459b81]" onChange={ () => setStartImmediate(!startImmediate) } />
           <label htmlFor="start_immediately" className="cursor-pointer">I want to start immediately</label>
         </span>
         <section className="flex gap-5">
@@ -360,12 +354,21 @@ const Step3 = () => {
             <h4 className="font-bold text-lg">Fixed Price</h4>
           </div>
         </section>
+        {rateType === "fixed" && (
+          <div className="w-full flex flex-col gap-2">
+            <label htmlFor="fixed_price">Enter Price</label>
+            <div className="w-fit relative flex gap-2 items-center">
+              <input type="number" id="fixed_price" placeholder="Your desired price" className="w-full px-7 py-3 border rounded-xl" />
+              <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
+            </div>
+          </div>
+        )}
         {rateType === "hourly" && (
           <div className="w-full flex gap-2">
             <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
               <h4>From</h4>
               <div className="w-fit relative flex gap-2 items-center">
-                <input type="number" className="w-full px-6 py-3 border rounded-xl" />
+                <input type="number" className="w-full px-7 py-3 border rounded-xl" />
                 <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
                 <h3>/hr</h3>
               </div>
@@ -373,7 +376,7 @@ const Step3 = () => {
             <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
               <h4>To</h4>
               <div className="w-fit relative flex gap-2 items-center">
-                <input type="number" className="w-full px-6 py-3 border rounded-xl" />
+                <input type="number" className="w-full px-7 py-3 border rounded-xl" />
                 <p className="absolute left-3 top-1/2 -translate-y-1/2">$</p>
                 <h3>/hr</h3>
               </div>
