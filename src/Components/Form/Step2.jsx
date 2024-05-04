@@ -8,117 +8,25 @@ import { BsTrash } from "react-icons/bs";
 import CloseIcon from "@mui/icons-material/Close";
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import {
+  CarpentryJobs,
+  ElectricalJobs,
+  GeneralJobs,
+  HvacJobs,
+  HomeCleaningJobs,
+  LawnCareJobs,
+  PaintingJobs,
+  PestControlJobs,
+  Rooms,
+  AreaType,
+  Colors,
+  PLumbingServices,
+} from "../../Constants";
 
-const paintingJobs = [
-  { id: 1, name: "Interior Home Painting" },
-  { id: 2, name: "Exterior Home Painting" },
-  { id: 3, name: "Door Painting" },
-  { id: 4, name: "Cabinet Painting Or Refinishing" },
-  { id: 5, name: "Fence Painting" },
-  { id: 6, name: "Pressure Washing" },
-];
-
-const electricalJobs = [
-  {
-    id: 1,
-    name: "Fixing general electrical issues, such as faulty wiring ,fixing loose wiring or securing electrical boxes",
-  },
-  { id: 2, name: "Installing or repairing light fixtures and ceiling fans" },
-  { id: 3, name: "Upgrading electrical panels." },
-  { id: 4, name: "Mounting TVs and Home Theater Systems" },
-  { id: 5, name: "Wiring for New Construction or Renovations" },
-  { id: 6, name: "Electrical Troubleshooting" },
-  { id: 7, name: "Others" },
-];
-
-const carpentryJobs = [
-  { id: 1, name: "Furniture Assembly" },
-  { id: 2, name: "Repairing or replacing damaged woodwork" },
-  { id: 3, name: "Door Installation and Repairs" },
-  { id: 4, name: "Window Repairs and Installation" },
-  { id: 5, name: "Cabinet Repairs" },
-  { id: 6, name: "Custom Carpentry" },
-  { id: 7, name: "Others" },
-];
-
-const HvacJobs = [
-  { id: 1, name: "Regular maintenance of heating and cooling systems" },
-  { id: 2, name: "Repairing or replacing HVAC units." },
-  { id: 3, name: "Cleaning and servicing air ducts" },
-];
-
-const LawnCareJobs = [
-  { id: 1, name: "Mowing the lawn" },
-  { id: 2, name: "Trimming trees and shrubs." },
-  { id: 3, name: "Installing or repairing irrigation systems" },
-];
-
-const PestControlJobs = [
-  { id: 1, name: "Ant Control" },
-  { id: 2, name: "Cockroach Control" },
-  { id: 3, name: "Flies & Moquito Control" },
-  { id: 4, name: "Bed Bug Control" },
-  { id: 5, name: "Rodent Control" },
-];
-
-const HomeCleaningJobs = [
-  {
-    id: 1,
-    name: "Regular cleaning and maintenance of the home. ( by hour or number of cleaner)",
-  },
-  { id: 2, name: "Regular cleaning and maintenance of the home. ( by area)" },
-  {
-    id: 3,
-    name: "Deep cleaning, including carpet cleaning and upholstery cleaning",
-  },
-];
-
-const GeneralJobs = [
-  { id: 1, name: "Miscellaneous repairs and maintenance tasks" },
-];
-
-const rooms = [
-  { room: "1" },
-  { room: "2" },
-  { room: "3" },
-  { room: "4" },
-  { room: "5" },
-  { room: "6" },
-  { room: "7+" },
-];
-
-const areaType = [
-  { area: "Studio Cleaning" },
-  { area: "1 Bedroom Home Cleaning" },
-  { area: "2 Bedroom Home Cleaning" },
-  { area: "3 Bedroom Home Cleaning" },
-  { area: "Kitchen Cleaning" },
-  { area: "Bathroom Cleaning" },
-  { area: "Balcony Cleaning" },
-  { area: "Living Room Cleaning" },
-  { area: "Wardrobe Cleaning" },
-  { area: "Fridge Inside-Out Cleaning" },
-  { area: "Wardrobe Cleaning" },
-];
-const colors = [
-  { color: "#00D1FF" },
-  { color: "#262B2F" },
-  { color: "#8E45FB" },
-  { color: "#FFDC00" },
-  { color: "#3EB1FF" },
-  { color: "#FF0000" },
-  { color: "#F4F3F3" },
-];
-const jobMappings = {
-  1: "paintingJobs",
-  2: "electricalJobs",
-  // Add more mappings as needed for other services
-};
 const Step2 = () => {
   const navigate = useNavigate();
   const { progress, updateProgress, serviceSelected, updateSeletedService } =
     useProgress();
-
   const [selectedJob, setSelectedJob] = useState("");
   const [selectedRoom, setSelectedRoom] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
@@ -138,19 +46,19 @@ const Step2 = () => {
     let newOptions = [];
     switch (serviceSelected) {
       case 1:
-        newOptions = paintingJobs;
+        newOptions = PaintingJobs;
         break;
       case 2:
         newOptions = HvacJobs;
         break;
       case 3:
-        newOptions = electricalJobs;
+        newOptions = ElectricalJobs;
         break;
       case 4:
         newOptions = GeneralJobs;
         break;
       case 5:
-        newOptions = carpentryJobs;
+        newOptions = CarpentryJobs;
         break;
       case 6:
         newOptions = HomeCleaningJobs;
@@ -161,11 +69,15 @@ const Step2 = () => {
       case 8:
         newOptions = LawnCareJobs;
         break;
+      case 10:
+        newOptions = PLumbingServices;
+        break;
       default:
         newOptions = [];
     }
     setOptions(newOptions);
   }, [serviceSelected]);
+
   const addToList = () => {
     setListItems([...listItems, selectedJob]);
     setSelectedJob("");
@@ -210,10 +122,10 @@ const Step2 = () => {
                 {editSubService.id === 1 && (
                   <>
                     <h3 className="font-medium text-base text-[#0D0B01]">
-                      Number of rooms
+                      Number of Rooms
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -239,7 +151,7 @@ const Step2 = () => {
                       Number of Doors
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -265,7 +177,7 @@ const Step2 = () => {
                       Number of Cabinet
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -308,7 +220,7 @@ const Step2 = () => {
                     Choose a color
                   </h3>
                   <span className="flex items-center gap-3 font-medium text-base">
-                    {colors.map((color, index) => {
+                    {Colors.map((color, index) => {
                       return (
                         <span
                           key={index}
@@ -357,7 +269,7 @@ const Step2 = () => {
                   name="specialRequest"
                   id="specialRequest"
                   rows="5"
-                  className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                  className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                   placeholder="Please describe any special requests"
                 ></textarea>
               </span>
@@ -464,10 +376,10 @@ const Step2 = () => {
               <div className="flex flex-col gap-7">
                 <div className="flex flex-col gap-2 font-medium text-base">
                   <h3 className="font-medium text-base text-[#0D0B01]">
-                    Number of rooms
+                    Number of Rooms
                   </h3>
                   <span className="flex items-center gap-2 font-medium text-base">
-                    {rooms.map((room, index) => {
+                    {Rooms.map((room, index) => {
                       return (
                         <span
                           key={index}
@@ -501,7 +413,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -550,7 +462,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -586,7 +498,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -635,7 +547,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -659,7 +571,7 @@ const Step2 = () => {
                     Number of Doors
                   </h3>
                   <span className="flex items-center gap-2 font-medium text-base">
-                    {rooms.map((room, index) => {
+                    {Rooms.map((room, index) => {
                       return (
                         <span
                           key={index}
@@ -682,7 +594,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -731,7 +643,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -755,7 +667,7 @@ const Step2 = () => {
                     Number of Cabinet
                   </h3>
                   <span className="flex items-center gap-2 font-medium text-base">
-                    {rooms.map((room, index) => {
+                    {Rooms.map((room, index) => {
                       return (
                         <span
                           key={index}
@@ -778,7 +690,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -827,7 +739,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -863,7 +775,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -912,7 +824,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -949,7 +861,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -979,7 +891,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -1025,10 +937,10 @@ const Step2 = () => {
                 <div className="flex flex-col gap-2 font-medium text-base">
                   <section className="flex flex-col gap-2 mt-3">
                     <h3 className="font-medium text-base text-[#0D0B01]">
-                      Number of rooms
+                      Number of Rooms
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1135,10 +1047,10 @@ const Step2 = () => {
                   </section>
                   <section className="flex flex-col gap-2 mt-3">
                     <h3 className="font-medium text-base text-[#0D0B01]">
-                      Number of rooms
+                      Number of Rooms
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1248,7 +1160,7 @@ const Step2 = () => {
                       Number of Items
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1276,7 +1188,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder=""
                       ></textarea>
                     </span>
@@ -1337,7 +1249,7 @@ const Step2 = () => {
                       Number of Cleaner (Supplier)
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1361,7 +1273,7 @@ const Step2 = () => {
                       Number of Hours
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1446,7 +1358,7 @@ const Step2 = () => {
                       Type of Area
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base flex-wrap">
-                      {areaType.map((a, index) => {
+                      {AreaType.map((a, index) => {
                         return (
                           <span
                             key={index}
@@ -1471,7 +1383,7 @@ const Step2 = () => {
                       Number of Hours
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1556,7 +1468,7 @@ const Step2 = () => {
                       Number of Items
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -1607,14 +1519,14 @@ const Step2 = () => {
             onClick={() => {
               navigate("/");
             }}
-            className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-colors ease-out duration-200"
+            className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-Colors ease-out duration-200"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleNext}
-            className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100"
+            className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-Colors ease-in duration-100"
           >
             Continue
           </button>
