@@ -56,7 +56,7 @@ const Step3 = () => {
 
   const [selectedCity, setSelectedCity] = useState(null);
 
-  const { progress, updateProgress } = useProgress();
+  const { progress, updateProgress, resetAttributes } = useProgress();
 
   const handleNext = () => {
     if (!startImmediate) {
@@ -603,6 +603,8 @@ const Step3 = () => {
         <span className="w-full flex items-center justify-end gap-5">
           <button
             onClick={() => {
+              updateProgress(1);
+              resetAttributes();
               navigate("/");
             }}
             className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-colors ease-out duration-200"

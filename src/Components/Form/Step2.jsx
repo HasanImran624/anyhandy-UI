@@ -104,6 +104,7 @@ const Step2 = () => {
             onClick={() => {
               resetAttributes();
               navigate("/");
+              updateProgress(1);
             }}
             className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-Colors ease-out duration-200"
           >
