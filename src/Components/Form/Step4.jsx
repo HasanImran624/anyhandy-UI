@@ -198,11 +198,7 @@ const Step4 = () => {
           </button>
           <span className="flex items-center gap-5">
             <button
-              onClick={() => {
-                resetAttributes();
-                updateProgress(1);
-                navigate("/");
-              }}
+              onClick={() => {}}
               className="font-semibold text-lg bg-white text-[#00CF91] p-4 rounded-md border borer-[#E1DFD7] hover:bg-green-50 outline-none focus:bg-green-100 transition-colors ease-et duration-200"
             >
               Edit Details
