@@ -1,0 +1,1 @@
+export { FencePaintingJobEditForm } from "./FencePaintingJobEditForm";

@@ -1,0 +1,1 @@
+export { InteriorPaintingJobEditForm } from "./InteriorPaintingJobEditForm";

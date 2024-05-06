@@ -1,6 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Dropdown } from "primereact/dropdown";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { LuPen } from "react-icons/lu";
@@ -8,36 +8,75 @@ import { BsTrash } from "react-icons/bs";
 import CloseIcon from "@mui/icons-material/Close";
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
-import { services } from "../../Constants";
-
-const rooms = [
-  { room: "1" },
-  { room: "2" },
-  { room: "3" },
-  { room: "4" },
-  { room: "5" },
-  { room: "6" },
-  { room: "7+" },
-];
-
-const colors = [
-  { color: "#00D1FF" },
-  { color: "#262B2F" },
-  { color: "#8E45FB" },
-  { color: "#FFDC00" },
-  { color: "#3EB1FF" },
-  { color: "#FF0000" },
-  { color: "#F4F3F3" },
-];
+import {
+  CarpentryJobs,
+  ElectricalJobs,
+  GeneralJobs,
+  HvacJobs,
+  HomeCleaningJobs,
+  LawnCareJobs,
+  PaintingJobs,
+  PestControlJobs,
+  Rooms,
+  AreaType,
+  Colors,
+  PLumbingServices,
+} from "../../Constants";
 
 const Step2 = () => {
   const navigate = useNavigate();
-  const { progress, updateProgress, serviceSelected } = useProgress();
+  const { progress, updateProgress, serviceSelected, updateSeletedService } =
+    useProgress();
   const [selectedJob, setSelectedJob] = useState("");
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [selectedArea, setSelectedArea] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [editSubService, setEditSubService] = useState(false);
   const [listItems, setListItems] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  useEffect(() => {
+    // Logic to set options based on selectedService
+    let newOptions = [];
+    switch (serviceSelected) {
+      case 1:
+        newOptions = PaintingJobs;
+        break;
+      case 2:
+        newOptions = HvacJobs;
+        break;
+      case 3:
+        newOptions = ElectricalJobs;
+        break;
+      case 4:
+        newOptions = GeneralJobs;
+        break;
+      case 5:
+        newOptions = CarpentryJobs;
+        break;
+      case 6:
+        newOptions = HomeCleaningJobs;
+        break;
+      case 7:
+        newOptions = PestControlJobs;
+        break;
+      case 8:
+        newOptions = LawnCareJobs;
+        break;
+      case 10:
+        newOptions = PLumbingServices;
+        break;
+      default:
+        newOptions = [];
+    }
+    setOptions(newOptions);
+  }, [serviceSelected]);
 
   const addToList = () => {
     setListItems([...listItems, selectedJob]);
@@ -53,10 +92,9 @@ const Step2 = () => {
     updateProgress(progress + 1);
   };
 
-  const subJobs = useMemo(() => {
-    return services.find((service) => service.id === serviceSelected)
-      .subServices;
-  }, [serviceSelected]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -84,10 +122,10 @@ const Step2 = () => {
                 {editSubService.id === 1 && (
                   <>
                     <h3 className="font-medium text-base text-[#0D0B01]">
-                      Number of rooms
+                      Number of Rooms
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -113,7 +151,7 @@ const Step2 = () => {
                       Number of Doors
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -139,7 +177,7 @@ const Step2 = () => {
                       Number of Cabinet
                     </h3>
                     <span className="flex items-center gap-2 font-medium text-base">
-                      {rooms.map((room, index) => {
+                      {Rooms.map((room, index) => {
                         return (
                           <span
                             key={index}
@@ -182,7 +220,7 @@ const Step2 = () => {
                     Choose a color
                   </h3>
                   <span className="flex items-center gap-3 font-medium text-base">
-                    {colors.map((color, index) => {
+                    {Colors.map((color, index) => {
                       return (
                         <span
                           key={index}
@@ -231,7 +269,7 @@ const Step2 = () => {
                   name="specialRequest"
                   id="specialRequest"
                   rows="5"
-                  className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                  className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                   placeholder="Please describe any special requests"
                 ></textarea>
               </span>
@@ -317,30 +355,31 @@ const Step2 = () => {
                 This will help a job post stand out
               </p>
             </header>
-            <section className="flex flex-col gap-5">
-              <h3 className="font-medium text-lg text-[#0D0B01]">
-                Enter job description
-              </h3>
-              <Dropdown
-                value={selectedJob}
-                onChange={(e) => setSelectedJob(e.value)}
-                options={subJobs}
-                optionLabel="name"
-                scrollHeight={"250px"}
-                highlightOnSelect={true}
-                placeholder="Choose an option"
-                className="w-full md:w-14rem border border-[#E0E5ED] p-2 rounded-xl"
-              />
-            </section>
-
+            {serviceSelected !== 9 && (
+              <section className="flex flex-col gap-5">
+                <h3 className="font-medium text-lg text-[#0D0B01]">
+                  Enter job description
+                </h3>
+                <Dropdown
+                  value={selectedJob}
+                  onChange={(e) => setSelectedJob(e.value)}
+                  options={options}
+                  optionLabel="name"
+                  scrollHeight={"250px"}
+                  highlightOnSelect={true}
+                  placeholder="Choose an option"
+                  className="w-full md:w-14rem border border-[#E0E5ED] p-2 rounded-xl"
+                />
+              </section>
+            )}
             {selectedJob.name === "Interior Home Painting" && (
               <div className="flex flex-col gap-7">
                 <div className="flex flex-col gap-2 font-medium text-base">
                   <h3 className="font-medium text-base text-[#0D0B01]">
-                    Number of rooms
+                    Number of Rooms
                   </h3>
                   <span className="flex items-center gap-2 font-medium text-base">
-                    {rooms.map((room, index) => {
+                    {Rooms.map((room, index) => {
                       return (
                         <span
                           key={index}
@@ -374,7 +413,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -423,7 +462,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -459,7 +498,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -508,7 +547,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -532,7 +571,7 @@ const Step2 = () => {
                     Number of Doors
                   </h3>
                   <span className="flex items-center gap-2 font-medium text-base">
-                    {rooms.map((room, index) => {
+                    {Rooms.map((room, index) => {
                       return (
                         <span
                           key={index}
@@ -555,7 +594,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -604,7 +643,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -628,7 +667,7 @@ const Step2 = () => {
                     Number of Cabinet
                   </h3>
                   <span className="flex items-center gap-2 font-medium text-base">
-                    {rooms.map((room, index) => {
+                    {Rooms.map((room, index) => {
                       return (
                         <span
                           key={index}
@@ -651,7 +690,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -700,7 +739,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -736,7 +775,7 @@ const Step2 = () => {
                       Choose a color
                     </h3>
                     <span className="flex items-center justify-between font-medium text-base">
-                      {colors.map((color, index) => {
+                      {Colors.map((color, index) => {
                         return (
                           <span
                             key={index}
@@ -785,7 +824,7 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
@@ -822,10 +861,644 @@ const Step2 = () => {
                         name="specialRequest"
                         id="specialRequest"
                         rows="5"
-                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
                         placeholder="Please describe any special requests"
                       ></textarea>
                     </span>
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {selectedJob.name ===
+              "Miscellaneous repairs and maintenance tasks" && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Description
+                    </h3>
+                    <span className="mt-3">
+                      <textarea
+                        name="specialRequest"
+                        id="specialRequest"
+                        rows="5"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        placeholder="Please describe any special requests"
+                      ></textarea>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Attachments
+                    </h3>
+                    <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
+                      Choose file...
+                      <input
+                        type="file"
+                        name="attachment"
+                        className="hidden"
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                    {selectedFile && (
+                      <p className="text-[#636363] text-sm">
+                        {selectedFile.name}
+                      </p>
+                    )}
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {(selectedJob.name === "Ant Control" ||
+              selectedJob.name === "Flies & Moquito Control" ||
+              selectedJob.name === "Bed Bug Control" ||
+              selectedJob.name === "Rodent Control") && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Rooms
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Location Type
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="villa"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="villa">Villa</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="apartment"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="apartment">Apartment</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="office"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="office">Office</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Location Size
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        name="locationSize"
+                        id="locationSize"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="locationSize">For Office Type</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {selectedJob.name === "Cockroach Control" && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Type of Room
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="roomType"
+                        id="kitchen"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="villa">Kitchen</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="roomType"
+                        id="bathroom"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="apartment">Bathroom</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Rooms
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Location Type
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="villa"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="villa">Villa</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="apartment"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="apartment">Apartment</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="office"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="office">Office</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Location Size
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        name="locationSize"
+                        id="locationSize"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="locationSize">For Office Type</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {serviceSelected === 9 && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Type of Furniture
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="roomType"
+                        id="oven"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="villa">Oven</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="roomType"
+                        id="fridge"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="apartment">Fridge</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Items
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Details of Issue
+                    </h3>
+                    <span className="mt-3">
+                      <textarea
+                        name="specialRequest"
+                        id="specialRequest"
+                        rows="5"
+                        className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
+                        placeholder=""
+                      ></textarea>
+                    </span>
+                  </section>
+
+                  <section className="flex flex-col gap-2">
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {selectedJob.name ===
+              "Regular cleaning and maintenance of the home. ( by hour or number of cleaner)" && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Location Type
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="villa"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="villa">Villa</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="apartment"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="apartment">Apartment</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="office"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="office">Office</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Cleaner (Supplier)
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Hours
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        name="provideSupplies"
+                        id="provideSupplies"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="provideSupplies">For Office Type</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {selectedJob.name ===
+              "Regular cleaning and maintenance of the home. ( by area)" && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Location Type
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="villa"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="villa">Villa</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="apartment"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="apartment">Apartment</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="locationType"
+                        id="office"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="office">Office</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Type of Area
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base flex-wrap">
+                      {AreaType.map((a, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedArea === a.area &&
+                              "bg-[#00CF91] text-white"
+                            }`}
+                            onClick={() => setSelectedArea(a.area)}
+                            style={{ minWidth: "5rem" }} // Set minimum width
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {a.area}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Hours
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        name="provideSupplies"
+                        id="provideSupplies"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="provideSupplies">Provide Supplies</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <span
+                      className="flex gap-2 items-center mt-5 cursor-pointer"
+                      onClick={() => addToList(selectedJob)}
+                    >
+                      <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+                      <h4 className="font-semibold text-base">
+                        Add To the list
+                      </h4>
+                    </span>
+                  </section>
+                </div>
+              </div>
+            )}
+            {selectedJob.name ===
+              "Deep cleaning, including carpet cleaning and upholstery cleaning" && (
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2 font-medium text-base">
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Type of Furniture
+                    </h3>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="sofa"
+                        id="sofa"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="sofa">Sofa</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="mattress"
+                        id="mattress"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="mattress">Mattress</label>
+                    </span>
+                    <span className="flex gap-3 items-center">
+                      <input
+                        type="radio"
+                        name="carpet"
+                        id="carpet"
+                        className="w-4 h-4  accent-[#15a177]"
+                      />
+                      <label htmlFor="carpet">Carpet</label>
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2 mt-3">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Number of Items
+                    </h3>
+                    <span className="flex items-center gap-2 font-medium text-base">
+                      {Rooms.map((room, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                              selectedRoom === room.room &&
+                              "bg-[#00CF91] text-white"
+                            }  `}
+                            onClick={() => setSelectedRoom(room.room)}
+                          >
+                            <h3 className="font-medium text-base text-center">
+                              {" "}
+                              {room.room}{" "}
+                            </h3>
+                          </span>
+                        );
+                      })}
+                    </span>
+                  </section>
+                  <section className="flex flex-col gap-2">
+                    <h3 className="font-medium text-base text-[#0D0B01]">
+                      Size of Items
+                    </h3>
+                    <input
+                      type="text"
+                      name="areaSize"
+                      className="w-full bg-white rounded-lg p-3 border"
+                      placeholder=""
+                    />
+                  </section>
+                  <section className="flex flex-col gap-2">
                     <span
                       className="flex gap-2 items-center mt-5 cursor-pointer"
                       onClick={() => addToList(selectedJob)}
@@ -846,16 +1519,14 @@ const Step2 = () => {
             onClick={() => {
               navigate("/");
             }}
-            className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-colors ease-out duration-200"
+            className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-Colors ease-out duration-200"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleNext}
-            className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100
-            disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={selectedJob === ""}
+            className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-Colors ease-in duration-100"
           >
             Continue
           </button>

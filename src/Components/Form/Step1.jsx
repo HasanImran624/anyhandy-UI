@@ -3,30 +3,19 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import { Tooltip } from "primereact/tooltip";
 import { services } from "../../Constants";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 const Step1 = () => {
   const navigate = useNavigate();
-  const [selectedService, setSelectedService] = useState(null);
-  const [jobDescription, setJobDescription] = useState(null);
-  const { progress, updateProgress, updateSeletedService } = useProgress();
-
-  const handleSelectService = (e) => {
-    setSelectedService(e);
-    updateSeletedService(e);
-  };
-
-  const handleNext = () => {
-    updateProgress(progress + 1);
-    updateSeletedService(selectedService);
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const {
+    progress,
+    updateProgress,
+    formAttributes,
+    setFormAttributes,
+    resetAttributes,
+  } = useProgress();
 
   return (
     <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
@@ -48,6 +37,7 @@ const Step1 = () => {
           <span
             className="flex gap-3 w-fit cursor-pointer"
             onClick={() => {
+              resetAttributes();
               navigate("/");
             }}
           >
@@ -70,9 +60,14 @@ const Step1 = () => {
                     <div
                       key={service.id}
                       name={service.uid}
-                      onClick={() => handleSelectService(service.id)}
+                      onClick={() =>
+                        setFormAttributes({
+                          ...formAttributes,
+                          selectedMainServiceCode: service.code,
+                        })
+                      }
                       className={`w-fit flex items-center justify-center gap-3 rounded-[50px] p-2 lg_mobile:p-3 border border-[#E1DFD7] cursor-pointer hover:bg-green-300  ${
-                        selectedService === service.id
+                        formAttributes.selectedMainServiceCode === service.code
                           ? "bg-[#00CF91] text-white"
                           : "bg-white"
                       } transition-colors ease-in-out duration-200 form-services-btn`}
@@ -82,7 +77,10 @@ const Step1 = () => {
                       </p>
                       <IoMdInformationCircleOutline
                         color={
-                          selectedService === service.id ? "#FFFF" : "#AFAFAF"
+                          formAttributes.selectedMainServiceCode ===
+                          service.code
+                            ? "#FFFF"
+                            : "#AFAFAF"
                         }
                         className="text-lg lg_mobile:text-3xl"
                       />
@@ -131,16 +129,23 @@ const Step1 = () => {
               <span>
                 <textarea
                   name="service_des"
-                  rows="5 "
+                  rows="5"
                   className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-colors ease-linear duration-200 placeholder:text-[#96A0B5] resize cursor-pointer"
                   placeholder="Please describe a job that needs to be done"
-                  onInput={(e) => setJobDescription(e.target.value)}
-                ></textarea>
+                  value={formAttributes.mainServiceDescription}
+                  onInput={(e) =>
+                    setFormAttributes({
+                      ...formAttributes,
+                      mainServiceDescription: e.target.value,
+                    })
+                  }
+                />
               </span>
             </section>
             <span className="w-full flex items-center justify-end gap-5">
               <button
                 onClick={() => {
+                  resetAttributes();
                   navigate("/");
                 }}
                 className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-colors ease-out duration-200"
@@ -149,11 +154,11 @@ const Step1 = () => {
               </button>
               <button
                 type="button"
-                onClick={handleNext}
+                onClick={() => updateProgress(progress + 1)}
                 className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7]
                             hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100
                             disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={selectedService === null}
+                disabled={formAttributes.selectedMainServiceCode === null}
               >
                 Continue
               </button>

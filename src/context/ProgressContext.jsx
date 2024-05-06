@@ -1,23 +1,38 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useState } from "react";
 
-const ProgressContext = createContext()
+const ProgressContext = createContext();
 
-export const useProgress = () => useContext(ProgressContext)
+export const useProgress = () => useContext(ProgressContext);
+
+const initailFormAttributes = {
+  mainServiceDescription: "",
+  selectedMainServiceCode: null,
+  subServices: [],
+};
 
 export const ProgressProvider = ({ children }) => {
   const [progress, setProgress] = useState(1);
-  const [serviceSelected, setServiceSelected] = useState("");
+  const [formAttributes, setFormAttributes] = useState(initailFormAttributes);
 
-  const updateProgress = (newProgress) => {
+  const updateProgress = useCallback((newProgress) => {
     setProgress(newProgress);
-  };
-  
-  const updateSeletedService = (newService) => {
-    setServiceSelected(newService);
-  };
+  }, []);
+
+  const resetAttributes = useCallback(
+    () => setFormAttributes(initailFormAttributes),
+    []
+  );
 
   return (
-    <ProgressContext.Provider value={{ progress, updateProgress, serviceSelected, updateSeletedService  }} >
+    <ProgressContext.Provider
+      value={{
+        progress,
+        updateProgress,
+        formAttributes,
+        setFormAttributes,
+        resetAttributes,
+      }}
+    >
       {children}
     </ProgressContext.Provider>
   );
