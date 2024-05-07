@@ -18,7 +18,9 @@ export const HomeCleaningJobForm = () => {
         </h3>
         <Dropdown
           value={selectedSubHomeCleaningJob}
-          onChange={(e) => setSelectedSubHomeCleaningJob(e.value)}
+          onChange={(e) => {
+            setSelectedSubHomeCleaningJob(e.value)
+          }}
           options={HomeCleaningJobs}
           optionLabel="name"
           scrollHeight={"250px"}

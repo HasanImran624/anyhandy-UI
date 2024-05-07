@@ -8,6 +8,7 @@ const initailFormAttributes = {
   mainServiceDescription: "",
   selectedMainServiceCode: null,
   subServices: [],
+  location: {},
 };
 
 export const ProgressProvider = ({ children }) => {

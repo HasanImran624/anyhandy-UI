@@ -7,11 +7,13 @@ import { CiCalendar } from "react-icons/ci";
 import { CiMoneyBill } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import Swal from "sweetalert2";
+import axios from "../../api/axios";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { SUBMIT_JOB_REQUEST_URL } from "../../Constants";
 
 const Step4 = () => {
   const {
@@ -24,16 +26,24 @@ const Step4 = () => {
 
   const navigate = useNavigate();
 
-  const success = () => {
-    Swal.fire({
-      title: "Success!",
-      text: "Job posted successfully!",
-      icon: "success",
-    }).then(() => {
-      navigate("/");
-      updateProgress(1);
-    });
-  };
+  const submitJob = useCallback(() => {
+    try {
+      axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      Swal.fire({
+        title: "Success!",
+        text: "Job posted successfully!",
+        icon: "success",
+      }).then(() => {
+        navigate("/");
+        updateProgress(1);
+        setFormAttributes({});
+      });
+    } catch (error) {}
+  }, [formAttributes, navigate, setFormAttributes, updateProgress]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -228,7 +238,7 @@ const Step4 = () => {
               Edit Details
             </button>
             <button
-              onClick={success}
+              onClick={submitJob}
               className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100"
             >
               Confirm And Post

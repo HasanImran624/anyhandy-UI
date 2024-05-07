@@ -9,14 +9,23 @@ export const PressureWashingJobForm = ({ setSelectedSubPaintingJob }) => {
   const [errorText, setErrorText] = useState("");
   const { formAttributes, setFormAttributes } = useProgress();
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileChange = useCallback(
+    (e) => {
+      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
+    },
+    [selectedAttributes]
+  );
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
-  };
+  const getFileNames = useCallback(() => {
+    if (selectedAttributes.files) {
+      let names = [];
+      for (let i = 0; i < selectedAttributes.files.length; i++) {
+        names.push(selectedAttributes.files[i].name);
+      }
+      return names.join(", ");
+    }
+  }, [selectedAttributes.files]);
 
-  
   const addToList = useCallback(() => {
     const altreadyAdded = !!formAttributes.subServices.find(
       (s) => s.code === PaintingJobCode.WASHING
@@ -85,32 +94,33 @@ export const PressureWashingJobForm = ({ setSelectedSubPaintingJob }) => {
             />
           </span>
           <section className="flex flex-col gap-2">
-              <h3 className="font-medium text-base text-[#0D0B01]">
-                Attachments
-              </h3>
-              <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
-                Choose file...
-                <input
-                  type="file"
-                  name="attachment"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </label>
-              {selectedFile && (
-                <p className="text-[#636363] text-sm">{selectedFile.name}</p>
-              )}
-            </section>
-            <section className="flex flex-col gap-2">
-              {!!errorText && (
-                <span
-                  style={{ color: "#dc2626" }}
-                  className="font-semibold text-base"
-                >
-                  {errorText}
-                </span>
-              )}
-            </section>
+            <h3 className="font-medium text-base text-[#0D0B01]">
+              Attachments
+            </h3>
+            <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
+              Choose file...
+              <input
+                multiple
+                type="file"
+                name="attachment"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
+            {selectedAttributes.files && (
+              <p className="text-[#636363] text-sm">{getFileNames()}</p>
+            )}
+          </section>
+          <section className="flex flex-col gap-2">
+            {!!errorText && (
+              <span
+                style={{ color: "#dc2626" }}
+                className="font-semibold text-base"
+              >
+                {errorText}
+              </span>
+            )}
+          </section>
           <section
             className="flex gap-2 items-center mt-5 cursor-pointer"
             onClick={addToList}

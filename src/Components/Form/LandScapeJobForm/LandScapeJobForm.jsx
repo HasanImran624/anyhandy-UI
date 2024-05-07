@@ -40,13 +40,22 @@ export const LandScapeJobForm = () => {
     selectedSubLandscapeJob.name,
     setFormAttributes,
   ]);
+  const handleFileChange = useCallback(
+    (e) => {
+      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
+    },
+    [selectedAttributes]
+  );
 
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
-  };
+  const getFileNames = useCallback(() => {
+    if (selectedAttributes.files) {
+      let names = [];
+      for (let i = 0; i < selectedAttributes.files.length; i++) {
+        names.push(selectedAttributes.files[i].name);
+      }
+      return names.join(", ");
+    }
+  }, [selectedAttributes.files]);
 
   return (
     <>
@@ -116,14 +125,15 @@ export const LandScapeJobForm = () => {
               <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
                 Choose file...
                 <input
+                  multiple
                   type="file"
                   name="attachment"
                   className="hidden"
                   onChange={handleFileChange}
                 />
               </label>
-              {selectedFile && (
-                <p className="text-[#636363] text-sm">{selectedFile.name}</p>
+              {selectedAttributes.files && (
+                <p className="text-[#636363] text-sm">{getFileNames()}</p>
               )}
             </section>
             <section className="flex flex-col gap-2">

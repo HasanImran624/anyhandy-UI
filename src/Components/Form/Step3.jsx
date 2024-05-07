@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import axios from "../../api/axios";
+import Swal from "sweetalert2";
 
 import email from "../../Assets/email.png";
 import lock from "../../Assets/lock.png";
@@ -25,32 +27,20 @@ import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
-
 import { Dropdown } from "primereact/dropdown";
-
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 import clock from "../../Assets/clock.png";
 import cash from "../../Assets/cash.png";
-
-const cities = [
-  { name: "New York", code: "NY" },
-  { name: "Rome", code: "RM" },
-  { name: "London", code: "LDN" },
-  { name: "Istanbul", code: "IST" },
-  { name: "Paris", code: "PRS" },
-];
+import { LOGIN_URL, Countries } from "../../Constants";
 
 const Step3 = () => {
   const navigate = useNavigate();
   const [addLocation, setAddLocation] = useState(false);
   const [addLocationMenu, setAddLocationMenu] = useState(false);
-  const [locationType, setLocationType] = useState(false);
   const [eye, setEye] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-
-  const [selectedCity, setSelectedCity] = useState(null);
 
   const {
     progress,
@@ -80,6 +70,15 @@ const Step3 = () => {
     }
     updateProgress(progress + 1);
   };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -113,7 +112,6 @@ const Step3 = () => {
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
       try {
-        console.log("I am in");
         const userData = {
           FullName: "",
           Password: values.password,
@@ -121,9 +119,34 @@ const Step3 = () => {
           MobileNumber: "",
           IsHandyman: true,
         };
-        // Add your logic for handling userData here
+        const response = await axios.post(LOGIN_URL, userData);
+        const jwt = response.data.token;
+        localStorage.setItem("jwt", jwt);
+        localStorage.setItem("name", response.data.username);
+        setIsLogin(!isLogin);
       } catch (err) {
-        console.log(err);
+        if (!err.response) {
+          Swal.fire({
+            title: "Something went wrong!",
+            text: "Please check your internet connection and try again.",
+            icon: "error",
+            confirmButtonText: "Retry",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setIsLogin(!isLogin);
+            }
+          });
+        } else if (err.response.status === 401) {
+          Swal.fire({
+            title: "Invalid email or password!",
+            icon: "error",
+            confirmButtonText: "Retry",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setIsLogin(!isLogin);
+            }
+          });
+        }
       }
     },
   });
@@ -297,11 +320,16 @@ const Step3 = () => {
                 Select Location
               </label>
               <Dropdown
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.value)}
-                options={cities}
+                value={formAttributes.location.country}
+                onChange={(e) =>
+                  setFormAttributes({
+                    ...formAttributes,
+                    location: { ...formAttributes.location, country: e.value },
+                  })
+                }
+                options={Countries}
                 optionLabel="name"
-                placeholder="Select address"
+                placeholder="Select Country"
                 className="w-full md:w-14rem border border-[#E0E5ED] rounded-xl p-1 pr-5 text-[#0D0B01] "
               />
             </section>
@@ -326,36 +354,54 @@ const Step3 = () => {
                     <span className="flex items-center gap-2 font-medium text-base">
                       <button
                         className={`flex-1 text-center border py-3 rounded-lg ${
-                          locationType === "Apartment"
+                          formAttributes.location.locationType === "Apartment"
                             ? "bg-[#00CF91] text-white"
                             : "bg-white text-[#0D0B01]"
                         } transition ease-in duration-150 `}
                         onClick={() => {
-                          setLocationType("Apartment");
+                          setFormAttributes({
+                            ...formAttributes,
+                            location: {
+                              ...formAttributes.location,
+                              locationType: "Apartment",
+                            },
+                          });
                         }}
                       >
                         Apartment
                       </button>
                       <button
                         className={`flex-1 text-center border py-3 rounded-lg ${
-                          locationType === "Villa"
+                          formAttributes.location.locationType === "Villa"
                             ? "bg-[#00CF91] text-white"
                             : "bg-white text-[#0D0B01]"
                         } transition ease-in duration-150 `}
                         onClick={() => {
-                          setLocationType("Villa");
+                          setFormAttributes({
+                            ...formAttributes,
+                            location: {
+                              ...formAttributes.location,
+                              locationType: "Villa",
+                            },
+                          });
                         }}
                       >
                         Villa
                       </button>
                       <button
                         className={`flex-1 text-center border py-3 rounded-lg ${
-                          locationType === "Office"
+                          formAttributes.location.locationType === "Office"
                             ? "bg-[#00CF91] text-white"
                             : "bg-white text-[#0D0B01]"
                         } transition ease-in duration-150 `}
                         onClick={() => {
-                          setLocationType("Office");
+                          setFormAttributes({
+                            ...formAttributes,
+                            location: {
+                              ...formAttributes.location,
+                              locationType: "Office",
+                            },
+                          });
                         }}
                       >
                         Office
@@ -369,6 +415,16 @@ const Step3 = () => {
                     <input
                       type="text"
                       name="buildingDetails"
+                      value={formAttributes.location.numAndBuildName}
+                      onChange={(e) =>
+                        setFormAttributes({
+                          ...formAttributes,
+                          location: {
+                            ...formAttributes.location,
+                            numAndBuildName: e.target.value,
+                          },
+                        })
+                      }
                       className="w-full bg-white rounded-lg p-3"
                       placeholder="Write details here.."
                     />
@@ -378,6 +434,16 @@ const Step3 = () => {
                       Area
                     </h3>
                     <input
+                      value={formAttributes.location.area}
+                      onChange={(e) =>
+                        setFormAttributes({
+                          ...formAttributes,
+                          location: {
+                            ...formAttributes.location,
+                            area: e.target.value,
+                          },
+                        })
+                      }
                       type="text"
                       name="buildingDetails"
                       className="w-full bg-white rounded-lg p-3"
@@ -408,7 +474,10 @@ const Step3 = () => {
               <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
               <h4 className="font-semibold text-base">Add Location</h4>
             </span>
-            <button className="w-full bg-[#00CF91] text-white font-bold text-base rounded-lg py-3">
+            <button
+              onClick={() => setAddLocation(false)}
+              className="w-full bg-[#00CF91] text-white font-bold text-base rounded-lg py-3"
+            >
               Continue Adding Job Details
             </button>
           </section>
@@ -549,7 +618,7 @@ const Step3 = () => {
                 <label htmlFor="fixed_price">Enter Price</label>
                 <div className="w-fit relative flex gap-2 items-center">
                   <input
-                    value={formAttributes.startDate}
+                    value={formAttributes.fixPrice}
                     onChange={(e) => {
                       setFormAttributes({
                         ...formAttributes,
@@ -642,16 +711,22 @@ const Step3 = () => {
                     size={20}
                     color="#96A0B5"
                     className="cursor-pointer"
+                    onClick={() =>
+                      setFormAttributes({ ...formAttributes, location: {} })
+                    }
                   />
                 </span>
               </span>
               <h4 className="font-medium text-base text-[#0D0B01]">
-                Apartment
+                {formAttributes.location.locationType || "Apartment"}
               </h4>
               <h4 className="font-medium text-base text-[#0D0B01]">
-                Number & Building name
+                {formAttributes.location.numAndBuildName ||
+                  "Number & Building name"}
               </h4>
-              <h4 className="font-medium text-base text-[#0D0B01]">Area</h4>
+              <h4 className="font-medium text-base text-[#0D0B01]">
+                {formAttributes.location.area || "Area"}
+              </h4>
             </section>
           </section>
         </section>

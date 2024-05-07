@@ -571,3 +571,11 @@ export const Colors = [
   { color: "#FF0000" },
   { color: "#F4F3F3" },
 ];
+
+export const Countries = [
+  { name: "New York", code: "NY" },
+  { name: "Rome", code: "RM" },
+  { name: "London", code: "LDN" },
+  { name: "Istanbul", code: "IST" },
+  { name: "Paris", code: "PRS" },
+];
