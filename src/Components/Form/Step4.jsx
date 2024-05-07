@@ -6,10 +6,8 @@ import dimension from "../../Assets/dimension.png";
 import { CiCalendar } from "react-icons/ci";
 import { CiMoneyBill } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
-import Swal from "sweetalert2";
 import axios from "../../api/axios";
-
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -59,6 +57,37 @@ const Step4 = () => {
     formAttributes.location.city,
   ]);
 
+  const subServices = useMemo(() => {
+    return formAttributes.subServices.map((service) => {
+      return (
+        <div className="flex flex-col border border-[#E3E3E3] rounded-lg">
+          <h4 className="flex-1 bg-green-50 py-3 px-5 rounded-t-lg border-b border-[#E3E3E3] font-medium text-base text-black">
+            {service.name}
+          </h4>
+          <div className="flex-1 bg-white flex gap-x-10 gap-y-5 items-center flex-wrap py-3 px-5 rounded-b-lg">
+            <span className="flex items-center gap-2">
+              <img src={bed} alt="bed" className="pointer-events-none" />{" "}
+              <h6>2 rooms</h6>
+            </span>
+            <span className="flex items-center gap-2">
+              <img src={dimension} alt="bed" className="pointer-events-none" />
+              <h6>710-to721 Sq. Ft.</h6>
+            </span>
+            <span className="flex items-center gap-2">
+              <img src={art} alt="art" className="pointer-events-none" />
+              <span
+                className="w-7 h-7 rounded-full"
+                style={{
+                  background: "linear-gradient(to bottom, #00D1FF, #00D1FF80)",
+                }}
+              ></span>
+            </span>
+          </div>
+        </div>
+      );
+    });
+  }, [formAttributes.subServices]);
+
   return (
     <>
       <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
@@ -106,74 +135,7 @@ const Step4 = () => {
               <h2 className="font-bold text-2xl text-[#0D0B01]">
                 Sub Services
               </h2>
-              <div className="flex flex-col border border-[#E3E3E3] rounded-lg">
-                <h4 className="flex-1 bg-green-50 py-3 px-5 rounded-t-lg border-b border-[#E3E3E3] font-medium text-base text-black">
-                  Interior Home Painting
-                </h4>
-                <div className="flex-1 bg-white flex gap-x-10 gap-y-5 items-center flex-wrap py-3 px-5 rounded-b-lg">
-                  <span className="flex items-center gap-2">
-                    {" "}
-                    <img
-                      src={bed}
-                      alt="bed"
-                      className="pointer-events-none"
-                    />{" "}
-                    <h6>2 rooms</h6>{" "}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    {" "}
-                    <img
-                      src={dimension}
-                      alt="bed"
-                      className="pointer-events-none"
-                    />{" "}
-                    <h6>710-to721 Sq. Ft.</h6>{" "}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <img src={art} alt="art" className="pointer-events-none" />
-                    <span
-                      className="w-7 h-7 rounded-full"
-                      style={{
-                        background:
-                          "linear-gradient(to bottom, #00D1FF, #00D1FF80)",
-                      }}
-                    ></span>
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col border border-[#E3E3E3] rounded-lg">
-                <h4 className="flex-1 bg-green-50 py-3 px-5 rounded-t-lg border-b border-[#E3E3E3] font-medium text-base text-black">
-                  Exterior Home Painting
-                </h4>
-                <div className="flex-1 bg-white flex gap-x-10 gap-y-5 items-center flex-wrap py-3 px-5 rounded-b-lg">
-                  <span className="flex items-center gap-2">
-                    {" "}
-                    <img
-                      src={bed}
-                      alt="bed"
-                      className="pointer-events-none"
-                    />{" "}
-                    <h6 className="font-normal text-sm text-black">2 rooms</h6>{" "}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    {" "}
-                    <img
-                      src={dimension}
-                      alt="bed"
-                      className="pointer-events-none"
-                    />{" "}
-                    <h6 className="font-normal text-sm text-black">
-                      710-to721 Sq. Ft.
-                    </h6>{" "}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <img src={art} alt="art" className="pointer-events-none" />{" "}
-                    <h6 className="font-normal text-sm text-black">
-                      Will be provided
-                    </h6>
-                  </span>
-                </div>
-              </div>
+              {subServices}
               <span
                 onClick={() => {
                   updateProgress(2);
@@ -209,7 +171,7 @@ const Step4 = () => {
                     </div>
                     <div className="font-medium text-base">
                       {!!formAttributes.isHourlyRate
-                        ? `$${formAttributes.startRate}/hr-$${formAttributes.startRate}/hr`
+                        ? `$${formAttributes.startRate}/hr-$${formAttributes.endRate}/hr`
                         : `$${formAttributes.fixPrice || 0}/hr`}
                     </div>
                   </span>

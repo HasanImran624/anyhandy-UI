@@ -723,11 +723,11 @@ const Step3 = () => {
                   <h4>From</h4>
                   <div className="w-fit relative flex gap-2 items-center">
                     <input
-                      value={formAttributes.fixRate}
+                      value={formAttributes.startRate}
                       onChange={(e) => {
                         setFormAttributes({
                           ...formAttributes,
-                          fixRate: e.target.value,
+                          startRate: e.target.value,
                         });
                       }}
                       type="number"
