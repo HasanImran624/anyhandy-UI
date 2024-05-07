@@ -157,11 +157,13 @@ const Step4 = () => {
                       <CiCalendar size={25} /> Date
                     </div>
                     <div className="font-medium text-base">
-                      {formAttributes.startImmediatly
+                      {formAttributes.jobDetails.startImmediatly
                         ? "Start Immediate"
-                        : `${formAttributes.startDate.format(
+                        : `${formAttributes.jobDetails.startDate.format(
                             "DD/MM/YYYY"
-                          )} to ${formAttributes.endDate.format("DD/MM/YYYY")}`}
+                          )} to ${formAttributes.jobDetails.endDate.format(
+                            "DD/MM/YYYY"
+                          )}`}
                     </div>
                   </span>
                   <span className="flex items-center">
@@ -170,9 +172,9 @@ const Step4 = () => {
                       <CiMoneyBill size={25} /> Budget
                     </div>
                     <div className="font-medium text-base">
-                      {!!formAttributes.isHourlyRate
-                        ? `$${formAttributes.startRate}/hr-$${formAttributes.endRate}/hr`
-                        : `$${formAttributes.fixPrice || 0}/hr`}
+                      {!!formAttributes.jobDetails.isHourlyRate
+                        ? `$${formAttributes.jobDetails.startRate}/hr-$${formAttributes.jobDetails.endRate}/hr`
+                        : `$${formAttributes.jobDetails.fixPrice || 0}/hr`}
                     </div>
                   </span>
                   <span className="flex items-center">

@@ -9,6 +9,9 @@ const initailFormAttributes = {
   selectedMainServiceCode: null,
   subServices: [],
   location: {},
+  jobDetails: {
+    isHourlyRate: true,
+  },
 };
 
 export const ProgressProvider = ({ children }) => {

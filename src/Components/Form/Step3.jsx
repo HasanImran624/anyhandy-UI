@@ -113,21 +113,28 @@ const Step3 = () => {
     }
   };
 
+  console.log("ddd", formAttributes);
+
   const handleNext = () => {
-    if (!formAttributes.startImmediatly) {
-      if (!formAttributes.startDate) {
+    if (!formAttributes.jobDetails.startImmediatly) {
+      if (!formAttributes.jobDetails.startDate) {
         return;
       }
 
-      if (!formAttributes.endDate) {
+      if (!formAttributes.jobDetails.endDate) {
         return;
       }
 
-      if (formAttributes.startDate.isBefore(dayjs(), "day")) {
+      if (formAttributes.jobDetails.startDate.isBefore(dayjs(), "day")) {
         return;
       }
 
-      if (formAttributes.endDate.isBefore(formAttributes.startDate, "day")) {
+      if (
+        formAttributes.endDate.JobDetails.isBefore(
+          formAttributes.jobDetails.startDate,
+          "day"
+        )
+      ) {
         return;
       }
     }
@@ -609,12 +616,15 @@ const Step3 = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
                     <DatePicker
-                      disabled={!!formAttributes.startImmediatly}
-                      value={formAttributes.startDate}
+                      disabled={!!formAttributes.jobDetails.startImmediatly}
+                      value={formAttributes.jobDetails.startDate}
                       onChange={(newValue) => {
                         setFormAttributes({
                           ...formAttributes,
-                          startDate: newValue,
+                          jobDetails: {
+                            ...formAttributes.jobDetails,
+                            startDate: newValue,
+                          },
                         });
                       }}
                     />
@@ -626,12 +636,15 @@ const Step3 = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
                     <DatePicker
-                      disabled={!!formAttributes.startImmediatly}
-                      value={formAttributes.endDate}
+                      disabled={!!formAttributes.jobDetails.startImmediatly}
+                      value={formAttributes.jobDetails.endDate}
                       onChange={(newValue) => {
                         setFormAttributes({
                           ...formAttributes,
-                          endDate: newValue,
+                          jobDetails: {
+                            ...formAttributes.jobDetails,
+                            endDate: newValue,
+                          },
                         });
                       }}
                     />
@@ -641,7 +654,7 @@ const Step3 = () => {
             </section>
             <span className="flex gap-3 items-center w-fit">
               <input
-                checked={!!formAttributes.startImmediatly}
+                checked={!!formAttributes.jobDetails.startImmediatly}
                 type="checkbox"
                 name="start_immediately"
                 id="start_immediately"
@@ -649,9 +662,13 @@ const Step3 = () => {
                 onChange={() => {
                   setFormAttributes({
                     ...formAttributes,
-                    startDate: null,
-                    endDate: null,
-                    startImmediatly: true,
+                    jobDetails: {
+                      ...formAttributes.jobDetails,
+                      startDate: null,
+                      endDate: null,
+                      startImmediatly:
+                        !formAttributes.jobDetails.startImmediatly,
+                    },
                   });
                 }}
               />
@@ -662,15 +679,18 @@ const Step3 = () => {
             <section className="flex gap-5">
               <div
                 className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${
-                  !!formAttributes.isHourlyRate
+                  !!formAttributes.jobDetails.isHourlyRate
                     ? "bg-green-50 border-[#00CF91]"
                     : "border-[#E1DFD7] bg-white"
                 } cursor-pointer hover:shadow-md transition-all ease-in-out duration-200 `}
                 onClick={() => {
                   setFormAttributes({
                     ...formAttributes,
-                    isHourlyRate: true,
-                    fixRate: null,
+                    jobDetails: {
+                      ...formAttributes.jobDetails,
+                      isHourlyRate: true,
+                      fixRate: null,
+                    },
                   });
                 }}
               >
@@ -679,16 +699,19 @@ const Step3 = () => {
               </div>
               <div
                 className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${
-                  !formAttributes.isHourlyRate
+                  !formAttributes.jobDetails.isHourlyRate
                     ? "bg-green-50 border-[#00CF91]"
                     : "border-[#E1DFD7] bg-white"
                 } cursor-pointer hover:shadow-md transition-all ease-in-out duration-200`}
                 onClick={() => {
                   setFormAttributes({
                     ...formAttributes,
-                    isHourlyRate: false,
-                    startRate: null,
-                    endRate: null,
+                    jobDetails: {
+                      ...formAttributes.jobDetails,
+                      isHourlyRate: false,
+                      startRate: null,
+                      endRate: null,
+                    },
                   });
                 }}
               >
@@ -696,16 +719,19 @@ const Step3 = () => {
                 <h4 className="font-bold text-lg">Fixed Price</h4>
               </div>
             </section>
-            {!formAttributes.isHourlyRate && (
+            {!formAttributes.jobDetails.isHourlyRate && (
               <div className="w-full flex flex-col gap-2">
                 <label htmlFor="fixed_price">Enter Price</label>
                 <div className="w-fit relative flex gap-2 items-center">
                   <input
-                    value={formAttributes.fixPrice}
+                    value={formAttributes.jobDetails.fixPrice}
                     onChange={(e) => {
                       setFormAttributes({
                         ...formAttributes,
-                        fixPrice: e.target.value,
+                        jobDetails: {
+                          ...formAttributes.jobDetails,
+                          fixPrice: e.target.value,
+                        },
                       });
                     }}
                     type="number"
@@ -717,17 +743,20 @@ const Step3 = () => {
                 </div>
               </div>
             )}
-            {!!formAttributes.isHourlyRate && (
+            {!!formAttributes.jobDetails.isHourlyRate && (
               <div className="w-full flex gap-2">
                 <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
                   <h4>From</h4>
                   <div className="w-fit relative flex gap-2 items-center">
                     <input
-                      value={formAttributes.startRate}
+                      value={formAttributes.jobDetails.startRate}
                       onChange={(e) => {
                         setFormAttributes({
                           ...formAttributes,
-                          startRate: e.target.value,
+                          jobDetails: {
+                            ...formAttributes.jobDetails,
+                            startRate: e.target.value,
+                          },
                         });
                       }}
                       type="number"
@@ -743,11 +772,14 @@ const Step3 = () => {
                   <h4>To</h4>
                   <div className="w-fit relative flex gap-2 items-center">
                     <input
-                      value={formAttributes.endRate}
+                      value={formAttributes.jobDetails.endRate}
                       onChange={(e) => {
                         setFormAttributes({
                           ...formAttributes,
-                          endRate: e.target.value,
+                          jobDetails: {
+                            ...formAttributes.jobDetails,
+                            endRate: e.target.value,
+                          },
                         });
                       }}
                       type="number"
