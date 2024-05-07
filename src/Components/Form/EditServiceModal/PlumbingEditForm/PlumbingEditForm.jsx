@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useProgress } from "../../../../context/ProgressContext";
 import { Rooms } from "../../../../Constants";
 
-export const PlumbingJobEditForm = ({ service, setIsEditService }) => {
+export const PlumbingEditForm = ({ service, setIsEditService }) => {
   const [editFormAttributes, setEditFormAttributes] = useState({});
   const { formAttributes, setFormAttributes } = useProgress();
 

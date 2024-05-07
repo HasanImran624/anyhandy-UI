@@ -19,7 +19,7 @@ import { DeepCleaningJobEditForm } from "./DeepCleaningJobEditForm";
 import { GeneralPestJobEditForm } from "./GeneralPestJobEditForm";
 import { CockroachPestJobEditForm } from "./CockroachPestJobEditForm";
 import { MiscellaneousGeneralJobEditForm } from "./MiscellaneousGeneralJobEditForm";
-import { PlumbingJobEditForm } from "./PlumbingJobEditForm";
+import { PlumbingEditForm } from "./PlumbingEditForm";
 import { HvacJobEditForm } from "./HvacJobEditForm";
 import { ElectricJobEditForm } from "./ElectricJobEditForm";
 import { CarpentryJobEditForm } from "./CarpentryJobEditForm";
@@ -173,7 +173,7 @@ export const EditServiceModal = ({ service, setIsEditService }) => {
 
         {formAttributes.selectedMainServiceCode ===
           ServiceTypeCode.PLUMBING && (
-          <PlumbingJobEditForm
+          <PlumbingEditForm
             service={service}
             setIsEditService={setIsEditService}
           />

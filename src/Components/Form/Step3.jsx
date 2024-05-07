@@ -1,3 +1,44 @@
+// const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
+//   const [lat, setLat] = useState(null);
+//   const [long, setLong] = useState(null);
+//   const [address, setAddress] = useState(null);
+
+//   const getLocation = () => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(getCoordinates, handleLocationError);
+//     } else {
+//       alert("Geolocation is not supported by this browser.");
+//     }
+//   }
+
+//   const getCoordinates = (position) => {
+//     console.log(position.coords);
+//     console.log(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=14&size=400x400&sensor=false&key=${API_KEY}&markers=color:red%7C${lat},${long}`);
+//     setLat(position.coords.latitude);
+//     setLong(position.coords.longitude);
+//     getAddress();
+//   }
+
+//   const getAddress = () => {
+//     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=false&key=${API_KEY}`)
+//     .then(response => response.json())
+//     .then(data => console.log(data.results[0]))
+//     .catch(error => alert(error))
+//   }
+
+//   <div>
+//                 <button onClick={getLocation}>Get My Location</button>
+//                 {
+//                   lat && long ?
+//                   <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=14&size=400x400&sensor=false&key=${API_KEY}&markers=color:red%7C${lat},${long}`} alt='lora' />
+//                   :
+//                   "null"
+//                 }
+//                 {
+//                   address && (<p> Address: {address} </p>)
+//                 }
+//               </div>
+
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -5,7 +46,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "../../api/axios";
 import Swal from "sweetalert2";
-
 import email from "../../Assets/email.png";
 import lock from "../../Assets/lock.png";
 import facebook from "../../Assets/Facebook_icon.png";
@@ -29,7 +69,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Dropdown } from "primereact/dropdown";
 import { useProgress } from "../../context/ProgressContext";
-import ProgressBar from "../ProgressBar/ProgressBar";
+import { EditServiceModal } from "./EditServiceModal";
+import { ProgressAndServiceList } from "./ProgressAndServiceList";
 
 import clock from "../../Assets/clock.png";
 import cash from "../../Assets/cash.png";
@@ -41,6 +82,8 @@ const Step3 = () => {
   const [addLocationMenu, setAddLocationMenu] = useState(false);
   const [eye, setEye] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [selectedEditSubService, setSelectedEditSubService] = useState();
+  const [isEditService, setIsEditService] = useState(false);
 
   const {
     progress,
@@ -152,6 +195,12 @@ const Step3 = () => {
   });
   return (
     <>
+      {isEditService && (
+        <EditServiceModal
+          service={selectedEditSubService}
+          setIsEditService={setIsEditService}
+        />
+      )}
       {addLocation && !isLogin && (
         <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
           <div
@@ -485,19 +534,10 @@ const Step3 = () => {
       )}
       <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
         <section className="w-full h-full flex flex-col sm_desktop:gap-[10%] gap-10 sm_desktop:flex-row">
-          <section className="w-full sm_desktop:w-[45%] flex flex-col gap-10 sm_desktop:flex-row">
-            <div>
-              <ProgressBar progress={progress} />
-            </div>
-            <div className="hidden sm_desktop:flex flex-col gap-5">
-              <h2 className="font-Onest font-bold text-4xl leading-snug text-[#0D0B01]">
-                Lets add sub services you need
-              </h2>
-              <p className="font-Onest font-medium text-lg text-[#868580] pr-[0%]">
-                Select sub services and add details
-              </p>
-            </div>
-          </section>
+          <ProgressAndServiceList
+            setIsEditService={setIsEditService}
+            setSelectedEditSubService={setSelectedEditSubService}
+          />
           <section className="w-full sm_desktop:w-[45%] h-full flex flex-col gap-7">
             <span
               className="flex gap-3 w-fit cursor-pointer"
