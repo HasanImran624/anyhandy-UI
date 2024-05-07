@@ -393,7 +393,10 @@ const Step3 = () => {
                 onChange={(e) =>
                   setFormAttributes({
                     ...formAttributes,
-                    location: { ...formAttributes.location, city: e.value },
+                    location: {
+                      ...formAttributes.location,
+                      city: e.value,
+                    },
                   })
                 }
                 options={Cities}

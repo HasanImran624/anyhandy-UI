@@ -16,38 +16,48 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import { SUBMIT_JOB_REQUEST_URL } from "../../Constants";
 
 const Step4 = () => {
-  const {
-    progress,
-    updateProgress,
-    resetAttributes,
-    formAttributes,
-    setFormAttributes,
-  } = useProgress();
+  const { progress, updateProgress, resetAttributes, formAttributes } =
+    useProgress();
 
   const navigate = useNavigate();
 
   const submitJob = useCallback(() => {
     try {
-      axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      Swal.fire({
-        title: "Success!",
-        text: "Job posted successfully!",
-        icon: "success",
-      }).then(() => {
-        navigate("/");
-        updateProgress(1);
-        setFormAttributes({});
-      });
+      axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes);
+      navigate("/");
+      // axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // });
     } catch (error) {}
-  }, [formAttributes, navigate, setFormAttributes, updateProgress]);
+  }, [formAttributes, navigate]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const getLocation = useCallback(() => {
+    let locationTextArray = [];
+
+    if (formAttributes.location.addressByMap) {
+      locationTextArray.push(
+        formAttributes.location.addressByMap.split(",")[0]
+      );
+    } else if (formAttributes.location.area) {
+      locationTextArray.push(formAttributes.location.area);
+    }
+
+    if (formAttributes.location.city) {
+      locationTextArray.push(formAttributes.location.city);
+    }
+
+    return locationTextArray.join(", ");
+  }, [
+    formAttributes.location.addressByMap,
+    formAttributes.location.area,
+    formAttributes.location.city,
+  ]);
 
   return (
     <>
@@ -207,10 +217,7 @@ const Step4 = () => {
                     <div className="flex items-center gap-2 w-44">
                       <CiLocationOn size={25} /> Location
                     </div>
-                    <div className="font-medium text-base">
-                      {formAttributes.location.addressByMap ||
-                        formAttributes.location.area}
-                    </div>
+                    <div className="font-medium text-base">{getLocation()}</div>
                   </span>
                 </div>
               </div>
