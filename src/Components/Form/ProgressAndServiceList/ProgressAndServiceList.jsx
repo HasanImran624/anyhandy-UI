@@ -29,7 +29,6 @@ export const ProgressAndServiceList = ({
     },
     [setIsEditService, setSelectedEditSubService]
   );
-
   return (
     <section className="w-full sm_desktop:w-[45%] flex flex-col gap-10 sm_desktop:flex-row">
       <div>
