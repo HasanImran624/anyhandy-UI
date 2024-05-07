@@ -7,6 +7,7 @@ import { useProgress } from "../../context/ProgressContext";
 
 const Form = () => {
   const { progress } = useProgress();
+
   const display = () => {
     switch (progress) {
       case 1:

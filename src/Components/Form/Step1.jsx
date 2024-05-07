@@ -64,6 +64,7 @@ const Step1 = () => {
                         setFormAttributes({
                           ...formAttributes,
                           selectedMainServiceCode: service.code,
+                          mainServiceName: service.name,
                         })
                       }
                       className={`w-fit flex items-center justify-center gap-3 rounded-[50px] p-2 lg_mobile:p-3 border border-[#E1DFD7] cursor-pointer hover:bg-green-300  ${

@@ -317,7 +317,7 @@ export const ElectricalJobs = [
   {
     id: 2,
     name: ElectricalJobNames.LIGHT_FAN,
-    coed: ElectricalJobCodes.LIGHT_FAN,
+    code: ElectricalJobCodes.LIGHT_FAN,
   },
   {
     id: 3,

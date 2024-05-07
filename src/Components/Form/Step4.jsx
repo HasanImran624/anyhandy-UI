@@ -14,7 +14,14 @@ import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 const Step4 = () => {
-  const { progress, updateProgress, resetAttributes } = useProgress();
+  const {
+    progress,
+    updateProgress,
+    resetAttributes,
+    formAttributes,
+    setFormAttributes,
+  } = useProgress();
+
   const navigate = useNavigate();
 
   const success = () => {
@@ -63,7 +70,7 @@ const Step4 = () => {
             </span>
             <header className="flex flex-col gap-5">
               <h2 className="font-bold text-2xl text-[#0D0B01]">
-                Painting Services Needed
+                {formAttributes.mainServiceName}
               </h2>
               <p className="text-black font-medium text-base">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
@@ -147,7 +154,12 @@ const Step4 = () => {
                   </span>
                 </div>
               </div>
-              <span className="flex items-center gap-3 cursor-pointer">
+              <span
+                onClick={() => {
+                  updateProgress(2);
+                }}
+                className="flex items-center gap-3 cursor-pointer"
+              >
                 <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
                 <h6 className="font-semibold text-base text-[#00CF91]">
                   Add Sub-Service
@@ -163,7 +175,11 @@ const Step4 = () => {
                       <CiCalendar size={25} /> Date
                     </div>
                     <div className="font-medium text-base">
-                      11.08.2024 - 12.08.2024
+                      {formAttributes.startImmediatly
+                        ? "Start Immediate"
+                        : `${formAttributes.startDate.format(
+                            "DD/MM/YYYY"
+                          )} to ${formAttributes.endDate.format("DD/MM/YYYY")}`}
                     </div>
                   </span>
                   <span className="flex items-center">
@@ -171,7 +187,11 @@ const Step4 = () => {
                       {" "}
                       <CiMoneyBill size={25} /> Budget
                     </div>
-                    <div className="font-medium text-base">$15/hr-$30/hr</div>
+                    <div className="font-medium text-base">
+                      {!!formAttributes.isHourlyRate
+                        ? `$${formAttributes.startRate}/hr-$${formAttributes.startRate}/hr`
+                        : `$${formAttributes.fixPrice}/hr`}
+                    </div>
                   </span>
                   <span className="flex items-center">
                     <div className="flex items-center gap-2 w-44">
@@ -190,6 +210,8 @@ const Step4 = () => {
         <span className="w-full flex items-center justify-between">
           <button
             onClick={() => {
+              resetAttributes();
+              updateProgress(1);
               navigate("/");
             }}
             className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:text-white hover:bg-red-600 outline-none focus:border-red-500 transition-colors ease-out duration-200"
@@ -198,7 +220,9 @@ const Step4 = () => {
           </button>
           <span className="flex items-center gap-5">
             <button
-              onClick={() => {}}
+              onClick={() => {
+                updateProgress(progress - 1);
+              }}
               className="font-semibold text-lg bg-white text-[#00CF91] p-4 rounded-md border borer-[#E1DFD7] hover:bg-green-50 outline-none focus:bg-green-100 transition-colors ease-et duration-200"
             >
               Edit Details

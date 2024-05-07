@@ -44,35 +44,37 @@ const cities = [
 
 const Step3 = () => {
   const navigate = useNavigate();
-  const [rateType, setRateType] = useState("hourly");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [startImmediate, setStartImmediate] = useState(false);
   const [addLocation, setAddLocation] = useState(false);
   const [addLocationMenu, setAddLocationMenu] = useState(false);
   const [locationType, setLocationType] = useState(false);
   const [eye, setEye] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   const [selectedCity, setSelectedCity] = useState(null);
 
-  const { progress, updateProgress, resetAttributes } = useProgress();
+  const {
+    progress,
+    updateProgress,
+    resetAttributes,
+    formAttributes,
+    setFormAttributes,
+  } = useProgress();
 
   const handleNext = () => {
-    if (!startImmediate) {
-      if (!startDate) {
+    if (!formAttributes.startImmediatly) {
+      if (!formAttributes.startDate) {
         return;
       }
 
-      if (!endDate) {
+      if (!formAttributes.endDate) {
         return;
       }
 
-      if (startDate.isBefore(dayjs(), "day")) {
+      if (formAttributes.startDate.isBefore(dayjs(), "day")) {
         return;
       }
 
-      if (endDate.isBefore(startDate, "day")) {
+      if (formAttributes.endDate.isBefore(formAttributes.startDate, "day")) {
         return;
       }
     }
@@ -111,6 +113,7 @@ const Step3 = () => {
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
       try {
+        console.log("I am in");
         const userData = {
           FullName: "",
           Password: values.password,
@@ -126,7 +129,7 @@ const Step3 = () => {
   });
   return (
     <>
-      {addLocation && isLogin === false && (
+      {addLocation && !isLogin && (
         <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
           <div
             className="w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20"
@@ -249,7 +252,7 @@ const Step3 = () => {
           </section>
         </section>
       )}
-      {addLocation && isLogin === true && (
+      {addLocation && isLogin && (
         <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
           <div
             className="w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20"
@@ -454,9 +457,14 @@ const Step3 = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
                     <DatePicker
-                      disabled={startImmediate}
-                      value={startDate}
-                      onChange={(newValue) => setStartDate(newValue)}
+                      disabled={!!formAttributes.startImmediatly}
+                      value={formAttributes.startDate}
+                      onChange={(newValue) => {
+                        setFormAttributes({
+                          ...formAttributes,
+                          startDate: newValue,
+                        });
+                      }}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -466,9 +474,14 @@ const Step3 = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
                     <DatePicker
-                      disabled={startImmediate}
-                      value={endDate}
-                      onChange={(newValue) => setEndDate(newValue)}
+                      disabled={!!formAttributes.startImmediatly}
+                      value={formAttributes.endDate}
+                      onChange={(newValue) => {
+                        setFormAttributes({
+                          ...formAttributes,
+                          endDate: newValue,
+                        });
+                      }}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -476,11 +489,19 @@ const Step3 = () => {
             </section>
             <span className="flex gap-3 items-center w-fit">
               <input
+                checked={!!formAttributes.startImmediatly}
                 type="checkbox"
                 name="start_immediately"
                 id="start_immediately"
                 className="focus:outline-none w-4 h-4 checked:accent-[#459b81]"
-                onChange={() => setStartImmediate(!startImmediate)}
+                onChange={() => {
+                  setFormAttributes({
+                    ...formAttributes,
+                    startDate: null,
+                    endDate: null,
+                    startImmediatly: true,
+                  });
+                }}
               />
               <label htmlFor="start_immediately" className="cursor-pointer">
                 I want to start immediately
@@ -489,32 +510,52 @@ const Step3 = () => {
             <section className="flex gap-5">
               <div
                 className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${
-                  rateType === "hourly"
+                  !!formAttributes.isHourlyRate
                     ? "bg-green-50 border-[#00CF91]"
                     : "border-[#E1DFD7] bg-white"
                 } cursor-pointer hover:shadow-md transition-all ease-in-out duration-200 `}
-                onClick={() => setRateType("hourly")}
+                onClick={() => {
+                  setFormAttributes({
+                    ...formAttributes,
+                    isHourlyRate: true,
+                    fixRate: null,
+                  });
+                }}
               >
                 <img src={clock} alt="" className="w-10 h-10" />
                 <h4 className="font-bold text-lg">Hourly rate</h4>
               </div>
               <div
                 className={`flex-1 flex flex-col justify-center object-cover gap-2 py-7 px-4 rounded-3xl border ${
-                  rateType === "fixed"
+                  !formAttributes.isHourlyRate
                     ? "bg-green-50 border-[#00CF91]"
                     : "border-[#E1DFD7] bg-white"
                 } cursor-pointer hover:shadow-md transition-all ease-in-out duration-200`}
-                onClick={() => setRateType("fixed")}
+                onClick={() => {
+                  setFormAttributes({
+                    ...formAttributes,
+                    isHourlyRate: false,
+                    startRate: null,
+                    endRate: null,
+                  });
+                }}
               >
                 <img src={cash} alt="" className="w-10 h-10" />
                 <h4 className="font-bold text-lg">Fixed Price</h4>
               </div>
             </section>
-            {rateType === "fixed" && (
+            {!formAttributes.isHourlyRate && (
               <div className="w-full flex flex-col gap-2">
                 <label htmlFor="fixed_price">Enter Price</label>
                 <div className="w-fit relative flex gap-2 items-center">
                   <input
+                    value={formAttributes.startDate}
+                    onChange={(e) => {
+                      setFormAttributes({
+                        ...formAttributes,
+                        fixPrice: e.target.value,
+                      });
+                    }}
                     type="number"
                     id="fixed_price"
                     placeholder="Your desired price"
@@ -524,12 +565,19 @@ const Step3 = () => {
                 </div>
               </div>
             )}
-            {rateType === "hourly" && (
+            {!!formAttributes.isHourlyRate && (
               <div className="w-full flex gap-2">
                 <div className="flex-1 flex flex-col gap-2 font-medium text-lg text-[#0D0B01]">
                   <h4>From</h4>
                   <div className="w-fit relative flex gap-2 items-center">
                     <input
+                      value={formAttributes.fixRate}
+                      onChange={(e) => {
+                        setFormAttributes({
+                          ...formAttributes,
+                          fixRate: e.target.value,
+                        });
+                      }}
                       type="number"
                       className="w-full px-7 py-3 border rounded-xl"
                     />
@@ -543,6 +591,13 @@ const Step3 = () => {
                   <h4>To</h4>
                   <div className="w-fit relative flex gap-2 items-center">
                     <input
+                      value={formAttributes.endRate}
+                      onChange={(e) => {
+                        setFormAttributes({
+                          ...formAttributes,
+                          endRate: e.target.value,
+                        });
+                      }}
                       type="number"
                       className="w-full px-7 py-3 border rounded-xl"
                     />
@@ -616,7 +671,6 @@ const Step3 = () => {
               e.preventDefault(); // Prevent form submission
               handleNext();
             }}
-            // onClick={() => { setProgress((prevState) => prevState + 1 )}}     //progress ++
             className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100"
           >
             Continue
