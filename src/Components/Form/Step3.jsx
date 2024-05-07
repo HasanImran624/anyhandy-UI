@@ -1,6 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "../../api/axios";
@@ -46,6 +46,13 @@ const Step3 = () => {
   const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
+  const {
+    progress,
+    updateProgress,
+    resetAttributes,
+    formAttributes,
+    setFormAttributes,
+  } = useProgress();
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -61,8 +68,27 @@ const Step3 = () => {
   const getCoordinates = (position) => {
     setLat(position.coords.latitude);
     setLong(position.coords.longitude);
-    getAddress();
   };
+
+  const getAddress = useCallback(() => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=false&key=${API_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) =>
+        setFormAttributes({
+          ...formAttributes,
+          addressByMap: data.results[0].formatted_address,
+        })
+      )
+      .catch((error) => alert(error));
+  }, [formAttributes, lat, long, setFormAttributes]);
+
+  useEffect(() => {
+    if (lat && long) {
+      getAddress();
+    }
+  }, [getAddress, lat, long]);
 
   const handleLocationError = (error) => {
     switch (error.code) {
@@ -83,28 +109,6 @@ const Step3 = () => {
       }
     }
   };
-
-  const getAddress = () => {
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=false&key=${API_KEY}`
-    )
-      .then((response) => response.json())
-      .then((data) =>
-        setFormAttributes({
-          ...formAttributes,
-          addressByMap: data.results[0].formatted_address,
-        })
-      )
-      .catch((error) => alert(error));
-  };
-
-  const {
-    progress,
-    updateProgress,
-    resetAttributes,
-    formAttributes,
-    setFormAttributes,
-  } = useProgress();
 
   const handleNext = () => {
     if (!formAttributes.startImmediatly) {
