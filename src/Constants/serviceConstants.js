@@ -572,7 +572,7 @@ export const Colors = [
   { color: "#F4F3F3" },
 ];
 
-export const Countries = [
+export const Cities = [
   { name: "New York", code: "NY" },
   { name: "Rome", code: "RM" },
   { name: "London", code: "LDN" },

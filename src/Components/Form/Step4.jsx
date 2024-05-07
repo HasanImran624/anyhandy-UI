@@ -200,16 +200,16 @@ const Step4 = () => {
                     <div className="font-medium text-base">
                       {!!formAttributes.isHourlyRate
                         ? `$${formAttributes.startRate}/hr-$${formAttributes.startRate}/hr`
-                        : `$${formAttributes.fixPrice}/hr`}
+                        : `$${formAttributes.fixPrice || 0}/hr`}
                     </div>
                   </span>
                   <span className="flex items-center">
                     <div className="flex items-center gap-2 w-44">
-                      {" "}
                       <CiLocationOn size={25} /> Location
                     </div>
                     <div className="font-medium text-base">
-                      Location address
+                      {formAttributes.location.addressByMap ||
+                        formAttributes.location.area}
                     </div>
                   </span>
                 </div>

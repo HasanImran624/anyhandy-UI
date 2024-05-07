@@ -33,7 +33,7 @@ import { ProgressAndServiceList } from "./ProgressAndServiceList";
 
 import clock from "../../Assets/clock.png";
 import cash from "../../Assets/cash.png";
-import { LOGIN_URL, Countries } from "../../Constants";
+import { LOGIN_URL, Cities } from "../../Constants";
 
 const Step3 = () => {
   const navigate = useNavigate();
@@ -78,7 +78,10 @@ const Step3 = () => {
       .then((data) =>
         setFormAttributes({
           ...formAttributes,
-          addressByMap: data.results[0].formatted_address,
+          location: {
+            ...formAttributes.location,
+            addressByMap: data.results[0].formatted_address,
+          },
         })
       )
       .catch((error) => alert(error));
@@ -386,16 +389,16 @@ const Step3 = () => {
                 Select Location
               </label>
               <Dropdown
-                value={formAttributes.location.country}
+                value={formAttributes.location.city}
                 onChange={(e) =>
                   setFormAttributes({
                     ...formAttributes,
-                    location: { ...formAttributes.location, country: e.value },
+                    location: { ...formAttributes.location, city: e.value },
                   })
                 }
-                options={Countries}
+                options={Cities}
                 optionLabel="name"
-                placeholder="Select Country"
+                placeholder="Select City"
                 className="w-full md:w-14rem border border-[#E0E5ED] rounded-xl p-1 pr-5 text-[#0D0B01] "
               />
             </section>
@@ -526,7 +529,7 @@ const Step3 = () => {
                         name="buildingDetails"
                         className="w-full bg-white rounded-lg p-3"
                         placeholder="Click on map icon to get your location"
-                        value={formAttributes.addressByMap}
+                        value={formAttributes.location.addressByMap}
                         disabled
                       />
                       <PlaceIcon
