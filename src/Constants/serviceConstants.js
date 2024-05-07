@@ -535,7 +535,7 @@ export const PestControlJobs = [
   },
   { id: 3, name: PestControlJobNames.FLIES, code: PestControlJobCode.FLIES },
   { id: 4, name: PestControlJobNames.BUG, code: PestControlJobCode.BUG },
-  { id: 5, name: PestControlJobNames.RODENT, code: PaintingJobCode.RODENT },
+  { id: 5, name: PestControlJobNames.RODENT, code: PestControlJobCode.RODENT },
 ];
 
 export const Rooms = [

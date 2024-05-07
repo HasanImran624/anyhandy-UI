@@ -154,6 +154,7 @@ export const DeepCleaningJobForm = ({ setSelectedSubHomeCleaningJob }) => {
             Size of Items
           </h3>
           <input
+            type="number"
             value={selectedAttributes.itemSize}
             onChange={(e) =>
               setSelectedAttributes({
@@ -161,7 +162,6 @@ export const DeepCleaningJobForm = ({ setSelectedSubHomeCleaningJob }) => {
                 itemSize: e.target.value,
               })
             }
-            type="text"
             name="itemSize"
             className="w-full bg-white rounded-lg p-3 border"
             placeholder=""

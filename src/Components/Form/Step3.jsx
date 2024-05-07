@@ -1,44 +1,3 @@
-// const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
-//   const [lat, setLat] = useState(null);
-//   const [long, setLong] = useState(null);
-//   const [address, setAddress] = useState(null);
-
-//   const getLocation = () => {
-//     if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition(getCoordinates, handleLocationError);
-//     } else {
-//       alert("Geolocation is not supported by this browser.");
-//     }
-//   }
-
-//   const getCoordinates = (position) => {
-//     console.log(position.coords);
-//     console.log(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=14&size=400x400&sensor=false&key=${API_KEY}&markers=color:red%7C${lat},${long}`);
-//     setLat(position.coords.latitude);
-//     setLong(position.coords.longitude);
-//     getAddress();
-//   }
-
-//   const getAddress = () => {
-//     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=false&key=${API_KEY}`)
-//     .then(response => response.json())
-//     .then(data => console.log(data.results[0]))
-//     .catch(error => alert(error))
-//   }
-
-//   <div>
-//                 <button onClick={getLocation}>Get My Location</button>
-//                 {
-//                   lat && long ?
-//                   <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=14&size=400x400&sensor=false&key=${API_KEY}&markers=color:red%7C${lat},${long}`} alt='lora' />
-//                   :
-//                   "null"
-//                 }
-//                 {
-//                   address && (<p> Address: {address} </p>)
-//                 }
-//               </div>
-
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -84,6 +43,60 @@ const Step3 = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [selectedEditSubService, setSelectedEditSubService] = useState();
   const [isEditService, setIsEditService] = useState(false);
+  const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
+  const [lat, setLat] = useState(null);
+  const [long, setLong] = useState(null);
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        getCoordinates,
+        handleLocationError
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const getCoordinates = (position) => {
+    setLat(position.coords.latitude);
+    setLong(position.coords.longitude);
+    getAddress();
+  };
+
+  const handleLocationError = (error) => {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.");
+        break;
+      default: {
+        alert("An unknown error occurred.");
+      }
+    }
+  };
+
+  const getAddress = () => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=false&key=${API_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) =>
+        setFormAttributes({
+          ...formAttributes,
+          addressByMap: data.results[0].formatted_address,
+        })
+      )
+      .catch((error) => alert(error));
+  };
 
   const {
     progress,
@@ -508,11 +521,31 @@ const Step3 = () => {
                         type="text"
                         name="buildingDetails"
                         className="w-full bg-white rounded-lg p-3"
-                        placeholder="Type or select from map"
+                        placeholder="Click on map icon to get your location"
+                        value={formAttributes.addressByMap}
+                        disabled
                       />
-                      <PlaceIcon className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer " />
+                      <PlaceIcon
+                        onClick={getLocation}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer "
+                      />
                     </span>
                   </section>
+                  {lat && long ? (
+                    <section className="flex flex-col gap-2">
+                      <h3 className="font-medium text-base text-[#0D0B01]">
+                        Area on map
+                      </h3>
+                      <span className="relative">
+                        <img
+                          src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=14&size=400x400&sensor=false&key=${API_KEY}&markers=color:red%7C${lat},${long}`}
+                          alt="lora"
+                        />
+                      </span>
+                    </section>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </section>
             )}

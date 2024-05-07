@@ -112,7 +112,7 @@ export const FliesControlJobForm = ({ setSelectedSubPestControlJob }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.officce}
+              checked={!!selectedAttributes.office}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
