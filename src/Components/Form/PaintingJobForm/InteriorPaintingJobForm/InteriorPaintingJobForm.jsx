@@ -44,7 +44,7 @@ export const InteriorPaintingJobForm = ({
             onChange={(e) =>
               setSelectedAttributes({
                 ...selectedAttributes,
-                sizaArea: e.target.value,
+                sizeArea: e.target.value,
               })
             }
             className="w-full bg-white rounded-lg p-3 border"
