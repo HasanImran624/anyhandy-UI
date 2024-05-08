@@ -6,11 +6,38 @@ import dimension from "../../Assets/dimension.png";
 import { CiCalendar } from "react-icons/ci";
 import { CiMoneyBill } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
+
+import { BiCabinet } from "react-icons/bi";
+import { BsDoorOpen } from "react-icons/bs";
+import { MdHomeWork } from "react-icons/md";
+import { MdFence } from "react-icons/md";
+import { MdOutlineBedroomParent } from "react-icons/md";
+import { TbWashDryP } from "react-icons/tb";
+import { MdOutlinePlumbing } from "react-icons/md";
+import { TbAirConditioning } from "react-icons/tb";
+import { MdElectricBolt } from "react-icons/md";
+import { MdPestControl } from "react-icons/md";
+import { GiShears } from "react-icons/gi";
+import { RiFridgeFill } from "react-icons/ri";
+
+
 import axios from "../../api/axios";
 import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
-import { SUBMIT_JOB_REQUEST_URL } from "../../Constants";
+import {
+  SUBMIT_JOB_REQUEST_URL,
+  PaintingJobCode,
+  PlumbingServiceCode,
+  HvacJobCodes,
+  CarpentryJobCodes,
+  ElectricalJobCodes,
+  GeneralJobCodes,
+  HomeCleaningJobCode,
+  PestControlJobCode,
+  LawnCareJobCode,
+  ApplianceRepairJobCode,
+} from "../../Constants";
 import { ProgressAndServiceList } from "./ProgressAndServiceList";
 
 const Step4 = () => {
@@ -54,36 +81,181 @@ const Step4 = () => {
     formAttributes.location.details,
   ]);
 
+  const getNumberItem = useCallback((service) => {
+    let numberItem = "";
+    let area = "";
+    let color = "";
+    let icon = "";
+    let showPaint,
+      showArea = true;
+    switch (service.code) {
+      case PaintingJobCode.CABINET:
+        numberItem = service.numberItems + " cabinet";
+        showArea = false;
+        color = service.paintColor;
+        if (service.providePaint) {
+          color = "Paint Provided";
+        }
+        icon = <BiCabinet size={25} />;
+        break;
+      case PaintingJobCode.DOOR:
+        numberItem = service.numberItems + " door";
+        showArea = false;
+        color = service.paintColor;
+        if (service.providePaint) {
+          color = "Paint Provided";
+        }
+        icon = <BsDoorOpen size={25} />;
+        break;
+      case PaintingJobCode.EXTERIOR:
+        numberItem = "Exterior";
+        area = service.sizeArea + " Sq. Ft.";
+        color = service.paintColor;
+        if (service.providePaint) {
+          color = "Paint Provided";
+        }
+        icon = <MdHomeWork size={25} />;
+        break;
+      case PaintingJobCode.FENCE:
+        numberItem = "Fence";
+        area = service.sizeArea + " Sq. Ft.";
+        color = service.paintColor;
+        if (service.providePaint) {
+          color = "Paint Provided";
+        }
+        icon = <MdFence size={25} />;
+        break;
+      case PaintingJobCode.INTERIOR:
+        numberItem = service.numberItems + " interior";
+        area = service.sizeArea + " Sq. Ft.";
+        color = service.paintColor;
+        if (service.providePaint) {
+          color = "Paint Provided";
+        }
+        icon = <MdOutlineBedroomParent size={25} />;
+        break;
+      case PaintingJobCode.WASHING:
+        numberItem = "Washing";
+        area = service.sizeArea + " Sq. Ft.";
+        icon = <TbWashDryP size={25} />;
+        break;
+      case PlumbingServiceCode.DRAINS:
+      case PlumbingServiceCode.LEAKED:
+      case PlumbingServiceCode.OTHERS:
+      case PlumbingServiceCode.REPAIRING:
+        numberItem = service.numberItems;
+        showArea = false;
+        icon = <MdOutlinePlumbing size={25} />;
+        showPaint = false;
+        break;
+      case HvacJobCodes.CLEANING_SERVICE:
+      case HvacJobCodes.REGULAR_MAINTAINANCE:
+      case HvacJobCodes.REPAIRING_REPLACE:
+        numberItem = service.numberItems;
+        showArea = false;
+        icon = <TbAirConditioning size={25} />;
+        showPaint = false;
+        break;
+      case CarpentryJobCodes.CABINET_REPAIR:
+      case CarpentryJobCodes.CUSTOM:
+      case CarpentryJobCodes.DOOR_REPAIR:
+      case CarpentryJobCodes.FURNITURE_ASSEMBLY:
+      case CarpentryJobCodes.OTHERS:
+      case CarpentryJobCodes.REPAIRING_REPLACE:
+      case CarpentryJobCodes.WINDOW_REPAIR:
+        numberItem = service.numberItems;
+        showArea = false;
+        icon = <MdOutlineBedroomParent size={25} />;
+        showPaint = false;
+        break;
+      case ElectricalJobCodes.ELECTRICAL_TROUBLESHOOT:
+      case ElectricalJobCodes.GENERAL:
+      case ElectricalJobCodes.LIGHT_FAN:
+      case ElectricalJobCodes.NEW_CONSTRUCTION:
+      case ElectricalJobCodes.OTHERS:
+      case ElectricalJobCodes.TV_HOME_THETER:
+      case ElectricalJobCodes.UPGRADE_PANEL:
+        numberItem = service.numberItems;
+        showArea = false;
+        icon = <MdElectricBolt size={25} />;
+        showPaint = false;
+        break;
+      case GeneralJobCodes.MISCELLANEOUS:
+        return;
+      case PestControlJobCode.ANT:
+      case PestControlJobCode.BUG:
+      case PestControlJobCode.FLIES:
+      case PestControlJobCode.RODENT:
+      case PestControlJobCode.COCKROACH:
+        numberItem = service.numberItems + ' room';
+        icon = <MdPestControl size={25} />;
+        area = service.locationType;
+        showPaint = false;
+        break;
+      case LawnCareJobCode.IRRIGATION:
+      case LawnCareJobCode.MOVING:
+      case LawnCareJobCode.TRIMMING:
+        numberItem = service.numberItems;
+        area = service.sizeArea + " Sq. Ft.";
+        icon = <GiShears size={25} />;
+        showPaint = false;
+        break;
+      case ApplianceRepairJobCode.FIXING:
+        numberItem = service.numberItems;
+        showArea = false;
+        icon = <RiFridgeFill size={25} />;
+        showPaint = false;
+        break;
+      // case HomeCleaningJobCode.DEEP_CLEANING:
+      //   numberItem = service.numberItems + ' cleaners';
+      //   showArea = false;
+      //   icon = <MdElectricBolt size={25} />;
+      //   showPaint = false;
+      //   break;
+      //   break;
+      default:
+        return <div></div>;
+    }
+    return (
+      <div className="flex-1 bg-white flex gap-x-10 gap-y-5 items-center flex-wrap py-3 px-5 rounded-b-lg">
+        <span className="flex items-center gap-2">
+          {icon}
+          <h6>{numberItem}</h6>
+        </span>
+        {showArea && (
+          <span className="flex items-center gap-2">
+            <img src={dimension} alt="bed" className="pointer-events-none" />
+            <h6>{area}</h6>
+          </span>
+        )}
+        {showPaint && (
+          <span className="flex items-center gap-2">
+            <img src={art} alt="art" className="pointer-events-none" />
+            <span
+              className="w-7 h-7 rounded-full"
+              style={{
+                background: color || "#FFFFF0",
+              }}
+            ></span>
+          </span>
+        )}
+      </div>
+    );
+  }, []);
+
   const subServices = useMemo(() => {
     return formAttributes.subServices.map((service) => {
+      debugger;
       return (
         <div className="flex flex-col border border-[#E3E3E3] rounded-lg">
           <h4 className="flex-1 bg-green-50 py-3 px-5 rounded-t-lg border-b border-[#E3E3E3] font-medium text-base text-black">
             {service.name}
           </h4>
-          <div className="flex-1 bg-white flex gap-x-10 gap-y-5 items-center flex-wrap py-3 px-5 rounded-b-lg">
-            <span className="flex items-center gap-2">
-              <img src={bed} alt="bed" className="pointer-events-none" />{" "}
-              <h6>2 rooms</h6>
-            </span>
-            <span className="flex items-center gap-2">
-              <img src={dimension} alt="bed" className="pointer-events-none" />
-              <h6>710-to721 Sq. Ft.</h6>
-            </span>
-            <span className="flex items-center gap-2">
-              <img src={art} alt="art" className="pointer-events-none" />
-              <span
-                className="w-7 h-7 rounded-full"
-                style={{
-                  background: "linear-gradient(to bottom, #00D1FF, #00D1FF80)",
-                }}
-              ></span>
-            </span>
-          </div>
+          {getNumberItem(service)}
         </div>
       );
     });
-  }, [formAttributes.subServices]);
+  }, [formAttributes.subServices, getNumberItem]);
 
   return (
     <>

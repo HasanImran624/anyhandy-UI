@@ -84,9 +84,9 @@ export const HomeCleaningJobForm = () => {
   const onSubJobChange = useCallback(
     (e) => {
       setSelectedSubHomeCleaningJob(e.value);
-      selectedAttributes({});
+      setSelectedAttributes({});
     },
-    [selectedAttributes]
+    []
   );
 
   const add = useCallback(() => {
