@@ -39,13 +39,13 @@ export const GeneralPestJobEditForm = ({ service, setIsEditService }) => {
                 <span
                   key={index}
                   className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                    editFormAttributes.rooms === room.room &&
+                    editFormAttributes.numberItems === room.room &&
                     "bg-[#00CF91] text-white"
                   }  `}
                   onClick={() =>
                     setEditFormAttributes({
                       ...editFormAttributes,
-                      rooms: room.room,
+                      numberItems: room.room,
                     })
                   }
                 >
@@ -64,13 +64,11 @@ export const GeneralPestJobEditForm = ({ service, setIsEditService }) => {
           </h3>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!editFormAttributes.villa}
+              checked={editFormAttributes.locationType === "Villa"}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  villa: true,
-                  apartment: false,
-                  office: false,
+                  locationType: "Villa",
                 })
               }
               type="radio"
@@ -82,13 +80,11 @@ export const GeneralPestJobEditForm = ({ service, setIsEditService }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!editFormAttributes.apartment}
+              checked={editFormAttributes.locationType === "Apartment"}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  villa: false,
-                  apartment: true,
-                  office: false,
+                  locationType: "Apartment",
                 })
               }
               type="radio"
@@ -100,13 +96,11 @@ export const GeneralPestJobEditForm = ({ service, setIsEditService }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!editFormAttributes.officce}
+              checked={editFormAttributes.locationType === "Office"}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  villa: false,
-                  apartment: false,
-                  office: true,
+                  locationType: "Office",
                 })
               }
               type="radio"
@@ -120,11 +114,11 @@ export const GeneralPestJobEditForm = ({ service, setIsEditService }) => {
         <section className="flex flex-col gap-2 mt-3">
           <span className="flex gap-3 items-center">
             <input
-              checked={!!editFormAttributes.officeType}
+              checked={!!editFormAttributes.forOfficeType}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  officeType: e.target.checked,
+                  forOfficeType: e.target.checked,
                 })
               }
               type="checkbox"

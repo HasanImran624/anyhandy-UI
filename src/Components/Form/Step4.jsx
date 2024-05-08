@@ -43,10 +43,8 @@ const Step4 = () => {
   const getLocation = useCallback(() => {
     let locationTextArray = [];
 
-    if (formAttributes.location.addressByMap) {
-      locationTextArray.push(
-        formAttributes.location.addressByMap.split(",")[0]
-      );
+    if (formAttributes.location.details) {
+      locationTextArray.push(formAttributes.location.details.split(",")[0]);
     } else if (formAttributes.location.area) {
       locationTextArray.push(formAttributes.location.area);
     }
@@ -57,9 +55,9 @@ const Step4 = () => {
 
     return locationTextArray.join(", ");
   }, [
-    formAttributes.location.addressByMap,
     formAttributes.location.area,
     formAttributes.location.city,
+    formAttributes.location.details,
   ]);
 
   const subServices = useMemo(() => {

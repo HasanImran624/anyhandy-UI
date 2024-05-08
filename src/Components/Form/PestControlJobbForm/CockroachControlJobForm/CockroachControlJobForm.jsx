@@ -45,12 +45,11 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
           <h3 className="font-medium text-base text-[#0D0B01]">Type of Room</h3>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.kitchen}
+              checked={selectedAttributes.roomType === "Kitchen"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  kitchen: true,
-                  bathroom: false,
+                  roomType: "Kitchen",
                 })
               }
               type="radio"
@@ -62,12 +61,11 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.bathroom}
+              checked={selectedAttributes.roomType === "Bathroom"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  kitchen: false,
-                  bathroom: true,
+                  roomType: "Bathroom",
                 })
               }
               type="radio"
@@ -88,13 +86,13 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
                 <span
                   key={index}
                   className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                    selectedAttributes.rooms === room.room &&
+                    selectedAttributes.numberItems === room.room &&
                     "bg-[#00CF91] text-white"
                   }  `}
                   onClick={() =>
                     setSelectedAttributes({
                       ...selectedAttributes,
-                      rooms: room.room,
+                      numberItems: room.room,
                     })
                   }
                 >
@@ -113,13 +111,11 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
           </h3>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.villa}
+              checked={selectedAttributes.locationType === "Villa"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  villa: true,
-                  apartment: false,
-                  office: false,
+                  locationType: "Villa",
                 })
               }
               type="radio"
@@ -131,13 +127,11 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.apartment}
+              checked={selectedAttributes.locationType === "Apartment"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  villa: false,
-                  apartment: true,
-                  office: false,
+                  locationType: "Apartment",
                 })
               }
               type="radio"
@@ -149,13 +143,11 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.office}
+              checked={selectedAttributes.locationType === "Office"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  villa: false,
-                  apartment: false,
-                  office: true,
+                  locationType: "Office",
                 })
               }
               type="radio"
@@ -169,11 +161,11 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
         <section className="flex flex-col gap-2 mt-3">
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.officeType}
+              checked={!!selectedAttributes.forOfficeType}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  officeType: e.target.checked,
+                  forOfficeType: e.target.checked,
                 })
               }
               type="checkbox"

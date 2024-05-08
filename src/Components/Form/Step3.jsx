@@ -728,7 +728,7 @@ const Step3 = () => {
                         ...formAttributes,
                         jobDetails: {
                           ...formAttributes.jobDetails,
-                          fixedPriceAmount: parseInt(e.target.value),
+                          fixedPriceAmount: e.target.value,
                         },
                       });
                     }}
