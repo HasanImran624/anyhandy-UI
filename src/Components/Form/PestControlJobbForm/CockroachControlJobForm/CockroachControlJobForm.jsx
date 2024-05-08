@@ -1,43 +1,9 @@
-import { useCallback, useState } from "react";
-import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { Rooms } from "../../../../Constants";
-import { useProgress } from "../../../../context/ProgressContext";
-import { PestControlJobCode, PestControlJobNames } from "../../../../Constants";
 
-export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
-  const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [errorText, setErrorText] = useState("");
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  const addToList = useCallback(() => {
-    const altreadyAdded = !!formAttributes.subServices.find(
-      (s) => s.code === PestControlJobCode.COCKROACH
-    );
-
-    if (altreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-
-    setFormAttributes({
-      ...formAttributes,
-      subServices: [
-        ...formAttributes.subServices,
-        {
-          ...selectedAttributes,
-          code: PestControlJobCode.COCKROACH,
-          name: PestControlJobNames.COCKROACH,
-        },
-      ],
-    });
-    setSelectedSubPestControlJob({});
-  }, [
-    formAttributes,
-    selectedAttributes,
-    setFormAttributes,
-    setSelectedSubPestControlJob,
-  ]);
-
+export const CockroachControlJobForm = ({
+  selectedAttributes,
+  setSelectedAttributes,
+}) => {
   return (
     <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2 font-medium text-base">
@@ -174,23 +140,6 @@ export const CockroachControlJobForm = ({ setSelectedSubPestControlJob }) => {
               className="w-4 h-4  accent-[#15a177]"
             />
             <label htmlFor="provideSupplies">For Office Type</label>
-          </span>
-        </section>
-        {!!errorText && (
-          <span
-            style={{ color: "#dc2626" }}
-            className="font-semibold text-base"
-          >
-            {errorText}
-          </span>
-        )}
-        <section className="flex flex-col gap-2">
-          <span
-            className="flex gap-2 items-center mt-5 cursor-pointer"
-            onClick={addToList}
-          >
-            <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
-            <h4 className="font-semibold text-base">Add To the list</h4>
           </span>
         </section>
       </div>

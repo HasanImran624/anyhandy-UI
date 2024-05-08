@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useProgress } from "../../../../context/ProgressContext";
-import { Rooms, Colors } from "../../../../Constants";
+import { Colors } from "../../../../Constants";
 
 export const FencePaintingJobEditForm = ({ service, setIsEditService }) => {
   const [editFormAttributes, setEditFormAttributes] = useState({});
@@ -25,6 +25,23 @@ export const FencePaintingJobEditForm = ({ service, setIsEditService }) => {
     setFormAttributes,
     setIsEditService,
   ]);
+
+  const handleFileChange = useCallback(
+    (e) => {
+      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
+    },
+    [editFormAttributes]
+  );
+
+  const getFileNames = useCallback(() => {
+    if (editFormAttributes.files) {
+      let names = [];
+      for (let i = 0; i < editFormAttributes.files.length; i++) {
+        names.push(editFormAttributes.files[i].name);
+      }
+      return names.join(", ");
+    }
+  }, [editFormAttributes.files]);
 
   return (
     <section className="flex flex-col gap-5">
@@ -131,6 +148,22 @@ export const FencePaintingJobEditForm = ({ service, setIsEditService }) => {
           placeholder="Please describe any special requests"
         />
       </span>
+      <section className="flex flex-col gap-2">
+        <h3 className="font-medium text-base text-[#0D0B01]">Attachments</h3>
+        <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
+          Choose file...
+          <input
+            multiple
+            type="file"
+            name="attachment"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+        {editFormAttributes.files && (
+          <p className="text-[#636363] text-sm">{getFileNames()}</p>
+        )}
+      </section>
       <span className="flex items-center justify-end gap-3">
         <button
           className="px-4 bg-white text-black font-medium text-base rounded-md py-3 hover:bg-green-50 border"

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import art from "../../Assets/art.png";
@@ -11,19 +10,14 @@ import axios from "../../api/axios";
 import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
-import ProgressBar from "../ProgressBar/ProgressBar";
 import { SUBMIT_JOB_REQUEST_URL } from "../../Constants";
 import { ProgressAndServiceList } from "./ProgressAndServiceList";
-import { EditServiceModal } from "./EditServiceModal";
 
 const Step4 = () => {
   const { progress, updateProgress, resetAttributes, formAttributes } =
     useProgress();
 
   const navigate = useNavigate();
-  const [selectedEditSubService, setSelectedEditSubService] = useState();
-  const [isEditService, setIsEditService] = useState(false);
-
   const submitJob = useCallback(() => {
     try {
       axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes);
@@ -93,18 +87,9 @@ const Step4 = () => {
 
   return (
     <>
-      {isEditService && (
-        <EditServiceModal
-          service={selectedEditSubService}
-          setIsEditService={setIsEditService}
-        />
-      )}
       <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
         <section className="w-full h-full flex flex-col sm_desktop:gap-[10%] gap-10 sm_desktop:flex-row">
-          <ProgressAndServiceList
-            setIsEditService={setIsEditService}
-            setSelectedEditSubService={setSelectedEditSubService}
-          />
+          <ProgressAndServiceList />
           <section className="w-full sm_desktop:w-[45%] h-full flex flex-col gap-7">
             <span
               className="flex gap-3 w-fit cursor-pointer"

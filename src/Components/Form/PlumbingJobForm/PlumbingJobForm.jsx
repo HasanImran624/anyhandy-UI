@@ -1,25 +1,32 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Dropdown } from "primereact/dropdown";
+import { useNavigate } from "react-router-dom";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { useProgress } from "../../../context/ProgressContext";
 import { PLumbingServices, Rooms } from "../../../Constants";
 
 export const PlumbingJobForm = () => {
+  const navigate = useNavigate();
   const [selectedSubPlumbingJob, setSelectedSubPlumbingJob] = useState({});
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [errorText, setErrorText] = useState("");
-  const { formAttributes, setFormAttributes } = useProgress();
+  const {
+    formAttributes,
+    setFormAttributes,
+    progress,
+    updateProgress,
+    resetAttributes,
+  } = useProgress();
+
+  const alreadyAdded = useMemo(
+    () =>
+      !!formAttributes.subServices.find(
+        (s) => s.code === selectedSubPlumbingJob.code
+      ),
+    [formAttributes.subServices, selectedSubPlumbingJob.code]
+  );
 
   const addToList = useCallback(() => {
-    const altreadyAdded = !!formAttributes.subServices.find(
-      (s) => s.code === selectedSubPlumbingJob.code
-    );
-
-    if (altreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-
     setFormAttributes({
       ...formAttributes,
       subServices: [
@@ -33,13 +40,7 @@ export const PlumbingJobForm = () => {
     });
     setSelectedSubPlumbingJob({});
     setSelectedAttributes({});
-  }, [
-    formAttributes,
-    selectedAttributes,
-    selectedSubPlumbingJob.code,
-    selectedSubPlumbingJob.name,
-    setFormAttributes,
-  ]);
+  }, [formAttributes, selectedAttributes, selectedSubPlumbingJob.code, selectedSubPlumbingJob.name, setFormAttributes]);
 
   const handleFileChange = useCallback(
     (e) => {
@@ -57,6 +58,29 @@ export const PlumbingJobForm = () => {
       return names.join(", ");
     }
   }, [selectedAttributes.files]);
+
+  const handleNext = useCallback(() => {
+    if (selectedSubPlumbingJob.code) {
+      if (!alreadyAdded) {
+        addToList();
+      }
+    }
+    updateProgress(progress + 1);
+  }, [
+    addToList,
+    alreadyAdded,
+    progress,
+    selectedSubPlumbingJob.code,
+    updateProgress,
+  ]);
+
+  const add = useCallback(() => {
+    if (alreadyAdded) {
+      setErrorText("* Service is already added");
+      return;
+    }
+    addToList();
+  }, [addToList, alreadyAdded]);
 
   return (
     <>
@@ -98,7 +122,7 @@ export const PlumbingJobForm = () => {
                     onClick={() =>
                       setSelectedAttributes({
                         ...selectedAttributes,
-                        items: room.numberItems,
+                        numberItems: room.room,
                       })
                     }
                   >
@@ -157,7 +181,7 @@ export const PlumbingJobForm = () => {
             </section>
             <section
               className="flex gap-2 items-center mt-5 cursor-pointer"
-              onClick={addToList}
+              onClick={add}
             >
               <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
               <h4 className="font-semibold text-base">Add To the list</h4>
@@ -165,6 +189,25 @@ export const PlumbingJobForm = () => {
           </div>
         </div>
       )}
+      <span className="w-full flex items-center justify-end gap-5">
+        <button
+          onClick={() => {
+            resetAttributes();
+            navigate("/");
+            updateProgress(1);
+          }}
+          className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-Colors ease-out duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={handleNext}
+          className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-Colors ease-in duration-100"
+        >
+          Continue
+        </button>
+      </span>
     </>
   );
 };

@@ -1,23 +1,34 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Dropdown } from "primereact/dropdown";
+import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../../context/ProgressContext";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { ElectricalJobs, Rooms } from "../../../Constants";
 
 export const ElectricalJobForm = () => {
+  const navigate = useNavigate();
   const [selectedSubElectricalJob, setSelectedSubElectricalJob] = useState({});
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [errorText, setErrorText] = useState("");
-  const { formAttributes, setFormAttributes } = useProgress();
+  const {
+    formAttributes,
+    setFormAttributes,
+    progress,
+    updateProgress,
+    resetAttributes,
+  } = useProgress();
+
+  const alreadyAdded = useMemo(
+    () =>
+      !!formAttributes.subServices.find(
+        (s) => s.code === selectedSubElectricalJob.code
+      ),
+    [formAttributes.subServices, selectedSubElectricalJob.code]
+  );
 
   const addToList = useCallback(() => {
-    const altreadyAdded = !!formAttributes.subServices.find(
-      (s) => s.code === selectedSubElectricalJob.code
-    );
-
-    if (altreadyAdded) {
+    if (alreadyAdded) {
       setErrorText("* Service is already added");
-      return;
     }
 
     setFormAttributes({
@@ -34,12 +45,21 @@ export const ElectricalJobForm = () => {
     setSelectedSubElectricalJob({});
     setSelectedAttributes({});
   }, [
+    alreadyAdded,
     formAttributes,
     selectedAttributes,
     selectedSubElectricalJob.code,
     selectedSubElectricalJob.name,
     setFormAttributes,
   ]);
+
+  const add = useCallback(() => {
+    if (alreadyAdded) {
+      setErrorText("* Service is already added");
+      return;
+    }
+    addToList();
+  }, [addToList, alreadyAdded]);
 
   const handleFileChange = useCallback(
     (e) => {
@@ -57,6 +77,21 @@ export const ElectricalJobForm = () => {
       return names.join(", ");
     }
   }, [selectedAttributes.files]);
+
+  const handleNext = useCallback(() => {
+    if (selectedSubElectricalJob.code) {
+      if (!alreadyAdded) {
+        addToList();
+      }
+    }
+    updateProgress(progress + 1);
+  }, [
+    addToList,
+    alreadyAdded,
+    progress,
+    selectedSubElectricalJob.code,
+    updateProgress,
+  ]);
 
   return (
     <>
@@ -156,7 +191,7 @@ export const ElectricalJobForm = () => {
             </section>
             <section
               className="flex gap-2 items-center mt-5 cursor-pointer"
-              onClick={addToList}
+              onClick={add}
             >
               <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
               <h4 className="font-semibold text-base">Add To the list</h4>
@@ -164,6 +199,25 @@ export const ElectricalJobForm = () => {
           </div>
         </div>
       )}
+      <span className="w-full flex items-center justify-end gap-5">
+        <button
+          onClick={() => {
+            resetAttributes();
+            navigate("/");
+            updateProgress(1);
+          }}
+          className="font-semibold text-lg text-black p-4 rounded-md border borer-[#E1DFD7] hover:bg-red-600 outline-none focus:border-red-500 transition-Colors ease-out duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={handleNext}
+          className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-Colors ease-in duration-100"
+        >
+          Continue
+        </button>
+      </span>
     </>
   );
 };

@@ -28,7 +28,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Dropdown } from "primereact/dropdown";
 import { useProgress } from "../../context/ProgressContext";
-import { EditServiceModal } from "./EditServiceModal";
 import { ProgressAndServiceList } from "./ProgressAndServiceList";
 
 import clock from "../../Assets/clock.png";
@@ -41,8 +40,6 @@ const Step3 = () => {
   const [addLocationMenu, setAddLocationMenu] = useState(false);
   const [eye, setEye] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [selectedEditSubService, setSelectedEditSubService] = useState();
-  const [isEditService, setIsEditService] = useState(false);
   const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
@@ -220,12 +217,6 @@ const Step3 = () => {
   });
   return (
     <>
-      {isEditService && (
-        <EditServiceModal
-          service={selectedEditSubService}
-          setIsEditService={setIsEditService}
-        />
-      )}
       {addLocation && !isLogin && (
         <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
           <div
@@ -583,10 +574,7 @@ const Step3 = () => {
       )}
       <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
         <section className="w-full h-full flex flex-col sm_desktop:gap-[10%] gap-10 sm_desktop:flex-row">
-          <ProgressAndServiceList
-            setIsEditService={setIsEditService}
-            setSelectedEditSubService={setSelectedEditSubService}
-          />
+          <ProgressAndServiceList />
           <section className="w-full sm_desktop:w-[45%] h-full flex flex-col gap-7">
             <span
               className="flex gap-3 w-fit cursor-pointer"

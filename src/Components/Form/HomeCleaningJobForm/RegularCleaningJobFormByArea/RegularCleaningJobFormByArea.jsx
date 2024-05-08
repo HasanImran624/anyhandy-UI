@@ -1,66 +1,10 @@
-import { useCallback, useState } from "react";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
-import { useProgress } from "../../../../context/ProgressContext";
-import {
-  Rooms,
-  HomeCleaningJobCode,
-  HomeCleaningJobNames,
-  AreaType,
-} from "../../../../Constants";
+import { Rooms, AreaType } from "../../../../Constants";
 
 export const RegularCleaningJobFormByArea = ({
-  setSelectedSubHomeCleaningJob,
+  selectedAttributes,
+  setSelectedAttributes,
 }) => {
-  const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [errorText, setErrorText] = useState("");
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  const handleFileChange = useCallback(
-    (e) => {
-      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
-    },
-    [selectedAttributes]
-  );
-
-  const getFileNames = useCallback(() => {
-    if (selectedAttributes.files) {
-      let names = [];
-      for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name);
-      }
-      return names.join(", ");
-    }
-  }, [selectedAttributes.files]);
-
-  const addToList = useCallback(() => {
-    const altreadyAdded = !!formAttributes.subServices.find(
-      (s) => s.code === HomeCleaningJobCode.MAINTAINANCE
-    );
-
-    if (altreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-
-    setFormAttributes({
-      ...formAttributes,
-      subServices: [
-        ...formAttributes.subServices,
-        {
-          ...selectedAttributes,
-          code: HomeCleaningJobCode.MAINTAINANCE,
-          name: HomeCleaningJobNames.MAINTAINANCE,
-        },
-      ],
-    });
-    setSelectedSubHomeCleaningJob({});
-  }, [
-    formAttributes,
-    setFormAttributes,
-    selectedAttributes,
-    setSelectedSubHomeCleaningJob,
-  ]);
-
   return (
     <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2 font-medium text-base">
@@ -195,39 +139,6 @@ export const RegularCleaningJobFormByArea = ({
             />
             <label htmlFor="provideSupplies">For Office Type</label>
           </span>
-        </section>
-        <section className="flex flex-col gap-2">
-          <h3 className="font-medium text-base text-[#0D0B01]">Attachments</h3>
-          <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
-            Choose file...
-            <input
-              multiple
-              type="file"
-              name="attachment"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </label>
-          {selectedAttributes.files && (
-            <p className="text-[#636363] text-sm">{getFileNames()}</p>
-          )}
-        </section>
-        <section className="flex flex-col gap-2">
-          {!!errorText && (
-            <span
-              style={{ color: "#dc2626" }}
-              className="font-semibold text-base"
-            >
-              {errorText}
-            </span>
-          )}
-        </section>
-        <section
-          className="flex gap-2 items-center mt-5 cursor-pointer"
-          onClick={addToList}
-        >
-          <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
-          <h4 className="font-semibold text-base">Add To the list</h4>
         </section>
       </div>
     </div>

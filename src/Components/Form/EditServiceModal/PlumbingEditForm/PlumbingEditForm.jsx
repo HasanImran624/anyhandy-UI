@@ -10,6 +10,13 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
     setEditFormAttributes({ ...service });
   }, [service]);
 
+  const handleFileChange = useCallback(
+    (e) => {
+      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
+    },
+    [editFormAttributes]
+  );
+
   const onSAveChanges = useCallback(() => {
     setFormAttributes({
       ...formAttributes,
@@ -25,6 +32,16 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
     setFormAttributes,
     setIsEditService,
   ]);
+
+  const getFileNames = useCallback(() => {
+    if (editFormAttributes.files) {
+      let names = [];
+      for (let i = 0; i < editFormAttributes.files.length; i++) {
+        names.push(editFormAttributes.files[i].name);
+      }
+      return names.join(", ");
+    }
+  }, [editFormAttributes.files]);
 
   return (
     <section className="flex flex-col gap-5">
@@ -79,6 +96,22 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
             placeholder="Please describe any special requests"
           />
         </span>
+      </section>
+      <section className="flex flex-col gap-2">
+        <h3 className="font-medium text-base text-[#0D0B01]">Attachments</h3>
+        <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
+          Choose file...
+          <input
+            multiple
+            type="file"
+            name="attachment"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+        {editFormAttributes.files && (
+          <p className="text-[#636363] text-sm">{getFileNames()}</p>
+        )}
       </section>
       <span className="flex items-center justify-end gap-3">
         <button
