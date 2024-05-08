@@ -38,13 +38,13 @@ export const DoorPaintingJobEditForm = ({ service, setIsEditService }) => {
               <span
                 key={index}
                 className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                  editFormAttributes.doors === room.room &&
+                  editFormAttributes.numberItems === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
                 onClick={() =>
                   setEditFormAttributes({
                     ...editFormAttributes,
-                    doors: room.room,
+                    numberItems: room.room,
                   })
                 }
               >
@@ -67,14 +67,14 @@ export const DoorPaintingJobEditForm = ({ service, setIsEditService }) => {
                 key={index}
                 className={`flex w-10 h-10 items-center justify-center gap-2 border-2 rounded-full cursor-pointer
                           ${
-                            editFormAttributes.color === color.color
+                            editFormAttributes.paintColor === color.color
                               ? "border-[#00CF91]"
                               : "border-transparent"
                           }  `}
                 onClick={() =>
                   setEditFormAttributes({
                     ...editFormAttributes,
-                    color: color.color,
+                    paintColor: color.color,
                   })
                 }
               >
@@ -91,11 +91,11 @@ export const DoorPaintingJobEditForm = ({ service, setIsEditService }) => {
         <div className="w-full flex items-center gap-[5%] mt-3">
           <span className="flex gap-3 items-center">
             <input
-              checked={editFormAttributes.paintProvided}
+              checked={editFormAttributes.providePaint}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  paintProvided: e.target.checked,
+                  providePaint: e.target.checked,
                 })
               }
               type="checkbox"
@@ -107,11 +107,11 @@ export const DoorPaintingJobEditForm = ({ service, setIsEditService }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={editFormAttributes.doubleCoat}
+              checked={editFormAttributes.numberOfCoats}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  doubleCoat: e.target.checked,
+                  numberOfCoats: e.target.checked,
                 })
               }
               type="checkbox"

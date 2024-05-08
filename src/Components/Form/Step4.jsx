@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import art from "../../Assets/art.png";
@@ -12,12 +13,16 @@ import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../context/ProgressContext";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { SUBMIT_JOB_REQUEST_URL } from "../../Constants";
+import { ProgressAndServiceList } from "./ProgressAndServiceList";
+import { EditServiceModal } from "./EditServiceModal";
 
 const Step4 = () => {
   const { progress, updateProgress, resetAttributes, formAttributes } =
     useProgress();
 
   const navigate = useNavigate();
+  const [selectedEditSubService, setSelectedEditSubService] = useState();
+  const [isEditService, setIsEditService] = useState(false);
 
   const submitJob = useCallback(() => {
     try {
@@ -47,7 +52,7 @@ const Step4 = () => {
     }
 
     if (formAttributes.location.city) {
-      locationTextArray.push(formAttributes.location.city);
+      locationTextArray.push(formAttributes.location.city.name);
     }
 
     return locationTextArray.join(", ");
@@ -90,21 +95,18 @@ const Step4 = () => {
 
   return (
     <>
+      {isEditService && (
+        <EditServiceModal
+          service={selectedEditSubService}
+          setIsEditService={setIsEditService}
+        />
+      )}
       <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
         <section className="w-full h-full flex flex-col sm_desktop:gap-[10%] gap-10 sm_desktop:flex-row">
-          <section className="w-full sm_desktop:w-[45%] flex flex-col gap-10 sm_desktop:flex-row">
-            <div>
-              <ProgressBar progress={progress} />
-            </div>
-            <div className="hidden sm_desktop:flex flex-col gap-5">
-              <h2 className="font-Onest font-bold text-4xl leading-snug text-[#0D0B01]">
-                Lets add sub services you need
-              </h2>
-              <p className="font-Onest font-medium text-lg text-[#868580] pr-[0%]">
-                Select sub services and add details
-              </p>
-            </div>
-          </section>
+          <ProgressAndServiceList
+            setIsEditService={setIsEditService}
+            setSelectedEditSubService={setSelectedEditSubService}
+          />
           <section className="w-full sm_desktop:w-[45%] h-full flex flex-col gap-7">
             <span
               className="flex gap-3 w-fit cursor-pointer"

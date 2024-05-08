@@ -65,11 +65,11 @@ export const PressureWashingJobForm = ({ setSelectedSubPaintingJob }) => {
           <input
             type="text"
             name="areaSize"
-            value={selectedAttributes.area}
+            value={selectedAttributes.sizeArea}
             onChange={(e) =>
               setSelectedAttributes({
                 ...selectedAttributes,
-                area: e.target.value,
+                sizeArea: e.target.value,
               })
             }
             className="w-full bg-white rounded-lg p-3 border"

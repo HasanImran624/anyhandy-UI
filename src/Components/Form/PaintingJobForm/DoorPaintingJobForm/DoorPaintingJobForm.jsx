@@ -67,13 +67,13 @@ export const DoorPaintingJobForm = ({ setSelectedSubPaintingJob }) => {
               <span
                 key={index}
                 className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                  selectedAttributes.doors === room.room &&
+                  selectedAttributes.numberItems === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
                 onClick={() =>
                   setSelectedAttributes({
                     ...selectedAttributes,
-                    doors: room.room,
+                    numberItems: room.room,
                   })
                 }
               >
@@ -95,14 +95,14 @@ export const DoorPaintingJobForm = ({ setSelectedSubPaintingJob }) => {
                   key={index}
                   className={`flex w-10 h-10 items-center justify-center gap-2 border-2 rounded-full cursor-pointer
                     ${
-                      selectedAttributes.color === color.color
+                      selectedAttributes.paintColor === color.color
                         ? "border-[#00CF91]"
                         : "border-transparent"
                     }  `}
                   onClick={() =>
                     setSelectedAttributes({
                       ...selectedAttributes,
-                      color: color.color,
+                      paintColor: color.color,
                     })
                   }
                 >
@@ -121,12 +121,12 @@ export const DoorPaintingJobForm = ({ setSelectedSubPaintingJob }) => {
               <input
                 type="checkbox"
                 name="providePaint"
-                checked={!!selectedAttributes.paintProvided}
+                checked={!!selectedAttributes.providePaint}
                 id="providePaint"
                 onChange={(e) =>
                   setSelectedAttributes({
                     ...selectedAttributes,
-                    paintProvided: e.target.checked,
+                    providePaint: e.target.checked,
                   })
                 }
                 className="w-4 h-4  accent-[#15a177]"
@@ -135,11 +135,11 @@ export const DoorPaintingJobForm = ({ setSelectedSubPaintingJob }) => {
             </span>
             <span className="flex gap-3 items-center">
               <input
-                value={!!selectedAttributes.doubleCoat}
+                value={!!selectedAttributes.numberOfCoats}
                 onChange={(e) =>
                   setSelectedAttributes({
                     ...selectedAttributes,
-                    doubleCoat: e.target.checked,
+                    numberOfCoats: e.target.checked,
                   })
                 }
                 type="checkbox"

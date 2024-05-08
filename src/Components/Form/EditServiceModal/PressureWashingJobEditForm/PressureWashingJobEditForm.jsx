@@ -35,11 +35,11 @@ export const PressureWashingJobEditForm = ({ service, setIsEditService }) => {
           </h3>
           <input
             type="text"
-            value={editFormAttributes.area}
+            value={editFormAttributes.sizeArea}
             onChange={(e) =>
               setEditFormAttributes({
                 ...editFormAttributes,
-                area: e.target.value,
+                sizeArea: e.target.value,
               })
             }
             name="areaSize"

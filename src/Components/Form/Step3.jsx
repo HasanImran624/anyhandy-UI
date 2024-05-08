@@ -663,8 +663,6 @@ const Step3 = () => {
                     ...formAttributes,
                     jobDetails: {
                       ...formAttributes.jobDetails,
-                      // startDate: null,
-                      // endDate: null,
                       startImmediatly:
                         !formAttributes.jobDetails.startImmediatly,
                     },
@@ -688,7 +686,7 @@ const Step3 = () => {
                     jobDetails: {
                       ...formAttributes.jobDetails,
                       isHourlyRate: true,
-                      fixRate: null,
+                      isfixRate: false,
                     },
                   });
                 }}
@@ -708,6 +706,7 @@ const Step3 = () => {
                     jobDetails: {
                       ...formAttributes.jobDetails,
                       isHourlyRate: false,
+                      isfixRate: true,
                       startRate: null,
                       endRate: null,
                     },
@@ -718,18 +717,18 @@ const Step3 = () => {
                 <h4 className="font-bold text-lg">Fixed Price</h4>
               </div>
             </section>
-            {!formAttributes.jobDetails.isHourlyRate && (
+            {!!formAttributes.jobDetails.isfixRate && (
               <div className="w-full flex flex-col gap-2">
                 <label htmlFor="fixed_price">Enter Price</label>
                 <div className="w-fit relative flex gap-2 items-center">
                   <input
-                    value={formAttributes.jobDetails.fixPrice}
+                    value={formAttributes.jobDetails.fixedPriceAmount}
                     onChange={(e) => {
                       setFormAttributes({
                         ...formAttributes,
                         jobDetails: {
                           ...formAttributes.jobDetails,
-                          fixPrice: e.target.value,
+                          fixedPriceAmount: parseInt(e.target.value),
                         },
                       });
                     }}

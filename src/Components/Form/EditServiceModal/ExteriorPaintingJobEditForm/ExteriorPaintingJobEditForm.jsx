@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useProgress } from "../../../../context/ProgressContext";
-import { Rooms, Colors } from "../../../../Constants";
+import { Colors } from "../../../../Constants";
 
 export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
   const [editFormAttributes, setEditFormAttributes] = useState({});
@@ -35,11 +35,11 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
           </h3>
           <input
             type="text"
-            value={editFormAttributes.area}
+            value={editFormAttributes.sizeArea}
             onChange={(e) =>
               setEditFormAttributes({
                 ...editFormAttributes,
-                area: e.target.value,
+                sizeArea: e.target.value,
               })
             }
             name="areaSize"
@@ -59,14 +59,14 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
                 key={index}
                 className={`flex w-10 h-10 items-center justify-center gap-2 border-2 rounded-full cursor-pointer
                           ${
-                            editFormAttributes.color === color.color
+                            editFormAttributes.paintColor === color.color
                               ? "border-[#00CF91]"
                               : "border-transparent"
                           }  `}
                 onClick={() =>
                   setEditFormAttributes({
                     ...editFormAttributes,
-                    color: color.color,
+                    paintColor: color.color,
                   })
                 }
               >
@@ -83,11 +83,11 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
         <div className="w-full flex items-center gap-[5%] mt-3">
           <span className="flex gap-3 items-center">
             <input
-              checked={editFormAttributes.paintProvided}
+              checked={editFormAttributes.providePaint}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  paintProvided: e.target.checked,
+                  providePaint: e.target.checked,
                 })
               }
               type="checkbox"
@@ -99,11 +99,11 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={editFormAttributes.doubleCoat}
+              checked={editFormAttributes.numberOfCoats}
               onChange={(e) =>
                 setEditFormAttributes({
                   ...editFormAttributes,
-                  doubleCoat: e.target.checked,
+                  numberOfCoats: e.target.checked,
                 })
               }
               type="checkbox"
