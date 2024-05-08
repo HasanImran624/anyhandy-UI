@@ -19,7 +19,6 @@ export const GeneralJobForm = () => {
           optionLabel="name"
           scrollHeight={"250px"}
           highlightOnSe
-          lect={true}
           placeholder="Choose an option"
           className="w-full md:w-14rem border border-[#E0E5ED] p-2 rounded-xl"
         />

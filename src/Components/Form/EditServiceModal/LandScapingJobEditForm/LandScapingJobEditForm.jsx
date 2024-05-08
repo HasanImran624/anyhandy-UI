@@ -33,11 +33,11 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
         <input
           type="text"
           name="areaSize"
-          value={editFormAttributes.area}
+          value={editFormAttributes.sizeArea}
           onChange={(e) =>
             setEditFormAttributes({
               ...editFormAttributes,
-              area: e.target.value,
+              sizeArea: e.target.value,
             })
           }
           className="w-full bg-white rounded-lg p-3 border"

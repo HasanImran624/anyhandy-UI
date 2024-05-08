@@ -92,13 +92,13 @@ export const PlumbingJobForm = () => {
                   <span
                     key={index}
                     className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                      selectedAttributes.items === room.room &&
+                      selectedAttributes.numberItems === room.room &&
                       "bg-[#00CF91] text-white"
                     }  `}
                     onClick={() =>
                       setSelectedAttributes({
                         ...selectedAttributes,
-                        items: room.room,
+                        items: room.numberItems,
                       })
                     }
                   >

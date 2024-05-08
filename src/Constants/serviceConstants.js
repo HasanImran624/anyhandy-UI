@@ -559,7 +559,6 @@ export const AreaType = [
   { area: "Living Room Cleaning" },
   { area: "Wardrobe Cleaning" },
   { area: "Fridge Inside-Out Cleaning" },
-  { area: "Wardrobe Cleaning" },
 ];
 
 export const Colors = [

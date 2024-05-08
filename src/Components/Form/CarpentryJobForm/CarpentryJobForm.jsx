@@ -75,7 +75,6 @@ export const CarpentryJobForm = () => {
           optionLabel="name"
           scrollHeight={"250px"}
           highlightOnSe
-          lect={true}
           placeholder="Choose an option"
           className="w-full md:w-14rem border border-[#E0E5ED] p-2 rounded-xl"
         />
@@ -93,13 +92,13 @@ export const CarpentryJobForm = () => {
                   <span
                     key={index}
                     className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                      selectedAttributes.items === room.room &&
+                      selectedAttributes.numberItems === room.room &&
                       "bg-[#00CF91] text-white"
                     }  `}
                     onClick={() =>
                       setSelectedAttributes({
                         ...selectedAttributes,
-                        items: room.room,
+                        numberItems: room.room,
                       })
                     }
                   >
