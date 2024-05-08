@@ -40,7 +40,8 @@ const Step3 = () => {
   const [addLocationMenu, setAddLocationMenu] = useState(false);
   const [eye, setEye] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
+  // const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
+  const API_KEY = "getyourkey";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const [city, setCity] = useState();
