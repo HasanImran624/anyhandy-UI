@@ -52,7 +52,7 @@ const Step4 = () => {
     }
 
     if (formAttributes.location.city) {
-      locationTextArray.push(formAttributes.location.city.name);
+      locationTextArray.push(formAttributes.location.city);
     }
 
     return locationTextArray.join(", ");

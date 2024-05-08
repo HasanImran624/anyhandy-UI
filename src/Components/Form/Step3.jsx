@@ -46,6 +46,7 @@ const Step3 = () => {
   const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
+  const [city, setCity] = useState();
   const {
     progress,
     updateProgress,
@@ -80,7 +81,7 @@ const Step3 = () => {
           ...formAttributes,
           location: {
             ...formAttributes.location,
-            addressByMap: data.results[0].formatted_address,
+            details: data.results[0].formatted_address,
           },
         })
       )
@@ -112,8 +113,6 @@ const Step3 = () => {
       }
     }
   };
-
-  console.log("ddd", formAttributes);
 
   const handleNext = () => {
     if (!formAttributes.jobDetails.startImmediatly) {
@@ -395,16 +394,17 @@ const Step3 = () => {
                 Select Location
               </label>
               <Dropdown
-                value={formAttributes.location.city}
-                onChange={(e) =>
+                value={city}
+                onChange={(e) => {
                   setFormAttributes({
                     ...formAttributes,
                     location: {
                       ...formAttributes.location,
-                      city: e.value,
+                      city: e.value.name,
                     },
-                  })
-                }
+                  });
+                  setCity(e.value);
+                }}
                 options={Cities}
                 optionLabel="name"
                 placeholder="Select City"
@@ -432,7 +432,7 @@ const Step3 = () => {
                     <span className="flex items-center gap-2 font-medium text-base">
                       <button
                         className={`flex-1 text-center border py-3 rounded-lg ${
-                          formAttributes.location.locationType === "Apartment"
+                          formAttributes.location.addressType === "Apartment"
                             ? "bg-[#00CF91] text-white"
                             : "bg-white text-[#0D0B01]"
                         } transition ease-in duration-150 `}
@@ -441,7 +441,7 @@ const Step3 = () => {
                             ...formAttributes,
                             location: {
                               ...formAttributes.location,
-                              locationType: "Apartment",
+                              addressType: "Apartment",
                             },
                           });
                         }}
@@ -450,7 +450,7 @@ const Step3 = () => {
                       </button>
                       <button
                         className={`flex-1 text-center border py-3 rounded-lg ${
-                          formAttributes.location.locationType === "Villa"
+                          formAttributes.location.addressType === "Villa"
                             ? "bg-[#00CF91] text-white"
                             : "bg-white text-[#0D0B01]"
                         } transition ease-in duration-150 `}
@@ -459,7 +459,7 @@ const Step3 = () => {
                             ...formAttributes,
                             location: {
                               ...formAttributes.location,
-                              locationType: "Villa",
+                              addressType: "Villa",
                             },
                           });
                         }}
@@ -468,7 +468,7 @@ const Step3 = () => {
                       </button>
                       <button
                         className={`flex-1 text-center border py-3 rounded-lg ${
-                          formAttributes.location.locationType === "Office"
+                          formAttributes.location.addressType === "Office"
                             ? "bg-[#00CF91] text-white"
                             : "bg-white text-[#0D0B01]"
                         } transition ease-in duration-150 `}
@@ -477,7 +477,7 @@ const Step3 = () => {
                             ...formAttributes,
                             location: {
                               ...formAttributes.location,
-                              locationType: "Office",
+                              addressType: "Office",
                             },
                           });
                         }}
@@ -493,13 +493,13 @@ const Step3 = () => {
                     <input
                       type="text"
                       name="buildingDetails"
-                      value={formAttributes.location.numAndBuildName}
+                      value={formAttributes.location.numberAndBuildingName}
                       onChange={(e) =>
                         setFormAttributes({
                           ...formAttributes,
                           location: {
                             ...formAttributes.location,
-                            numAndBuildName: e.target.value,
+                            numberAndBuildingName: e.target.value,
                           },
                         })
                       }
@@ -538,7 +538,7 @@ const Step3 = () => {
                         name="buildingDetails"
                         className="w-full bg-white rounded-lg p-3"
                         placeholder="Click on map icon to get your location"
-                        value={formAttributes.location.addressByMap}
+                        value={formAttributes.location.details}
                         disabled
                       />
                       <PlaceIcon
