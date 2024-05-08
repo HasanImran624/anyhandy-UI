@@ -128,9 +128,8 @@ const Step3 = () => {
       if (formAttributes.jobDetails.startDate.isBefore(dayjs(), "day")) {
         return;
       }
-
       if (
-        formAttributes.endDate.JobDetails.isBefore(
+        formAttributes.jobDetails.endDate.isBefore(
           formAttributes.jobDetails.startDate,
           "day"
         )
@@ -664,8 +663,8 @@ const Step3 = () => {
                     ...formAttributes,
                     jobDetails: {
                       ...formAttributes.jobDetails,
-                      startDate: null,
-                      endDate: null,
+                      // startDate: null,
+                      // endDate: null,
                       startImmediatly:
                         !formAttributes.jobDetails.startImmediatly,
                     },
