@@ -14,13 +14,11 @@ export const RegularCleaningJobFormByArea = ({
           </h3>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.villa}
+              checked={selectedAttributes.locationType === "Villa"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  office: false,
-                  appartment: false,
-                  villa: true,
+                  locationType: "Villa",
                 })
               }
               type="radio"
@@ -32,13 +30,11 @@ export const RegularCleaningJobFormByArea = ({
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.appartment}
+              checked={selectedAttributes.locationType === "Apartment"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  office: false,
-                  appartment: true,
-                  villa: false,
+                  locationType: "Apartment",
                 })
               }
               type="radio"
@@ -50,13 +46,11 @@ export const RegularCleaningJobFormByArea = ({
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.office}
+              checked={selectedAttributes.locationType === "Office"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  office: true,
-                  appartment: false,
-                  villa: false,
+                  locationType: "Office",
                 })
               }
               type="radio"
@@ -104,13 +98,13 @@ export const RegularCleaningJobFormByArea = ({
                 <span
                   key={index}
                   className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                    selectedAttributes.hours === room.room &&
+                    selectedAttributes.numberHours === room.room &&
                     "bg-[#00CF91] text-white"
                   }  `}
                   onClick={() =>
                     setSelectedAttributes({
                       ...selectedAttributes,
-                      hours: room.room,
+                      numberHours: room.room,
                     })
                   }
                 >
@@ -120,24 +114,6 @@ export const RegularCleaningJobFormByArea = ({
                 </span>
               );
             })}
-          </span>
-        </section>
-        <section className="flex flex-col gap-2 mt-3">
-          <span className="flex gap-3 items-center">
-            <input
-              checked={!!selectedAttributes.officeType}
-              onChange={(e) =>
-                setSelectedAttributes({
-                  ...selectedAttributes,
-                  officeType: e.target.checked,
-                })
-              }
-              type="checkbox"
-              name="officeType"
-              id="officeType"
-              className="w-4 h-4  accent-[#15a177]"
-            />
-            <label htmlFor="provideSupplies">For Office Type</label>
           </span>
         </section>
       </div>

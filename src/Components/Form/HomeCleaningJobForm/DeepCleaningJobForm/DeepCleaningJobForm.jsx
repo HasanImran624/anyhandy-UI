@@ -13,13 +13,11 @@ export const DeepCleaningJobForm = ({
           </h3>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.sofa}
+              checked={selectedAttributes.typeFurniture === "Sofa"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  sofa: true,
-                  mattress: false,
-                  carpet: false,
+                  typeFurniture: "Sofa",
                 })
               }
               type="radio"
@@ -31,13 +29,11 @@ export const DeepCleaningJobForm = ({
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.mattress}
+              checked={selectedAttributes.typeFurniture === "Mattress"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  sofa: false,
-                  mattress: true,
-                  carpet: false,
+                  typeFurniture: "Mattress",
                 })
               }
               type="radio"
@@ -49,13 +45,11 @@ export const DeepCleaningJobForm = ({
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.mattress}
+              checked={selectedAttributes.typeFurniture === "Carpet"}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  sofa: false,
-                  mattress: true,
-                  carpet: false,
+                  typeFurniture: "Carpet",
                 })
               }
               type="radio"
@@ -76,13 +70,13 @@ export const DeepCleaningJobForm = ({
                 <span
                   key={index}
                   className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                    selectedAttributes.items === room.room &&
+                    selectedAttributes.numberItems === room.room &&
                     "bg-[#00CF91] text-white"
                   }  `}
                   onClick={() =>
                     setSelectedAttributes({
                       ...selectedAttributes,
-                      items: room.room,
+                      numberItems: room.room,
                     })
                   }
                 >

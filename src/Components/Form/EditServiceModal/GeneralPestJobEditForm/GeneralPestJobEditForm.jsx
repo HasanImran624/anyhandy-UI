@@ -111,24 +111,6 @@ export const GeneralPestJobEditForm = ({ service, setIsEditService }) => {
             <label htmlFor="office">Office</label>
           </span>
         </section>
-        <section className="flex flex-col gap-2 mt-3">
-          <span className="flex gap-3 items-center">
-            <input
-              checked={!!editFormAttributes.forOfficeType}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  forOfficeType: e.target.checked,
-                })
-              }
-              type="checkbox"
-              name="officeType"
-              id="officeType"
-              className="w-4 h-4  accent-[#15a177]"
-            />
-            <label htmlFor="provideSupplies">For Office Type</label>
-          </span>
-        </section>
         <span className="flex items-center justify-end gap-3">
           <button
             className="px-4 bg-white text-black font-medium text-base rounded-md py-3 hover:bg-green-50 border"

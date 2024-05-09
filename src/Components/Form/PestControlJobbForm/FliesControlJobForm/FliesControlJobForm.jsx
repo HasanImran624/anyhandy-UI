@@ -93,24 +93,6 @@ export const FliesControlJobForm = ({
             <label htmlFor="office">Office</label>
           </span>
         </section>
-        <section className="flex flex-col gap-2 mt-3">
-          <span className="flex gap-3 items-center">
-            <input
-              checked={!!selectedAttributes.forOfficeType}
-              onChange={(e) =>
-                setSelectedAttributes({
-                  ...selectedAttributes,
-                  forOfficeType: e.target.checked,
-                })
-              }
-              type="checkbox"
-              name="officeType"
-              id="officeType"
-              className="w-4 h-4  accent-[#15a177]"
-            />
-            <label htmlFor="provideSupplies">For Office Type</label>
-          </span>
-        </section>
       </div>
     </div>
   );

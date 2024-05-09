@@ -224,7 +224,8 @@ export const services = [
 
 // constants copy from Step2.jsx
 export const ApplianceRepairJobNames = {
-  FIXING: "Fixing or Servicing Household Appliances",
+  FIXING:
+    "Fixing or servicing household appliances like refrigerators, washing machines, and ovens.",
 };
 
 export const ApplianceRepairJobCode = {

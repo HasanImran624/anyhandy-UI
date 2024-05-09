@@ -52,13 +52,11 @@ export const RegularCleaningByHourJobEditForm = ({
         <h3 className="font-medium text-base text-[#0D0B01]">Location Type</h3>
         <span className="flex gap-3 items-center">
           <input
-            checked={!!editFormAttributes.villa}
+            checked={editFormAttributes.locationType === "Villa"}
             onChange={(e) =>
               setEditFormAttributes({
                 ...editFormAttributes,
-                office: false,
-                appartment: false,
-                villa: true,
+                locationType: "Villa",
               })
             }
             type="radio"
@@ -70,13 +68,11 @@ export const RegularCleaningByHourJobEditForm = ({
         </span>
         <span className="flex gap-3 items-center">
           <input
-            checked={!!editFormAttributes.appartment}
+            checked={editFormAttributes.locationType === "Apartment"}
             onChange={(e) =>
               setEditFormAttributes({
                 ...editFormAttributes,
-                office: false,
-                appartment: true,
-                villa: false,
+                locationType: "Apartment",
               })
             }
             type="radio"
@@ -88,13 +84,11 @@ export const RegularCleaningByHourJobEditForm = ({
         </span>
         <span className="flex gap-3 items-center">
           <input
-            checked={!!editFormAttributes.office}
+            checked={editFormAttributes.locationType === "Office"}
             onChange={(e) =>
               setEditFormAttributes({
                 ...editFormAttributes,
-                office: true,
-                appartment: false,
-                villa: false,
+                locationType: "Office",
               })
             }
             type="radio"
@@ -115,13 +109,13 @@ export const RegularCleaningByHourJobEditForm = ({
               <span
                 key={index}
                 className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                  editFormAttributes.cleaners === room.room &&
+                  editFormAttributes.numberCleaner === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
                 onClick={() =>
                   setEditFormAttributes({
                     ...editFormAttributes,
-                    cleaners: room.room,
+                    numberCleaner: room.room,
                   })
                 }
               >
@@ -143,13 +137,13 @@ export const RegularCleaningByHourJobEditForm = ({
               <span
                 key={index}
                 className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                  editFormAttributes.hours === room.room &&
+                  editFormAttributes.numberHours === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
                 onClick={() =>
                   setEditFormAttributes({
                     ...editFormAttributes,
-                    hours: room.room,
+                    numberHours: room.room,
                   })
                 }
               >
@@ -159,24 +153,6 @@ export const RegularCleaningByHourJobEditForm = ({
               </span>
             );
           })}
-        </span>
-      </section>
-      <section className="flex flex-col gap-2 mt-3">
-        <span className="flex gap-3 items-center">
-          <input
-            checked={!!editFormAttributes.officeType}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                officeType: e.target.checked,
-              })
-            }
-            type="checkbox"
-            name="officeType"
-            id="officeType"
-            className="w-4 h-4  accent-[#15a177]"
-          />
-          <label htmlFor="provideSupplies">For Office Type</label>
         </span>
       </section>
       <section className="flex flex-col gap-2">
