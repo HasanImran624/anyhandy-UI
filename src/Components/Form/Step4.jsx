@@ -279,12 +279,7 @@ const Step4 = () => {
                 {formAttributes.mainServiceName}
               </h2>
               <p className="text-black font-medium text-base">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
-                facere, consequatur ex architecto officiis unde numquam, placeat
-                adipisci recusandae quae labore soluta officia doloremque,
-                suscipit culpa quo ipsam explicabo illo excepturi possimus a et.
-                Cumque, earum consequuntur? Quae fuga quis maxime aspernatur quo
-                debitis soluta veritatis ducimus? Nam, asperiores nulla.
+                { formAttributes.mainServiceDescription }
               </p>
               <hr />
             </header>
@@ -331,7 +326,7 @@ const Step4 = () => {
                     <div className="font-medium text-base">
                       {!!formAttributes.jobDetails.isHourlyRate
                         ? `$${formAttributes.jobDetails.startRate}/hr-$${formAttributes.jobDetails.endRate}/hr`
-                        : `$${formAttributes.jobDetails.fixPrice || 0}/hr`}
+                        : `$${formAttributes.jobDetails.fixedPriceAmount || 0}/hr`}
                     </div>
                   </span>
                   <span className="flex items-center">

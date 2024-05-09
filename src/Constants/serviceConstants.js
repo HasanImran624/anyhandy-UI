@@ -158,7 +158,7 @@ export const services = [
   },
   {
     id: 6,
-    name: "Home Cleaning Services",
+    name: "Home Cleaning",
     code: ServiceTypeCode.HOME_CLEANING,
     uid: "home_cleaning_services",
     subServices: [
