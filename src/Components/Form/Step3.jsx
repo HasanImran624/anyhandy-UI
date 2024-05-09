@@ -820,14 +820,13 @@ const Step3 = () => {
                 </span>
               </span>
               <h4 className="font-medium text-base text-[#0D0B01]">
-                {formAttributes.location.locationType || "Apartment"}
+                {formAttributes.location.addressType}
               </h4>
               <h4 className="font-medium text-base text-[#0D0B01]">
-                {formAttributes.location.numAndBuildName ||
-                  "Number & Building name"}
+                {formAttributes.location.numberAndBuildingName}
               </h4>
               <h4 className="font-medium text-base text-[#0D0B01]">
-                {formAttributes.location.area || "Area"}
+                {formAttributes.location.area}
               </h4>
             </section>
           </section>

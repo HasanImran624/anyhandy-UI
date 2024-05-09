@@ -138,7 +138,7 @@ export const services = [
   },
   {
     id: 5,
-    name: "Carpentry Services",
+    name: "Carpentry Service",
     code: ServiceTypeCode.CARPENTERY,
     uid: "carpentry_services",
     subServices: [

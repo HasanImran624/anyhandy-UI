@@ -67,12 +67,11 @@ export const ApplienceRepairJobForm = () => {
           </h3>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.oven}
+              checked={selectedAttributes.typeAppliance === "Oven"}
               onChange={() =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  oven: true,
-                  fridge: false,
+                  typeAppliance: "Oven",
                 })
               }
               type="radio"
@@ -84,12 +83,11 @@ export const ApplienceRepairJobForm = () => {
           </span>
           <span className="flex gap-3 items-center">
             <input
-              checked={!!selectedAttributes.fridge}
+              checked={selectedAttributes.typeAppliance === "Fridge"}
               onChange={() =>
                 setSelectedAttributes({
                   ...selectedAttributes,
-                  oven: false,
-                  fridge: true,
+                  typeAppliance: "Fridge",
                 })
               }
               type="radio"
@@ -121,7 +119,6 @@ export const ApplienceRepairJobForm = () => {
                   }
                 >
                   <h3 className="font-medium text-base text-center">
-                    {" "}
                     {room.room}{" "}
                   </h3>
                 </span>

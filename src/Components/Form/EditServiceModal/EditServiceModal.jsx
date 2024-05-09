@@ -7,6 +7,7 @@ import {
   PestControlJobCode,
   GeneralJobCodes,
 } from "../../../Constants";
+import { ApplianceJobEditForm } from "./ApplianceJobEditForm";
 import { InteriorPaintingJobEditForm } from "./InteriorPaintingJobEditForm";
 import { PressureWashingJobEditForm } from "./PressureWashingJobEditForm";
 import { ExteriorPaintingJobEditForm } from "./ExteriorPaintingJobEditForm";
@@ -205,6 +206,14 @@ export const EditServiceModal = ({ service, setIsEditService }) => {
         {formAttributes.selectedMainServiceCode ===
           ServiceTypeCode.LANDSCAPING_LAWN && (
           <LandScapingJobEditForm
+            service={service}
+            setIsEditService={setIsEditService}
+          />
+        )}
+
+        {formAttributes.selectedMainServiceCode ===
+          ServiceTypeCode.APPLIANCE_REPAIR && (
+          <ApplianceJobEditForm
             service={service}
             setIsEditService={setIsEditService}
           />
