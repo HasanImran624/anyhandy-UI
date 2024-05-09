@@ -112,17 +112,22 @@ const Step3 = () => {
     }
   };
 
+  const [errorText, setErrorText] = useState("");
+
   const handleNext = () => {
     if (!formAttributes.jobDetails.startImmediatly) {
       if (!formAttributes.jobDetails.startDate) {
+        setErrorText("*Start Date is not Selected");
         return;
       }
 
       if (!formAttributes.jobDetails.endDate) {
+        setErrorText("*End Date is not Selected");
         return;
       }
 
       if (formAttributes.jobDetails.startDate.isBefore(dayjs(), "day")) {
+        setErrorText("*Start date is not earlier than today");
         return;
       }
       if (
@@ -131,6 +136,7 @@ const Step3 = () => {
           "day"
         )
       ) {
+        setErrorText("*End date must be grater then starrt date");
         return;
       }
     }
@@ -647,13 +653,15 @@ const Step3 = () => {
                 name="start_immediately"
                 id="start_immediately"
                 className="focus:outline-none w-4 h-4 checked:accent-[#459b81]"
-                onChange={() => {
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setErrorText("");
+                  }
                   setFormAttributes({
                     ...formAttributes,
                     jobDetails: {
                       ...formAttributes.jobDetails,
-                      startImmediatly:
-                        !formAttributes.jobDetails.startImmediatly,
+                      startImmediatly: e.target.checked,
                     },
                   });
                 }}
@@ -829,8 +837,17 @@ const Step3 = () => {
                 {formAttributes.location.area}
               </h4>
             </section>
+            {!!errorText && (
+              <span
+                style={{ color: "#dc2626" }}
+                className="font-semibold text-base"
+              >
+                {errorText}
+              </span>
+            )}
           </section>
         </section>
+
         <span className="w-full flex items-center justify-end gap-5">
           <button
             onClick={() => {

@@ -155,6 +155,27 @@ export const RegularCleaningByHourJobEditForm = ({
           })}
         </span>
       </section>
+      <section className="flex flex-col gap-2 mt-3">
+        <h3 className="font-medium text-base text-[#0D0B01]">
+          Provide Supplies
+        </h3>
+        <span className="flex gap-3 items-center">
+          <input
+            value={editFormAttributes.provideSupplies}
+            onChange={(e) =>
+              setEditFormAttributes({
+                ...editFormAttributes,
+                provideSupplies: e.target.checked,
+              })
+            }
+            type="checkbox"
+            name="provideSupplies"
+            id="provideSupplies"
+            className="w-4 h-4  accent-[#15a177]"
+          />
+          <label htmlFor="provideSupplies">Provide Supplies</label>
+        </span>
+      </section>
       <section className="flex flex-col gap-2">
         <h3 className="font-medium text-base text-[#0D0B01]">Attachments</h3>
         <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">

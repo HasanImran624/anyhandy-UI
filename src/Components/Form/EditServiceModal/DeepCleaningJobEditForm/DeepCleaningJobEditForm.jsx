@@ -45,59 +45,59 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
 
   return (
     <section className="flex flex-col gap-5">
-       <section className="flex flex-col gap-2 mt-3">
-          <h3 className="font-medium text-base text-[#0D0B01]">
-            Type of Furniture
-          </h3>
-          <span className="flex gap-3 items-center">
-            <input
-              checked={editFormAttributes.typeFurniture === "Sofa"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  typeFurniture: "Sofa",
-                })
-              }
-              type="radio"
-              name="furnitureType"
-              id="sofa"
-              className="w-4 h-4  accent-[#15a177]"
-            />
-            <label htmlFor="sofa">Sofa</label>
-          </span>
-          <span className="flex gap-3 items-center">
-            <input
-              checked={editFormAttributes.typeFurniture === "Mattress"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  typeFurniture: "Mattress",
-                })
-              }
-              type="radio"
-              name="furnitureType"
-              id="mattress"
-              className="w-4 h-4  accent-[#15a177]"
-            />
-            <label htmlFor="mattress">Mattress</label>
-          </span>
-          <span className="flex gap-3 items-center">
-            <input
-              checked={editFormAttributes.typeFurniture === "Carpet"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  typeFurniture: "Carpet",
-                })
-              }
-              type="radio"
-              name="furnitureType"
-              id="carpet"
-              className="w-4 h-4  accent-[#15a177]"
-            />
-            <label htmlFor="carpet">Carpet</label>
-          </span>
-        </section>
+      <section className="flex flex-col gap-2 mt-3">
+        <h3 className="font-medium text-base text-[#0D0B01]">
+          Type of Furniture
+        </h3>
+        <span className="flex gap-3 items-center">
+          <input
+            checked={editFormAttributes.typeFurniture === "Sofa"}
+            onChange={(e) =>
+              setEditFormAttributes({
+                ...editFormAttributes,
+                typeFurniture: "Sofa",
+              })
+            }
+            type="radio"
+            name="furnitureType"
+            id="sofa"
+            className="w-4 h-4  accent-[#15a177]"
+          />
+          <label htmlFor="sofa">Sofa</label>
+        </span>
+        <span className="flex gap-3 items-center">
+          <input
+            checked={editFormAttributes.typeFurniture === "Mattress"}
+            onChange={(e) =>
+              setEditFormAttributes({
+                ...editFormAttributes,
+                typeFurniture: "Mattress",
+              })
+            }
+            type="radio"
+            name="furnitureType"
+            id="mattress"
+            className="w-4 h-4  accent-[#15a177]"
+          />
+          <label htmlFor="mattress">Mattress</label>
+        </span>
+        <span className="flex gap-3 items-center">
+          <input
+            checked={editFormAttributes.typeFurniture === "Carpet"}
+            onChange={(e) =>
+              setEditFormAttributes({
+                ...editFormAttributes,
+                typeFurniture: "Carpet",
+              })
+            }
+            type="radio"
+            name="furnitureType"
+            id="carpet"
+            className="w-4 h-4  accent-[#15a177]"
+          />
+          <label htmlFor="carpet">Carpet</label>
+        </span>
+      </section>
       <section className="flex flex-col gap-2 mt-3">
         <h3 className="font-medium text-base text-[#0D0B01]">
           Number of Items
@@ -142,6 +142,27 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
           className="w-full bg-white rounded-lg p-3 border"
           placeholder=""
         />
+      </section>
+      <section className="flex flex-col gap-2 mt-3">
+        <h3 className="font-medium text-base text-[#0D0B01]">
+          Provide Supplies
+        </h3>
+        <span className="flex gap-3 items-center">
+          <input
+            value={editFormAttributes.provideSupplies}
+            onChange={(e) =>
+              setEditFormAttributes({
+                ...editFormAttributes,
+                provideSupplies: e.target.checked,
+              })
+            }
+            type="checkbox"
+            name="provideSupplies"
+            id="provideSupplies"
+            className="w-4 h-4  accent-[#15a177]"
+          />
+          <label htmlFor="provideSupplies">Provide Supplies</label>
+        </span>
       </section>
       <section className="flex flex-col gap-2">
         <h3 className="font-medium text-base text-[#0D0B01]">Attachments</h3>
