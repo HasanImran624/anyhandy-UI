@@ -45,13 +45,13 @@ const Step4 = () => {
   const navigate = useNavigate();
   const submitJob = useCallback(() => {
     try {
-      axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes);
+      const token = localStorage.getItem("jwt");
+      axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       navigate("/jobPosting");
-      // axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
     } catch (error) {}
   }, [formAttributes, navigate]);
 
