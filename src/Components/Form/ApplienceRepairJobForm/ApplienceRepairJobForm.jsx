@@ -44,7 +44,6 @@ export const ApplienceRepairJobForm = () => {
 
   const handleNext = useCallback(() => {
     if (!alreadyAdded) {
-      console.log("I am in");
       addToList();
     }
     updateProgress(progress + 1);

@@ -1,25 +1,23 @@
 import { FaArrowLeft } from "react-icons/fa";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import art from "../../Assets/art.png";
-import bed from "../../Assets/bed.png";
 import dimension from "../../Assets/dimension.png";
 import { CiCalendar } from "react-icons/ci";
 import { CiMoneyBill } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
-
 import { BiCabinet } from "react-icons/bi";
 import { BsDoorOpen } from "react-icons/bs";
-import { MdHomeWork } from "react-icons/md";
-import { MdFence } from "react-icons/md";
-import { MdOutlineBedroomParent } from "react-icons/md";
-import { TbWashDryP } from "react-icons/tb";
-import { MdOutlinePlumbing } from "react-icons/md";
-import { TbAirConditioning } from "react-icons/tb";
-import { MdElectricBolt } from "react-icons/md";
-import { MdPestControl } from "react-icons/md";
+import {
+  MdHomeWork,
+  MdFence,
+  MdOutlinePlumbing,
+  MdElectricBolt,
+  MdPestControl,
+  MdOutlineBedroomParent,
+} from "react-icons/md";
+import { TbWashDryP, TbAirConditioning } from "react-icons/tb";
 import { GiShears } from "react-icons/gi";
 import { RiFridgeFill } from "react-icons/ri";
-
 
 import axios from "../../api/axios";
 import { useCallback, useEffect, useMemo } from "react";
@@ -48,7 +46,7 @@ const Step4 = () => {
   const submitJob = useCallback(() => {
     try {
       axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes);
-      navigate("/");
+      navigate("/jobPosting");
       // axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
       //   headers: {
       //     "Content-Type": "multipart/form-data",
@@ -61,7 +59,7 @@ const Step4 = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const getLocation = useCallback(() => {
+  const location = useMemo(() => {
     let locationTextArray = [];
 
     if (formAttributes.location.details) {
@@ -86,8 +84,8 @@ const Step4 = () => {
     let area = "";
     let color = "";
     let icon = "";
-    let showPaint,
-      showArea = true;
+    let showPaint = true;
+    let showArea = true;
     switch (service.code) {
       case PaintingJobCode.CABINET:
         numberItem = service.numberItems + " cabinet";
@@ -187,7 +185,7 @@ const Step4 = () => {
       case PestControlJobCode.FLIES:
       case PestControlJobCode.RODENT:
       case PestControlJobCode.COCKROACH:
-        numberItem = service.numberItems + ' room';
+        numberItem = service.numberItems + " room";
         icon = <MdPestControl size={25} />;
         area = service.locationType;
         showPaint = false;
@@ -206,13 +204,24 @@ const Step4 = () => {
         icon = <RiFridgeFill size={25} />;
         showPaint = false;
         break;
-      // case HomeCleaningJobCode.DEEP_CLEANING:
-      //   numberItem = service.numberItems + ' cleaners';
-      //   showArea = false;
-      //   icon = <MdElectricBolt size={25} />;
-      //   showPaint = false;
-      //   break;
-      //   break;
+      case HomeCleaningJobCode.REGULAR:
+        numberItem = service.numberHours + " hour";
+        area = service.numberCleaner ? service.numberCleaner + " cleaner" : "";
+        icon = <MdHomeWork size={25} />;
+        showPaint = false;
+        break;
+      case HomeCleaningJobCode.MAINTAINANCE:
+        numberItem = service.numberHours + " hour";
+        area = service.areaType;
+        icon = <MdHomeWork size={25} />;
+        showPaint = false;
+        break;
+      case HomeCleaningJobCode.DEEP_CLEANING:
+        numberItem = service.numberItems + " item";
+        area = service.itemSize + " Sq. Ft.";
+        icon = <MdHomeWork size={25} />;
+        showPaint = false;
+        break;
       default:
         return <div></div>;
     }
@@ -231,12 +240,16 @@ const Step4 = () => {
         {showPaint && (
           <span className="flex items-center gap-2">
             <img src={art} alt="art" className="pointer-events-none" />
-            <span
-              className="w-7 h-7 rounded-full"
-              style={{
-                background: color || "#FFFFF0",
-              }}
-            ></span>
+            {!!service.providePaint ? (
+              <h6>{color}</h6>
+            ) : (
+              <span
+                className="w-7 h-7 rounded-full"
+                style={{
+                  background: color || "#FFFFF0",
+                }}
+              />
+            )}
           </span>
         )}
       </div>
@@ -245,9 +258,11 @@ const Step4 = () => {
 
   const subServices = useMemo(() => {
     return formAttributes.subServices.map((service) => {
-      debugger;
       return (
-        <div className="flex flex-col border border-[#E3E3E3] rounded-lg">
+        <div
+          key={service.name}
+          className="flex flex-col border border-[#E3E3E3] rounded-lg"
+        >
           <h4 className="flex-1 bg-green-50 py-3 px-5 rounded-t-lg border-b border-[#E3E3E3] font-medium text-base text-black">
             {service.name}
           </h4>
@@ -279,7 +294,7 @@ const Step4 = () => {
                 {formAttributes.mainServiceName}
               </h2>
               <p className="text-black font-medium text-base">
-                { formAttributes.mainServiceDescription }
+                {formAttributes.mainServiceDescription}
               </p>
               <hr />
             </header>
@@ -309,13 +324,16 @@ const Step4 = () => {
                       <CiCalendar size={25} /> Date
                     </div>
                     <div className="font-medium text-base">
-                      {formAttributes.jobDetails.startImmediatly
+                      {formAttributes.jobDetails?.startImmediatly
                         ? "Start Immediate"
-                        : `${formAttributes.jobDetails.startDate.format(
+                        : formAttributes.jobDetails?.startDate &&
+                          formAttributes.jobDetails?.endDate
+                        ? `${formAttributes.jobDetails?.startDate.format(
                             "DD/MM/YYYY"
-                          )} to ${formAttributes.jobDetails.endDate.format(
+                          )} to ${formAttributes.jobDetails?.endDate?.format(
                             "DD/MM/YYYY"
-                          )}`}
+                          )}`
+                        : ""}
                     </div>
                   </span>
                   <span className="flex items-center">
@@ -325,15 +343,19 @@ const Step4 = () => {
                     </div>
                     <div className="font-medium text-base">
                       {!!formAttributes.jobDetails.isHourlyRate
-                        ? `$${formAttributes.jobDetails.startRate}/hr-$${formAttributes.jobDetails.endRate}/hr`
-                        : `$${formAttributes.jobDetails.fixedPriceAmount || 0}/hr`}
+                        ? `$${formAttributes.jobDetails.startRate || 0}/hr-$${
+                            formAttributes.jobDetails.endRate || 0
+                          }/hr`
+                        : `$${
+                            formAttributes.jobDetails.fixedPriceAmount || 0
+                          }/hr`}
                     </div>
                   </span>
                   <span className="flex items-center">
                     <div className="flex items-center gap-2 w-44">
                       <CiLocationOn size={25} /> Location
                     </div>
-                    <div className="font-medium text-base">{getLocation()}</div>
+                    <div className="font-medium text-base">{location}</div>
                   </span>
                 </div>
               </div>

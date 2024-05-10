@@ -73,21 +73,23 @@ export const HomeCleaningJobForm = () => {
 
   const handleNext = useCallback(() => {
     if (selectedSubHomeCleaningJob.code) {
-      const res = addToList();
-      if (!res) {
-        return;
+      if (!alreadyAdded) {
+        addToList();
       }
     }
     updateProgress(progress + 1);
-  }, [addToList, progress, selectedSubHomeCleaningJob.code, updateProgress]);
+  }, [
+    addToList,
+    alreadyAdded,
+    progress,
+    selectedSubHomeCleaningJob.code,
+    updateProgress,
+  ]);
 
-  const onSubJobChange = useCallback(
-    (e) => {
-      setSelectedSubHomeCleaningJob(e.value);
-      setSelectedAttributes({});
-    },
-    []
-  );
+  const onSubJobChange = useCallback((e) => {
+    setSelectedSubHomeCleaningJob(e.value);
+    setSelectedAttributes({});
+  }, []);
 
   const add = useCallback(() => {
     if (alreadyAdded) {
