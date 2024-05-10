@@ -177,13 +177,24 @@ const JobPosting = () => {
         icon = <RiFridgeFill size={25} />;
         showPaint = false;
         break;
-      // case HomeCleaningJobCode.DEEP_CLEANING:
-      //   numberItem = service.numberItems + ' cleaners';
-      //   showArea = false;
-      //   icon = <MdElectricBolt size={25} />;
-      //   showPaint = false;
-      //   break;
-      //   break;
+      case HomeCleaningJobCode.REGULAR:
+        numberItem = service.numberHours + " hour";
+        area = service.numberCleaner ? service.numberCleaner + " cleaner" : "";
+        icon = <MdHomeWork size={25} />;
+        showPaint = false;
+        break;
+      case HomeCleaningJobCode.MAINTAINANCE:
+        numberItem = service.numberHours + " hour";
+        area = service.areaType;
+        icon = <MdHomeWork size={25} />;
+        showPaint = false;
+        break;
+      case HomeCleaningJobCode.DEEP_CLEANING:
+        numberItem = service.numberItems + " item";
+        area = service.itemSize + " Sq. Ft.";
+        icon = <MdHomeWork size={25} />;
+        showPaint = false;
+        break;
       default:
         return <div></div>;
     }
