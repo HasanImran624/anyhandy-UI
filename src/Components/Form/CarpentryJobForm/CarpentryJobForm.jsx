@@ -169,6 +169,7 @@ export const CarpentryJobForm = () => {
                   type="file"
                   name="attachment"
                   className="hidden"
+                  accept="image/*"
                   onChange={handleFileChange}
                 />
               </label>

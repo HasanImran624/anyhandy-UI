@@ -40,8 +40,7 @@ const Step3 = () => {
   const [addLocationMenu, setAddLocationMenu] = useState(false);
   const [eye, setEye] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  // const API_KEY = "AIzaSyAyo5nn2bNubrb8UQyeOhuxkvXKt4xWKlo";
-  const API_KEY = "getyourkey";
+  const API_KEY = "AIzaSyCfVmmRxuCJlRx3-Pkxu1mnPgFPM95jSog";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const [city, setCity] = useState();
@@ -63,7 +62,6 @@ const Step3 = () => {
       alert("Geolocation is not supported by this browser.");
     }
   };
-
   const getCoordinates = (position) => {
     setLat(position.coords.latitude);
     setLong(position.coords.longitude);
@@ -602,7 +600,7 @@ const Step3 = () => {
                 This will help a job post stand out
               </p>
             </header>
-            <section className="flex w-full gap-5">
+            <section className="flex flex-wrap gap-5 lg:flex-nowrap">
               <div className="flex-1">
                 <h3 className="font-medium text-lg text-[#0D0B01]">
                   Start Date

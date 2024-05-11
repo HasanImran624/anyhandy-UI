@@ -1,15 +1,18 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 import { useProgress } from "../../../context/ProgressContext";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { ElectricalJobs, Rooms } from "../../../Constants";
 
 export const ElectricalJobForm = () => {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [selectedSubElectricalJob, setSelectedSubElectricalJob] = useState({});
   const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [errorText, setErrorText] = useState("");
+  const [filePreviews, setFilePreviews] = useState([]);
+
   const {
     formAttributes,
     setFormAttributes,
@@ -17,22 +20,17 @@ export const ElectricalJobForm = () => {
     updateProgress,
     resetAttributes,
   } = useProgress();
-
-  const alreadyAdded = useMemo(
-    () =>
-      !!formAttributes.subServices.find(
-        (s) => s.code === selectedSubElectricalJob.code
-      ),
-    [formAttributes.subServices, selectedSubElectricalJob.code]
-  );
+  const id = uuid().substring(0, 4);
+  const handleReset = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Resetting the value of the file input
+    }
+  };
 
   const addToList = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-    }
-
     setFormAttributes({
       ...formAttributes,
+      uuid: id,
       subServices: [
         ...formAttributes.subServices,
         {
@@ -44,28 +42,53 @@ export const ElectricalJobForm = () => {
     });
     setSelectedSubElectricalJob({});
     setSelectedAttributes({});
+    handleReset();
   }, [
-    alreadyAdded,
     formAttributes,
+    id,
     selectedAttributes,
     selectedSubElectricalJob.code,
     selectedSubElectricalJob.name,
     setFormAttributes,
   ]);
 
-  const add = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-    addToList();
-  }, [addToList, alreadyAdded]);
-
   const handleFileChange = useCallback(
     (e) => {
-      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
+      const fileList = e.target.files;
+      const dataTransfer = new DataTransfer();
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList.item(i);
+        const modifiedFile = new File(
+          [file],
+          `${selectedSubElectricalJob.code}_${id}`,
+          {
+            type: file.type,
+          }
+        );
+        dataTransfer.items.add(modifiedFile);
+      }
+
+      const modifiedFilesList = dataTransfer.files;
+
+      setSelectedAttributes({
+        ...selectedAttributes,
+        files: modifiedFilesList,
+      });
+      const previews = [];
+
+      for (let i = 0; i < modifiedFilesList.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === modifiedFilesList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFilesList[i]);
+      }
     },
-    [selectedAttributes]
+    [id, selectedAttributes, selectedSubElectricalJob.code]
   );
 
   const getFileNames = useCallback(() => {
@@ -80,18 +103,10 @@ export const ElectricalJobForm = () => {
 
   const handleNext = useCallback(() => {
     if (selectedSubElectricalJob.code) {
-      if (!alreadyAdded) {
-        addToList();
-      }
+      addToList();
     }
     updateProgress(progress + 1);
-  }, [
-    addToList,
-    alreadyAdded,
-    progress,
-    selectedSubElectricalJob.code,
-    updateProgress,
-  ]);
+  }, [addToList, progress, selectedSubElectricalJob.code, updateProgress]);
 
   return (
     <>
@@ -104,6 +119,7 @@ export const ElectricalJobForm = () => {
           onChange={(e) => {
             setSelectedSubElectricalJob(e.value);
             setSelectedAttributes({});
+            handleReset();
           }}
           options={ElectricalJobs}
           optionLabel="name"
@@ -168,7 +184,9 @@ export const ElectricalJobForm = () => {
               <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
                 Choose file...
                 <input
+                  ref={fileInputRef}
                   multiple
+                  accept="image/*"
                   type="file"
                   name="attachment"
                   className="hidden"
@@ -178,20 +196,21 @@ export const ElectricalJobForm = () => {
               {selectedAttributes.files && (
                 <p className="text-[#636363] text-sm">{getFileNames()}</p>
               )}
-            </section>
-            <section className="flex flex-col gap-2">
-              {!!errorText && (
-                <span
-                  style={{ color: "#dc2626" }}
-                  className="font-semibold text-base"
-                >
-                  {errorText}
-                </span>
-              )}
+              <div className="flex flex-wrap gap-2" id="filePreviews">
+                {/* Display file previews here */}
+                {filePreviews.map((preview, index) => (
+                  <img
+                    key={index}
+                    src={preview}
+                    alt={`Preview ${index}`}
+                    className="w-20 h-20 object-cover rounded-lg"
+                  />
+                ))}
+              </div>
             </section>
             <section
               className="flex gap-2 items-center mt-5 cursor-pointer"
-              onClick={add}
+              onClick={addToList}
             >
               <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
               <h4 className="font-semibold text-base">Add To the list</h4>

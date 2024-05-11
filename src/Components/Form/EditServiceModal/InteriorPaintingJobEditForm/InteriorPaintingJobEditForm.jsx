@@ -42,7 +42,7 @@ export const InteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
       return names.join(", ");
     }
   }, [editFormAttributes.files]);
-  
+
   return (
     <section className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
@@ -181,6 +181,7 @@ export const InteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
           Choose file...
           <input
             multiple
+            accept="image/*"
             type="file"
             name="attachment"
             className="hidden"

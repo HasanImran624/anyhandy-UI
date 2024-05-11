@@ -344,9 +344,7 @@ const JobPosting = () => {
                         ? `$${formAttributes.jobDetails.startRate || 0}/hr-$${
                             formAttributes.jobDetails.endRate || 0
                           }/hr`
-                        : `$${
-                            formAttributes.jobDetails.fixedPriceAmount || 0
-                          }/hr`}
+                        : `$${formAttributes.jobDetails.fixedPriceAmount || 0}`}
                     </div>
                   </span>
                   <span className="flex flex-col gap-1 justify-center">

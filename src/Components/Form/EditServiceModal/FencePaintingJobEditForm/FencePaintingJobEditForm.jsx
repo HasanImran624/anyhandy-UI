@@ -154,6 +154,7 @@ export const FencePaintingJobEditForm = ({ service, setIsEditService }) => {
           Choose file...
           <input
             multiple
+            accept="image/*"
             type="file"
             name="attachment"
             className="hidden"

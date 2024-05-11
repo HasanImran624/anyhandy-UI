@@ -17,15 +17,16 @@ const initailFormAttributes = {
 export const ProgressProvider = ({ children }) => {
   const [progress, setProgress] = useState(1);
   const [formAttributes, setFormAttributes] = useState(initailFormAttributes);
+  const [filesData, setFilesData] = useState(new FormData());
 
   const updateProgress = useCallback((newProgress) => {
     setProgress(newProgress);
   }, []);
 
-  const resetAttributes = useCallback(
-    () => setFormAttributes(initailFormAttributes),
-    []
-  );
+  const resetAttributes = useCallback(() => {
+    setFormAttributes(initailFormAttributes);
+    setFilesData(new FormData());
+  }, []);
 
   return (
     <ProgressContext.Provider
@@ -35,6 +36,8 @@ export const ProgressProvider = ({ children }) => {
         formAttributes,
         setFormAttributes,
         resetAttributes,
+        filesData,
+        setFilesData,
       }}
     >
       {children}

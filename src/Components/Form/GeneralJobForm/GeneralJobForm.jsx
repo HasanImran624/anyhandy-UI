@@ -83,7 +83,13 @@ export const GeneralJobForm = () => {
       }
     }
     updateProgress(progress + 1);
-  }, [addToList, alreadyAdded, progress, selectedSubGeneralJob.code, updateProgress]);
+  }, [
+    addToList,
+    alreadyAdded,
+    progress,
+    selectedSubGeneralJob.code,
+    updateProgress,
+  ]);
 
   const onSubJobChange = useCallback((e) => {
     setSelectedSubGeneralJob(e.value);
@@ -135,6 +141,7 @@ export const GeneralJobForm = () => {
               Choose file...
               <input
                 multiple
+                accept="image/*"
                 type="file"
                 name="attachment"
                 className="hidden"

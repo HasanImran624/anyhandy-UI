@@ -46,13 +46,39 @@ const Step4 = () => {
   const submitJob = useCallback(() => {
     try {
       const token = localStorage.getItem("jwt");
-      axios.post(SUBMIT_JOB_REQUEST_URL, formAttributes, {
+      const dataTransfer = new DataTransfer();
+      const subServices = { ...formAttributes.subServices };
+
+      formAttributes.subServices.forEach((service) => {
+        if (service.files) {
+          for (let i = 0; i < service.files.length; i++) {
+            dataTransfer.items.add(service.files[i]);
+          }
+        }
+        delete subServices["files"];
+      });
+
+      const files = dataTransfer.files;
+
+      const requestFormAttributes = {
+        ...formAttributes,
+        subServices: subServices,
+      };
+
+      const formData = new FormData();
+      formData.append("files", files);
+      formData.append("form_attributes", requestFormAttributes);
+
+      axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `${token}`,
         },
       });
       navigate("/jobPosting");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [formAttributes, navigate]);
 
   useEffect(() => {
@@ -346,9 +372,7 @@ const Step4 = () => {
                         ? `$${formAttributes.jobDetails.startRate || 0}/hr-$${
                             formAttributes.jobDetails.endRate || 0
                           }/hr`
-                        : `$${
-                            formAttributes.jobDetails.fixedPriceAmount || 0
-                          }/hr`}
+                        : `$${formAttributes.jobDetails.fixedPriceAmount || 0}`}
                     </div>
                   </span>
                   <span className="flex items-center">

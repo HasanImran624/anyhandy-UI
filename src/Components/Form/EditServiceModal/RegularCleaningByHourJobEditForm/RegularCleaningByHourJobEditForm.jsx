@@ -182,6 +182,7 @@ export const RegularCleaningByHourJobEditForm = ({
           Choose file...
           <input
             multiple
+            accept="image/*"
             type="file"
             name="attachment"
             className="hidden"

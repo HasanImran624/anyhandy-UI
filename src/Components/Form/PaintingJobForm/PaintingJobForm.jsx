@@ -179,6 +179,7 @@ export const PaintingJobForm = () => {
               Choose file...
               <input
                 multiple
+                accept="image/*"
                 type="file"
                 name="attachment"
                 className="hidden"

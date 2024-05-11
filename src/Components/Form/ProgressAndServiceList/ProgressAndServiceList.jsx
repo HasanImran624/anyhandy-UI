@@ -16,7 +16,7 @@ export const ProgressAndServiceList = () => {
       setFormAttributes({
         ...formAttributes,
         subServices: formAttributes.subServices.filter(
-          (sub) => sub.code !== subService.code
+          (sub) => sub.uuid !== subService.uuid
         ),
       });
     },

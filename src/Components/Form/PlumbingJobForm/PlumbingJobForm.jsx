@@ -40,7 +40,13 @@ export const PlumbingJobForm = () => {
     });
     setSelectedSubPlumbingJob({});
     setSelectedAttributes({});
-  }, [formAttributes, selectedAttributes, selectedSubPlumbingJob.code, selectedSubPlumbingJob.name, setFormAttributes]);
+  }, [
+    formAttributes,
+    selectedAttributes,
+    selectedSubPlumbingJob.code,
+    selectedSubPlumbingJob.name,
+    setFormAttributes,
+  ]);
 
   const handleFileChange = useCallback(
     (e) => {
@@ -159,6 +165,7 @@ export const PlumbingJobForm = () => {
                 Choose file...
                 <input
                   multiple
+                  accept="image/*"
                   type="file"
                   name="attachment"
                   className="hidden"

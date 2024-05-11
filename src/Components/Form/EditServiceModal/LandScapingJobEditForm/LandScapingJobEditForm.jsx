@@ -24,7 +24,7 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
     setFormAttributes,
     setIsEditService,
   ]);
-  
+
   const handleFileChange = useCallback(
     (e) => {
       setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
@@ -85,6 +85,7 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
           Choose file...
           <input
             multiple
+            accept="image/*"
             type="file"
             name="attachment"
             className="hidden"

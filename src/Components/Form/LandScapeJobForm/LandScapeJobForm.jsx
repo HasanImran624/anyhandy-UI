@@ -42,7 +42,13 @@ export const LandScapeJobForm = () => {
     setSelectedSubLandscapeJob({});
     setSelectedAttributes({});
     return true;
-  }, [formAttributes, selectedAttributes, selectedSubLandscapeJob.code, selectedSubLandscapeJob.name, setFormAttributes]);
+  }, [
+    formAttributes,
+    selectedAttributes,
+    selectedSubLandscapeJob.code,
+    selectedSubLandscapeJob.name,
+    setFormAttributes,
+  ]);
 
   const handleFileChange = useCallback(
     (e) => {
@@ -153,6 +159,7 @@ export const LandScapeJobForm = () => {
                 Choose file...
                 <input
                   multiple
+                  accept="image/*"
                   type="file"
                   name="attachment"
                   className="hidden"
