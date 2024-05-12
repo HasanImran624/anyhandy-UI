@@ -64,7 +64,7 @@ const Step4 = () => {
         subServices: subServices,
       };
 
-      formData.append("form_attributes", requestFormAttributes);
+      formData.append("form_attributes", JSON.stringify(requestFormAttributes));
 
       axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
         headers: {
