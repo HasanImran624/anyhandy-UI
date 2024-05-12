@@ -30,13 +30,13 @@ export const ElectricalJobForm = () => {
   const addToList = useCallback(() => {
     setFormAttributes({
       ...formAttributes,
-      uuid: id,
       subServices: [
         ...formAttributes.subServices,
         {
           ...selectedAttributes,
           code: selectedSubElectricalJob.code,
           name: selectedSubElectricalJob.name,
+          uuid: id,
         },
       ],
     });
