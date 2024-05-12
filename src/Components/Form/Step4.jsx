@@ -46,27 +46,31 @@ const Step4 = () => {
   const submitJob = useCallback(() => {
     try {
       const token = localStorage.getItem("jwt");
-      const dataTransfer = new DataTransfer();
+      const formData = new FormData();
+      // const dataTransfer = new DataTransfer();
+      // const  files = []
       const subServices = { ...formAttributes.subServices };
-
+      let j = 0;
       formAttributes.subServices.forEach((service) => {
         if (service.files) {
           for (let i = 0; i < service.files.length; i++) {
-            dataTransfer.items.add(service.files[i]);
+            // dataTransfer.items.add(service.files[i]);
+            // files.push(service.files[i])
+            formData.append(`file${j}`, service.files[i]);
+            j++;
           }
         }
         delete subServices["files"];
       });
 
-      const files = dataTransfer.files;
+      // const files = dataTransfer.files;
 
       const requestFormAttributes = {
         ...formAttributes,
         subServices: subServices,
       };
 
-      const formData = new FormData();
-      formData.append("files", files);
+      // formData.append("files", files);
       formData.append("form_attributes", requestFormAttributes);
 
       axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
