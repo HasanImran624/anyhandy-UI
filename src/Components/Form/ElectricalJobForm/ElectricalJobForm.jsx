@@ -55,9 +55,10 @@ export const ElectricalJobForm = () => {
   const handleFileChange = useCallback(
     (e) => {
       const fileList = e.target.files;
-      const dataTransfer = new DataTransfer();
+      const modifiedFilesList = [];
+      const previews = [];
       for (let i = 0; i < fileList.length; i++) {
-        const file = fileList.item(i);
+        const file = fileList[i];
         const modifiedFile = new File(
           [file],
           `${selectedSubElectricalJob.code}_${id}`,
@@ -65,28 +66,23 @@ export const ElectricalJobForm = () => {
             type: file.type,
           }
         );
-        dataTransfer.items.add(modifiedFile);
-      }
+        modifiedFilesList.push(modifiedFile);
 
-      const modifiedFilesList = dataTransfer.files;
-
-      setSelectedAttributes({
-        ...selectedAttributes,
-        files: modifiedFilesList,
-      });
-      const previews = [];
-
-      for (let i = 0; i < modifiedFilesList.length; i++) {
         const reader = new FileReader();
         reader.onload = (event) => {
           previews.push(event.target.result);
-          if (previews.length === modifiedFilesList.length) {
+          if (previews.length === fileList.length) {
             setFilePreviews(previews);
           }
         };
 
-        reader.readAsDataURL(modifiedFilesList[i]);
+        reader.readAsDataURL(modifiedFile);
       }
+
+      setSelectedAttributes({
+        ...selectedAttributes,
+        files: modifiedFilesList,
+      })
     },
     [id, selectedAttributes, selectedSubElectricalJob.code]
   );

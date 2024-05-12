@@ -5,6 +5,7 @@ import { Rooms } from "../../../../Constants";
 export const PlumbingEditForm = ({ service, setIsEditService }) => {
   const [editFormAttributes, setEditFormAttributes] = useState({});
   const { formAttributes, setFormAttributes } = useProgress();
+  const [filePreviews, setFilePreviews] = useState([]);
 
   useEffect(() => {
     setEditFormAttributes({ ...service });
@@ -12,7 +13,35 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
 
   const handleFileChange = useCallback(
     (e) => {
-      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
+      const fileList = e.target.files;
+      const modifiedFilesList = [];
+      const previews = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const modifiedFile = new File(
+          [file],
+          `${editFormAttributes.code}_${editFormAttributes.uuid}`,
+          {
+            type: file.type,
+          }
+        );
+        modifiedFilesList.push(modifiedFile);
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === fileList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFile);
+      }
+
+      setEditFormAttributes({
+        ...editFormAttributes,
+        files: modifiedFilesList,
+      });
     },
     [editFormAttributes]
   );
@@ -21,14 +50,14 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
     setFormAttributes({
       ...formAttributes,
       subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
+        ser.code === service.uuid ? editFormAttributes : ser
       ),
     });
     setIsEditService(false);
   }, [
     editFormAttributes,
     formAttributes,
-    service.code,
+    service.uuid,
     setFormAttributes,
     setIsEditService,
   ]);
@@ -113,6 +142,16 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
         {editFormAttributes.files && (
           <p className="text-[#636363] text-sm">{getFileNames()}</p>
         )}
+        <div className="flex flex-wrap gap-2" id="filePreviews">
+          {filePreviews.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          ))}
+        </div>
       </section>
       <span className="flex items-center justify-end gap-3">
         <button

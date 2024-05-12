@@ -57,8 +57,9 @@ export const PlumbingJobForm = () => {
     (e) => {
       const fileList = e.target.files;
       const modifiedFilesList = [];
+      const previews = [];
       for (let i = 0; i < fileList.length; i++) {
-        const file = fileList.item(i);
+        const file = fileList[i];
         const modifiedFile = new File(
           [file],
           `${selectedSubPlumbingJob.code}_${id}`,
@@ -67,25 +68,22 @@ export const PlumbingJobForm = () => {
           }
         );
         modifiedFilesList.push(modifiedFile);
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === fileList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFile);
       }
 
       setSelectedAttributes({
         ...selectedAttributes,
         files: modifiedFilesList,
       });
-      const previews = [];
-
-      for (let i = 0; i < modifiedFilesList.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          previews.push(event.target.result);
-          if (previews.length === modifiedFilesList.length) {
-            setFilePreviews(previews);
-          }
-        };
-
-        reader.readAsDataURL(modifiedFilesList[i]);
-      }
     },
     [id, selectedAttributes, selectedSubPlumbingJob.code]
   );

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
 import { useProgress } from "../../../../context/ProgressContext";
 import { Rooms } from "../../../../Constants";
 
@@ -7,7 +6,6 @@ export const ElectricJobEditForm = ({ service, setIsEditService }) => {
   const [editFormAttributes, setEditFormAttributes] = useState({});
   const { formAttributes, setFormAttributes } = useProgress();
   const [filePreviews, setFilePreviews] = useState([]);
-  const id = uuid().substring(0, 4);
 
   useEffect(() => {
     setEditFormAttributes({ ...service });
@@ -16,40 +14,36 @@ export const ElectricJobEditForm = ({ service, setIsEditService }) => {
   const handleFileChange = useCallback(
     (e) => {
       const fileList = e.target.files;
-      const dataTransfer = new DataTransfer();
+      const modifiedFilesList = [];
+      const previews = [];
       for (let i = 0; i < fileList.length; i++) {
-        const file = fileList.item(i);
+        const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${editFormAttributes.code}_${id}`,
+          `${editFormAttributes.code}_${editFormAttributes.uuid}`,
           {
             type: file.type,
           }
         );
-        dataTransfer.items.add(modifiedFile);
-      }
+        modifiedFilesList.push(modifiedFile);
 
-      const modifiedFilesList = dataTransfer.files;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === fileList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFile);
+      }
 
       setEditFormAttributes({
         ...editFormAttributes,
         files: modifiedFilesList,
       });
-      const previews = [];
-
-      for (let i = 0; i < modifiedFilesList.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          previews.push(event.target.result);
-          if (previews.length === modifiedFilesList.length) {
-            setFilePreviews(previews);
-          }
-        };
-
-        reader.readAsDataURL(modifiedFilesList[i]);
-      }
     },
-    [editFormAttributes, id]
+    [editFormAttributes]
   );
 
   const onSAveChanges = useCallback(() => {
