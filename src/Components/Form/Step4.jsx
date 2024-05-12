@@ -47,23 +47,23 @@ const Step4 = () => {
     try {
       const token = localStorage.getItem("jwt");
       const formData = new FormData();
-      const subServices = { ...formAttributes.subServices };
+      const subServices = [];
       let j = 0;
       formAttributes.subServices.forEach((service) => {
-        if (service.files) {
+        const { files, ...ser } = service;
+        if (files) {
           for (let i = 0; i < service.files.length; i++) {
             formData.append(`file${j}`, service.files[i]);
             j++;
           }
         }
-        delete subServices["files"];
+        subServices.push(ser);
       });
 
       const requestFormAttributes = {
         ...formAttributes,
         subServices: subServices,
       };
-
       formData.append("form_attributes", JSON.stringify(requestFormAttributes));
 
       axios.post(SUBMIT_JOB_REQUEST_URL, formData, {

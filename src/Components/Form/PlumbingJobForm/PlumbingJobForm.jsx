@@ -1,15 +1,18 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { useProgress } from "../../../context/ProgressContext";
 import { PLumbingServices, Rooms } from "../../../Constants";
 
 export const PlumbingJobForm = () => {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [selectedSubPlumbingJob, setSelectedSubPlumbingJob] = useState({});
   const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [errorText, setErrorText] = useState("");
+  const [filePreviews, setFilePreviews] = useState([]);
+
   const {
     formAttributes,
     setFormAttributes,
@@ -18,13 +21,12 @@ export const PlumbingJobForm = () => {
     resetAttributes,
   } = useProgress();
 
-  const alreadyAdded = useMemo(
-    () =>
-      !!formAttributes.subServices.find(
-        (s) => s.code === selectedSubPlumbingJob.code
-      ),
-    [formAttributes.subServices, selectedSubPlumbingJob.code]
-  );
+  const id = uuid().substring(0, 4);
+  const handleReset = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Resetting the value of the file input
+    }
+  };
 
   const addToList = useCallback(() => {
     setFormAttributes({
@@ -33,6 +35,7 @@ export const PlumbingJobForm = () => {
         ...formAttributes.subServices,
         {
           ...selectedAttributes,
+          uuid: id,
           code: selectedSubPlumbingJob.code,
           name: selectedSubPlumbingJob.name,
         },
@@ -40,8 +43,10 @@ export const PlumbingJobForm = () => {
     });
     setSelectedSubPlumbingJob({});
     setSelectedAttributes({});
+    handleReset();
   }, [
     formAttributes,
+    id,
     selectedAttributes,
     selectedSubPlumbingJob.code,
     selectedSubPlumbingJob.name,
@@ -50,9 +55,39 @@ export const PlumbingJobForm = () => {
 
   const handleFileChange = useCallback(
     (e) => {
-      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
+      const fileList = e.target.files;
+      const modifiedFilesList = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList.item(i);
+        const modifiedFile = new File(
+          [file],
+          `${selectedSubPlumbingJob.code}_${id}`,
+          {
+            type: file.type,
+          }
+        );
+        modifiedFilesList.push(modifiedFile);
+      }
+
+      setSelectedAttributes({
+        ...selectedAttributes,
+        files: modifiedFilesList,
+      });
+      const previews = [];
+
+      for (let i = 0; i < modifiedFilesList.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === modifiedFilesList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFilesList[i]);
+      }
     },
-    [selectedAttributes]
+    [id, selectedAttributes, selectedSubPlumbingJob.code]
   );
 
   const getFileNames = useCallback(() => {
@@ -67,26 +102,10 @@ export const PlumbingJobForm = () => {
 
   const handleNext = useCallback(() => {
     if (selectedSubPlumbingJob.code) {
-      if (!alreadyAdded) {
-        addToList();
-      }
+      addToList();
     }
     updateProgress(progress + 1);
-  }, [
-    addToList,
-    alreadyAdded,
-    progress,
-    selectedSubPlumbingJob.code,
-    updateProgress,
-  ]);
-
-  const add = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-    addToList();
-  }, [addToList, alreadyAdded]);
+  }, [addToList, progress, selectedSubPlumbingJob.code, updateProgress]);
 
   return (
     <>
@@ -99,6 +118,7 @@ export const PlumbingJobForm = () => {
           onChange={(e) => {
             setSelectedSubPlumbingJob(e.value);
             setSelectedAttributes({});
+            handleReset();
           }}
           options={PLumbingServices}
           optionLabel="name"
@@ -164,6 +184,7 @@ export const PlumbingJobForm = () => {
               <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
                 Choose file...
                 <input
+                  ref={fileInputRef}
                   multiple
                   accept="image/*"
                   type="file"
@@ -175,20 +196,21 @@ export const PlumbingJobForm = () => {
               {selectedAttributes.files && (
                 <p className="text-[#636363] text-sm">{getFileNames()}</p>
               )}
-            </section>
-            <section className="flex flex-col gap-2">
-              {!!errorText && (
-                <span
-                  style={{ color: "#dc2626" }}
-                  className="font-semibold text-base"
-                >
-                  {errorText}
-                </span>
-              )}
+              <div className="flex flex-wrap gap-2" id="filePreviews">
+                {/* Display file previews here */}
+                {filePreviews.map((preview, index) => (
+                  <img
+                    key={index}
+                    src={preview}
+                    alt={`Preview ${index}`}
+                    className="w-20 h-20 object-cover rounded-lg"
+                  />
+                ))}
+              </div>
             </section>
             <section
               className="flex gap-2 items-center mt-5 cursor-pointer"
-              onClick={add}
+              onClick={addToList}
             >
               <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
               <h4 className="font-semibold text-base">Add To the list</h4>

@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 import { useProgress } from "../../../../context/ProgressContext";
 import { Rooms } from "../../../../Constants";
 
 export const ElectricJobEditForm = ({ service, setIsEditService }) => {
   const [editFormAttributes, setEditFormAttributes] = useState({});
   const { formAttributes, setFormAttributes } = useProgress();
+  const [filePreviews, setFilePreviews] = useState([]);
+  const id = uuid().substring(0, 4);
 
   useEffect(() => {
     setEditFormAttributes({ ...service });
@@ -12,9 +15,41 @@ export const ElectricJobEditForm = ({ service, setIsEditService }) => {
 
   const handleFileChange = useCallback(
     (e) => {
-      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
+      const fileList = e.target.files;
+      const dataTransfer = new DataTransfer();
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList.item(i);
+        const modifiedFile = new File(
+          [file],
+          `${editFormAttributes.code}_${id}`,
+          {
+            type: file.type,
+          }
+        );
+        dataTransfer.items.add(modifiedFile);
+      }
+
+      const modifiedFilesList = dataTransfer.files;
+
+      setEditFormAttributes({
+        ...editFormAttributes,
+        files: modifiedFilesList,
+      });
+      const previews = [];
+
+      for (let i = 0; i < modifiedFilesList.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === modifiedFilesList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFilesList[i]);
+      }
     },
-    [editFormAttributes]
+    [editFormAttributes, id]
   );
 
   const onSAveChanges = useCallback(() => {
@@ -113,6 +148,16 @@ export const ElectricJobEditForm = ({ service, setIsEditService }) => {
         {editFormAttributes.files && (
           <p className="text-[#636363] text-sm">{getFileNames()}</p>
         )}
+        <div className="flex flex-wrap gap-2" id="filePreviews">
+          {filePreviews.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          ))}
+        </div>
       </section>
       <span className="flex items-center justify-end gap-3">
         <button

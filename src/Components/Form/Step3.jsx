@@ -21,7 +21,6 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import CloseIcon from "@mui/icons-material/Close";
@@ -29,7 +28,6 @@ import PlaceIcon from "@mui/icons-material/Place";
 import { Dropdown } from "primereact/dropdown";
 import { useProgress } from "../../context/ProgressContext";
 import { ProgressAndServiceList } from "./ProgressAndServiceList";
-
 import clock from "../../Assets/clock.png";
 import cash from "../../Assets/cash.png";
 import { LOGIN_URL, Cities } from "../../Constants";
