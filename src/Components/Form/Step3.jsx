@@ -335,7 +335,7 @@ const Step3 = () => {
                   <h3 className="text-[#0D0B01]">Don't have an account?</h3>
                   <h3
                     className="text-[#00CF91] cursor-pointer"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/signUp")}
                   >
                     Create
                   </h3>

@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { useProgress } from "../../../context/ProgressContext";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
-import { ElectricalJobs, Rooms } from "../../../Constants";
+import {
+  ElectricalJobs,
+  Rooms,
+  SUBMIT_JOB_REQUEST_URL,
+} from "../../../Constants";
+import axios from "../../../api/axios";
 
 export const ElectricalJobForm = () => {
   const navigate = useNavigate();
@@ -54,10 +59,13 @@ export const ElectricalJobForm = () => {
 
   const handleFileChange = useCallback(
     (e) => {
+      const token = localStorage.getItem("jwt");
       const fileList = e.target.files;
       const dataTransfer = new DataTransfer();
+      const formData = new FormData();
       for (let i = 0; i < fileList.length; i++) {
-        const file = fileList.item(i);
+        const file = fileList[i];
+        formData.append(`file${i}`, file);
         const modifiedFile = new File(
           [file],
           `${selectedSubElectricalJob.code}_${id}`,
@@ -67,6 +75,13 @@ export const ElectricalJobForm = () => {
         );
         dataTransfer.items.add(modifiedFile);
       }
+
+      axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token}`,
+        },
+      });
 
       const modifiedFilesList = dataTransfer.files;
 
