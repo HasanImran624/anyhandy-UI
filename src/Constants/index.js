@@ -39,3 +39,4 @@ export { Cities } from "./serviceConstants";
 export { LOGIN_URL } from "./urls";
 export { SIGNUP_URL } from "./urls";
 export { SUBMIT_JOB_REQUEST_URL } from "./urls";
+export { GET_LIST_COUNTRIES_CITIES } from "./urls";

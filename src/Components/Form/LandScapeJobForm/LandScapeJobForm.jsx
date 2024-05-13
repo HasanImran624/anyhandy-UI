@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useRef } from "react";
+import { v4 as uuid } from "uuid";
 import { Dropdown } from "primereact/dropdown";
 import { useNavigate } from "react-router-dom";
 import { useProgress } from "../../../context/ProgressContext";
@@ -10,7 +11,10 @@ export const LandScapeJobForm = () => {
 
   const [selectedSubLandscapeJob, setSelectedSubLandscapeJob] = useState({});
   const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [errorText, setErrorText] = useState("");
+  const [filePreviews, setFilePreviews] = useState([]);
+  const fileInputRef = useRef(null);
+  const [id, setId] = useState(uuid().substring(0, 4));
+
   const {
     formAttributes,
     setFormAttributes,
@@ -19,13 +23,14 @@ export const LandScapeJobForm = () => {
     resetAttributes,
   } = useProgress();
 
-  const alreadyAdded = useMemo(
-    () =>
-      !!formAttributes.subServices.find(
-        (s) => s.code === selectedSubLandscapeJob.code
-      ),
-    [formAttributes.subServices, selectedSubLandscapeJob.code]
-  );
+  const handleReset = useCallback(() => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setSelectedAttributes({});
+    setFilePreviews([]);
+    setId(uuid().substring(0, 4));
+  }, []);
 
   const addToList = useCallback(() => {
     setFormAttributes({
@@ -34,16 +39,19 @@ export const LandScapeJobForm = () => {
         ...formAttributes.subServices,
         {
           ...selectedAttributes,
+          uuid: id,
           code: selectedSubLandscapeJob.code,
           name: selectedSubLandscapeJob.name,
         },
       ],
     });
     setSelectedSubLandscapeJob({});
-    setSelectedAttributes({});
+    handleReset();
     return true;
   }, [
     formAttributes,
+    handleReset,
+    id,
     selectedAttributes,
     selectedSubLandscapeJob.code,
     selectedSubLandscapeJob.name,
@@ -52,9 +60,37 @@ export const LandScapeJobForm = () => {
 
   const handleFileChange = useCallback(
     (e) => {
-      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
+      const fileList = e.target.files;
+      const modifiedFilesList = [];
+      const previews = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const modifiedFile = new File(
+          [file],
+          `${selectedSubLandscapeJob.code}_${id}`,
+          {
+            type: file.type,
+          }
+        );
+        modifiedFilesList.push(modifiedFile);
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === fileList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFile);
+      }
+
+      setSelectedAttributes({
+        ...selectedAttributes,
+        files: modifiedFilesList,
+      });
     },
-    [selectedAttributes]
+    [id, selectedAttributes, selectedSubLandscapeJob.code]
   );
 
   const getFileNames = useCallback(() => {
@@ -69,26 +105,18 @@ export const LandScapeJobForm = () => {
 
   const handleNext = useCallback(() => {
     if (selectedSubLandscapeJob.code) {
-      if (!alreadyAdded) {
-        addToList();
-      }
+      addToList();
     }
     updateProgress(progress + 1);
-  }, [
-    addToList,
-    alreadyAdded,
-    progress,
-    selectedSubLandscapeJob.code,
-    updateProgress,
-  ]);
+  }, [addToList, progress, selectedSubLandscapeJob.code, updateProgress]);
 
-  const add = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-    addToList();
-  }, [addToList, alreadyAdded]);
+  const onSubJobChange = useCallback(
+    (e) => {
+      setSelectedSubLandscapeJob(e.value);
+      handleReset();
+    },
+    [handleReset]
+  );
 
   return (
     <>
@@ -98,10 +126,7 @@ export const LandScapeJobForm = () => {
         </h3>
         <Dropdown
           value={selectedSubLandscapeJob}
-          onChange={(e) => {
-            setSelectedSubLandscapeJob(e.value);
-            setSelectedAttributes({});
-          }}
+          onChange={onSubJobChange}
           options={LawnCareJobs}
           optionLabel="name"
           scrollHeight={"250px"}
@@ -158,6 +183,7 @@ export const LandScapeJobForm = () => {
               <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
                 Choose file...
                 <input
+                  ref={fileInputRef}
                   multiple
                   accept="image/*"
                   type="file"
@@ -169,20 +195,21 @@ export const LandScapeJobForm = () => {
               {selectedAttributes.files && (
                 <p className="text-[#636363] text-sm">{getFileNames()}</p>
               )}
-            </section>
-            <section className="flex flex-col gap-2">
-              {!!errorText && (
-                <span
-                  style={{ color: "#dc2626" }}
-                  className="font-semibold text-base"
-                >
-                  {errorText}
-                </span>
-              )}
+              <div className="flex flex-wrap gap-2" id="filePreviews">
+                {/* Display file previews here */}
+                {filePreviews.map((preview, index) => (
+                  <img
+                    key={index}
+                    src={preview}
+                    alt={`Preview ${index}`}
+                    className="w-20 h-20 object-cover rounded-lg"
+                  />
+                ))}
+              </div>
             </section>
             <section
               className="flex gap-2 items-center mt-5 cursor-pointer"
-              onClick={add}
+              onClick={addToList}
             >
               <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
               <h4 className="font-semibold text-base">Add To the list</h4>

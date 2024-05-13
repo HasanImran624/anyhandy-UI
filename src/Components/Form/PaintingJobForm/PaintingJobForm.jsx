@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useRef } from "react";
+import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
@@ -21,14 +22,53 @@ export const PaintingJobForm = () => {
     updateProgress,
     resetAttributes,
   } = useProgress();
-  const [errorText, setErrorText] = useState("");
   const [selectedAttributes, setSelectedAttributes] = useState({});
+  const [filePreviews, setFilePreviews] = useState([]);
+  const fileInputRef = useRef(null);
+  const [id, setId] = useState(uuid().substring(0, 4));
+
+  const handleReset = useCallback(() => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setSelectedAttributes({});
+    setFilePreviews([]);
+    setId(uuid().substring(0, 4));
+  }, []);
 
   const handleFileChange = useCallback(
     (e) => {
-      setSelectedAttributes({ ...selectedAttributes, files: e.target.files });
+      const fileList = e.target.files;
+      const modifiedFilesList = [];
+      const previews = [];
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const modifiedFile = new File(
+          [file],
+          `${selectedSubPaintingJob.code}_${id}`,
+          {
+            type: file.type,
+          }
+        );
+        modifiedFilesList.push(modifiedFile);
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === fileList.length) {
+            setFilePreviews(previews);
+          }
+        };
+
+        reader.readAsDataURL(modifiedFile);
+      }
+
+      setSelectedAttributes({
+        ...selectedAttributes,
+        files: modifiedFilesList,
+      });
     },
-    [selectedAttributes]
+    [id, selectedAttributes, selectedSubPaintingJob.code]
   );
 
   const getFileNames = useCallback(() => {
@@ -41,14 +81,6 @@ export const PaintingJobForm = () => {
     }
   }, [selectedAttributes.files]);
 
-  const alreadyAdded = useMemo(
-    () =>
-      !!formAttributes.subServices.find(
-        (s) => s.code === selectedSubPaintingJob.code
-      ),
-    [formAttributes.subServices, selectedSubPaintingJob.code]
-  );
-
   const addToList = useCallback(() => {
     setFormAttributes({
       ...formAttributes,
@@ -56,6 +88,7 @@ export const PaintingJobForm = () => {
         ...formAttributes.subServices,
         {
           ...selectedAttributes,
+          uuid: id,
           code: selectedSubPaintingJob.code,
           name: selectedSubPaintingJob.name,
         },
@@ -65,6 +98,7 @@ export const PaintingJobForm = () => {
     setSelectedAttributes({});
   }, [
     formAttributes,
+    id,
     selectedAttributes,
     selectedSubPaintingJob.code,
     selectedSubPaintingJob.name,
@@ -73,31 +107,15 @@ export const PaintingJobForm = () => {
 
   const handleNext = useCallback(() => {
     if (selectedSubPaintingJob.code) {
-      if (!alreadyAdded) {
-        addToList();
-      }
+      addToList();
     }
     updateProgress(progress + 1);
-  }, [
-    addToList,
-    alreadyAdded,
-    progress,
-    selectedSubPaintingJob.code,
-    updateProgress,
-  ]);
-
-  const add = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-    addToList();
-  }, [addToList, alreadyAdded]);
+  }, [addToList, progress, selectedSubPaintingJob.code, updateProgress]);
 
   const onSubJobChange = useCallback((e) => {
     setSelectedSubPaintingJob(e.value);
-    setSelectedAttributes({});
-  }, []);
+    handleReset();
+  }, [handleReset]);
 
   return (
     <>
@@ -162,22 +180,13 @@ export const PaintingJobForm = () => {
       {!!selectedSubPaintingJob.code && (
         <>
           <section className="flex flex-col gap-2">
-            {!!errorText && (
-              <span
-                style={{ color: "#dc2626" }}
-                className="font-semibold text-base"
-              >
-                {errorText}
-              </span>
-            )}
-          </section>
-          <section className="flex flex-col gap-2">
             <h3 className="font-medium text-base text-[#0D0B01]">
               Attachments
             </h3>
             <label className="w-full bg-white rounded-lg p-3 border cursor-pointer">
               Choose file...
               <input
+                ref={fileInputRef}
                 multiple
                 accept="image/*"
                 type="file"
@@ -189,10 +198,21 @@ export const PaintingJobForm = () => {
             {selectedAttributes.files && (
               <p className="text-[#636363] text-sm">{getFileNames()}</p>
             )}
+            <div className="flex flex-wrap gap-2" id="filePreviews">
+              {/* Display file previews here */}
+              {filePreviews.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`Preview ${index}`}
+                  className="w-20 h-20 object-cover rounded-lg"
+                />
+              ))}
+            </div>
           </section>
           <section
             className="flex gap-2 items-center mt-5 cursor-pointer"
-            onClick={add}
+            onClick={addToList}
           >
             <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
             <h4 className="font-semibold text-base">Add To the list</h4>

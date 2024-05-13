@@ -1,46 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
-import { useProgress } from "../../../../context/ProgressContext";
+import { useEditFormAttributes } from "../../../../Hooks";
 
 export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
-  const [editFormAttributes, setEditFormAttributes] = useState({});
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  useEffect(() => {
-    setEditFormAttributes({ ...service });
-  }, [service]);
-
-  const onSAveChanges = useCallback(() => {
-    setFormAttributes({
-      ...formAttributes,
-      subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
-      ),
-    });
-    setIsEditService(false);
-  }, [
+  const {
     editFormAttributes,
-    formAttributes,
-    service.code,
-    setFormAttributes,
-    setIsEditService,
-  ]);
-
-  const handleFileChange = useCallback(
-    (e) => {
-      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
-    },
-    [editFormAttributes]
-  );
-
-  const getFileNames = useCallback(() => {
-    if (editFormAttributes.files) {
-      let names = [];
-      for (let i = 0; i < editFormAttributes.files.length; i++) {
-        names.push(editFormAttributes.files[i].name);
-      }
-      return names.join(", ");
-    }
-  }, [editFormAttributes.files]);
+    filePreviews,
+    handleFileChange,
+    getFileNames,
+    setAttribute,
+    onSaveChanges,
+  } = useEditFormAttributes(service, setIsEditService);
 
   return (
     <section className="flex flex-col gap-5">
@@ -50,12 +18,7 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
           type="text"
           name="areaSize"
           value={editFormAttributes.sizeArea}
-          onChange={(e) =>
-            setEditFormAttributes({
-              ...editFormAttributes,
-              sizeArea: e.target.value,
-            })
-          }
+          onChange={(e) => setAttribute("sizeArea", e.target.value)}
           className="w-full bg-white rounded-lg p-3 border"
           placeholder="Approximate area size e.g., 20"
         />
@@ -65,12 +28,7 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
         <span className="mt-3">
           <textarea
             value={editFormAttributes.specialRequest}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                specialRequest: e.target.value,
-              })
-            }
+            onChange={(e) => setAttribute("specialRequest", e.target.value)}
             name="specialRequest"
             id="specialRequest"
             rows="5"
@@ -95,6 +53,16 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
         {editFormAttributes.files && (
           <p className="text-[#636363] text-sm">{getFileNames()}</p>
         )}
+        <div className="flex flex-wrap gap-2" id="filePreviews">
+          {filePreviews.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          ))}
+        </div>
       </section>
       <span className="flex items-center justify-end gap-3">
         <button
@@ -105,7 +73,7 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
         </button>
         <button
           className="px-4 bg-[#00CF91] text-white font-medium text-base rounded-md py-3 hover:bg-opacity-90"
-          onClick={() => onSAveChanges()}
+          onClick={onSaveChanges}
         >
           Save Changes
         </button>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
@@ -20,12 +20,16 @@ export const ElectricalJobForm = () => {
     updateProgress,
     resetAttributes,
   } = useProgress();
-  const id = uuid().substring(0, 4);
-  const handleReset = () => {
+  const [id, setId] = useState(uuid().substring(0, 4));
+
+  const handleReset = useCallback(() => {
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Resetting the value of the file input
+      fileInputRef.current.value = "";
     }
-  };
+    setSelectedAttributes({});
+    setFilePreviews([]);
+    setId(uuid().substring(0, 4));
+  }, []);
 
   const addToList = useCallback(() => {
     setFormAttributes({
@@ -41,10 +45,10 @@ export const ElectricalJobForm = () => {
       ],
     });
     setSelectedSubElectricalJob({});
-    setSelectedAttributes({});
     handleReset();
   }, [
     formAttributes,
+    handleReset,
     id,
     selectedAttributes,
     selectedSubElectricalJob.code,
@@ -82,7 +86,7 @@ export const ElectricalJobForm = () => {
       setSelectedAttributes({
         ...selectedAttributes,
         files: modifiedFilesList,
-      })
+      });
     },
     [id, selectedAttributes, selectedSubElectricalJob.code]
   );
@@ -114,7 +118,6 @@ export const ElectricalJobForm = () => {
           value={selectedSubElectricalJob}
           onChange={(e) => {
             setSelectedSubElectricalJob(e.value);
-            setSelectedAttributes({});
             handleReset();
           }}
           options={ElectricalJobs}

@@ -1,30 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import { useProgress } from "../../../../context/ProgressContext";
 import { Rooms } from "../../../../Constants";
+import { useEditFormAttributes } from "../../../../Hooks";
 
 export const ApplianceJobEditForm = ({ service, setIsEditService }) => {
-  const [editFormAttributes, setEditFormAttributes] = useState({});
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  useEffect(() => {
-    setEditFormAttributes({ ...service });
-  }, [service]);
-
-  const onSAveChanges = useCallback(() => {
-    setFormAttributes({
-      ...formAttributes,
-      subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
-      ),
-    });
-    setIsEditService(false);
-  }, [
-    editFormAttributes,
-    formAttributes,
-    service.code,
-    setFormAttributes,
-    setIsEditService,
-  ]);
+  const { editFormAttributes, setAttribute, onSaveChanges } =
+    useEditFormAttributes(service, setIsEditService);
 
   return (
     <section className="flex flex-col gap-5">
@@ -35,12 +14,7 @@ export const ApplianceJobEditForm = ({ service, setIsEditService }) => {
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.typeAppliance === "Oven"}
-            onChange={() =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                typeAppliance: "Oven",
-              })
-            }
+            onChange={() => setAttribute("typeAppliance", "Oven")}
             type="radio"
             name="applianceType"
             id="oven"
@@ -51,12 +25,7 @@ export const ApplianceJobEditForm = ({ service, setIsEditService }) => {
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.typeAppliance === "Fridge"}
-            onChange={() =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                typeAppliance: "Fridge",
-              })
-            }
+            onChange={() => setAttribute("typeAppliance", "Fridge")}
             type="radio"
             name="applianceType"
             id="fridge"
@@ -78,12 +47,7 @@ export const ApplianceJobEditForm = ({ service, setIsEditService }) => {
                   editFormAttributes.numberItems === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
-                onClick={() =>
-                  setEditFormAttributes({
-                    ...editFormAttributes,
-                    numberItems: room.room,
-                  })
-                }
+                onClick={() => setAttribute("numberItems", room.room)}
               >
                 <h3 className="font-medium text-base text-center">
                   {room.room}{" "}
@@ -97,12 +61,7 @@ export const ApplianceJobEditForm = ({ service, setIsEditService }) => {
       <span className="mt-3">
         <textarea
           value={editFormAttributes.specialRequest}
-          onChange={(e) =>
-            setEditFormAttributes({
-              ...editFormAttributes,
-              specialRequest: e.target.value,
-            })
-          }
+          onChange={(e) => setAttribute("specialRequest", e.target.value)}
           name="specialRequest"
           id="specialRequest"
           rows="5"
@@ -119,7 +78,7 @@ export const ApplianceJobEditForm = ({ service, setIsEditService }) => {
         </button>
         <button
           className="px-4 bg-[#00CF91] text-white font-medium text-base rounded-md py-3 hover:bg-opacity-90"
-          onClick={() => onSAveChanges()}
+          onClick={onSaveChanges}
         >
           Save Changes
         </button>

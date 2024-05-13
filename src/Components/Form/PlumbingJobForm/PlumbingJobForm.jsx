@@ -21,12 +21,15 @@ export const PlumbingJobForm = () => {
     resetAttributes,
   } = useProgress();
 
-  const id = uuid().substring(0, 4);
-  const handleReset = () => {
+  const [id, setId] = useState(uuid().substring(0, 4));
+  const handleReset = useCallback(() => {
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Resetting the value of the file input
+      fileInputRef.current.value = "";
     }
-  };
+    setSelectedAttributes({});
+    setFilePreviews([]);
+    setId(uuid().substring(0, 4));
+  }, []);
 
   const addToList = useCallback(() => {
     setFormAttributes({
@@ -46,6 +49,7 @@ export const PlumbingJobForm = () => {
     handleReset();
   }, [
     formAttributes,
+    handleReset,
     id,
     selectedAttributes,
     selectedSubPlumbingJob.code,

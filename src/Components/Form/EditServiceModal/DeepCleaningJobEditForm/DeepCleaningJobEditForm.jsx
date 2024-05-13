@@ -1,47 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-import { useProgress } from "../../../../context/ProgressContext";
+import { useEditFormAttributes } from "../../../../Hooks";
 import { Rooms } from "../../../../Constants";
 
 export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
-  const [editFormAttributes, setEditFormAttributes] = useState({});
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  useEffect(() => {
-    setEditFormAttributes({ ...service });
-  }, [service]);
-
-  const onSAveChanges = useCallback(() => {
-    setFormAttributes({
-      ...formAttributes,
-      subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
-      ),
-    });
-    setIsEditService(false);
-  }, [
+  const {
     editFormAttributes,
-    formAttributes,
-    service.code,
-    setFormAttributes,
-    setIsEditService,
-  ]);
-
-  const handleFileChange = useCallback(
-    (e) => {
-      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
-    },
-    [editFormAttributes]
-  );
-
-  const getFileNames = useCallback(() => {
-    if (editFormAttributes.files) {
-      let names = [];
-      for (let i = 0; i < editFormAttributes.files.length; i++) {
-        names.push(editFormAttributes.files[i].name);
-      }
-      return names.join(", ");
-    }
-  }, [editFormAttributes.files]);
+    filePreviews,
+    handleFileChange,
+    getFileNames,
+    setAttribute,
+    onSaveChanges,
+  } = useEditFormAttributes(service, setIsEditService);
 
   return (
     <section className="flex flex-col gap-5">
@@ -52,12 +20,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.typeFurniture === "Sofa"}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                typeFurniture: "Sofa",
-              })
-            }
+            onChange={(e) => setAttribute("typeFurniture", "Sofa")}
             type="radio"
             name="furnitureType"
             id="sofa"
@@ -68,12 +31,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.typeFurniture === "Mattress"}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                typeFurniture: "Mattress",
-              })
-            }
+            onChange={(e) => setAttribute("typeFurniture", "Mattress")}
             type="radio"
             name="furnitureType"
             id="mattress"
@@ -84,12 +42,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.typeFurniture === "Carpet"}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                typeFurniture: "Carpet",
-              })
-            }
+            onChange={(e) => setAttribute("typeFurniture", "Carpet")}
             type="radio"
             name="furnitureType"
             id="carpet"
@@ -111,12 +64,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
                   editFormAttributes.items === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
-                onClick={() =>
-                  setEditFormAttributes({
-                    ...editFormAttributes,
-                    items: room.room,
-                  })
-                }
+                onClick={() => setAttribute("items", room.room)}
               >
                 <h3 className="font-medium text-base text-center">
                   {" "}
@@ -131,12 +79,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         <h3 className="font-medium text-base text-[#0D0B01]">Size of Items</h3>
         <input
           value={editFormAttributes.itemSize}
-          onChange={(e) =>
-            setEditFormAttributes({
-              ...editFormAttributes,
-              itemSize: e.target.value,
-            })
-          }
+          onChange={(e) => setAttribute("itemSize", e.target.value)}
           type="text"
           name="itemSize"
           className="w-full bg-white rounded-lg p-3 border"
@@ -150,12 +93,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         <span className="flex gap-3 items-center">
           <input
             value={editFormAttributes.provideSupplies}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                provideSupplies: e.target.checked,
-              })
-            }
+            onChange={(e) => setAttribute("provideSupplies", e.target.checked)}
             type="checkbox"
             name="provideSupplies"
             id="provideSupplies"
@@ -180,6 +118,16 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         {editFormAttributes.files && (
           <p className="text-[#636363] text-sm">{getFileNames()}</p>
         )}
+        <div className="flex flex-wrap gap-2" id="filePreviews">
+          {filePreviews.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          ))}
+        </div>
       </section>
       <span className="flex items-center justify-end gap-3">
         <button
@@ -190,7 +138,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         </button>
         <button
           className="px-4 bg-[#00CF91] text-white font-medium text-base rounded-md py-3 hover:bg-opacity-90"
-          onClick={() => onSAveChanges()}
+          onClick={onSaveChanges}
         >
           Save Changes
         </button>

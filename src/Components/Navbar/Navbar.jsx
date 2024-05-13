@@ -344,18 +344,7 @@ export const Navbar = () => {
                       )}
                   </span>
                 </div>
-                {/* <div className='relative flex items-center gap-2'>
-                  <input
-                    type="checkbox"
-                    id="check"
-                    name='agree'
-                    checked={signUpFormik.values.agree}
-                    onChange={signUpFormik.handleChange}
-                    onBlur={signUpFormik.handleBlur}
-                  />
-                  <label htmlFor="check" className='text-[#868580] font-medium text-base cursor-pointer'>I agree to the Terms & Conditions</label>
-                  {(signUpFormik.touched.agree && signUpFormik.errors.agree) && <p className='absolute -bottom-5 left-0 text-sm text-red-500'>{signUpFormik.errors.agree}</p>}
-                </div> */}
+                
                 <button
                   type="submit"
                   className="w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md"

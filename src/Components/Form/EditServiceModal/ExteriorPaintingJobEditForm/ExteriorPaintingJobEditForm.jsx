@@ -1,47 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
-import { useProgress } from "../../../../context/ProgressContext";
 import { Colors } from "../../../../Constants";
-
+import { useEditFormAttributes } from "../../../../Hooks";
 export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
-  const [editFormAttributes, setEditFormAttributes] = useState({});
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  useEffect(() => {
-    setEditFormAttributes({ ...service });
-  }, [service]);
-
-  const onSAveChanges = useCallback(() => {
-    setFormAttributes({
-      ...formAttributes,
-      subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
-      ),
-    });
-    setIsEditService(false);
-  }, [
+  const {
     editFormAttributes,
-    formAttributes,
-    service.code,
-    setFormAttributes,
-    setIsEditService,
-  ]);
-
-  const handleFileChange = useCallback(
-    (e) => {
-      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
-    },
-    [editFormAttributes]
-  );
-
-  const getFileNames = useCallback(() => {
-    if (editFormAttributes.files) {
-      let names = [];
-      for (let i = 0; i < editFormAttributes.files.length; i++) {
-        names.push(editFormAttributes.files[i].name);
-      }
-      return names.join(", ");
-    }
-  }, [editFormAttributes.files]);
+    filePreviews,
+    handleFileChange,
+    getFileNames,
+    setAttribute,
+    onSaveChanges,
+  } = useEditFormAttributes(service, setIsEditService);
 
   return (
     <section className="flex flex-col gap-5">
@@ -53,12 +20,7 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
           <input
             type="text"
             value={editFormAttributes.sizeArea}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                sizeArea: e.target.value,
-              })
-            }
+            onChange={(e) => setAttribute("sizeArea", e.target.value)}
             name="areaSize"
             className="w-full bg-white rounded-lg p-3 border"
             placeholder="Approximate area size e.g., 20"
@@ -80,12 +42,7 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
                               ? "border-[#00CF91]"
                               : "border-transparent"
                           }  `}
-                onClick={() =>
-                  setEditFormAttributes({
-                    ...editFormAttributes,
-                    paintColor: color.color,
-                  })
-                }
+                onClick={() => setAttribute("paintColor", color.color)}
               >
                 <span
                   className="w-7 h-7 rounded-full"
@@ -101,12 +58,7 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.providePaint}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  providePaint: e.target.checked,
-                })
-              }
+              onChange={(e) => setAttribute("providePaint", e.target.checked)}
               type="checkbox"
               name="providePaint"
               id="providePaint"
@@ -117,12 +69,7 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.numberOfCoats}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  numberOfCoats: e.target.checked,
-                })
-              }
+              onChange={(e) => setAttribute("numberOfCoats", e.target.checked)}
               type="checkbox"
               name="coats"
               id="coats"
@@ -135,12 +82,7 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
       <span className="mt-3">
         <textarea
           value={editFormAttributes.specialRequest}
-          onChange={(e) =>
-            setEditFormAttributes({
-              ...editFormAttributes,
-              specialRequest: e.target.value,
-            })
-          }
+          onChange={(e) => setAttribute("specialRequest", e.target.value)}
           name="specialRequest"
           id="specialRequest"
           rows="5"
@@ -164,6 +106,17 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
         {editFormAttributes.files && (
           <p className="text-[#636363] text-sm">{getFileNames()}</p>
         )}
+        <div className="flex flex-wrap gap-2" id="filePreviews">
+          {/* Display file previews here */}
+          {filePreviews.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          ))}
+        </div>
       </section>
       <span className="flex items-center justify-end gap-3">
         <button
@@ -174,7 +127,7 @@ export const ExteriorPaintingJobEditForm = ({ service, setIsEditService }) => {
         </button>
         <button
           className="px-4 bg-[#00CF91] text-white font-medium text-base rounded-md py-3 hover:bg-opacity-90"
-          onClick={() => onSAveChanges()}
+          onClick={onSaveChanges}
         >
           Save Changes
         </button>

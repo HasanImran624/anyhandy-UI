@@ -1,50 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
-import { useProgress } from "../../../../context/ProgressContext";
+import { useEditFormAttributes } from "../../../../Hooks";
 import { Rooms } from "../../../../Constants";
 
 export const RegularCleaningByHourJobEditForm = ({
   service,
   setIsEditService,
 }) => {
-  const [editFormAttributes, setEditFormAttributes] = useState({});
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  useEffect(() => {
-    setEditFormAttributes({ ...service });
-  }, [service]);
-
-  const onSAveChanges = useCallback(() => {
-    setFormAttributes({
-      ...formAttributes,
-      subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
-      ),
-    });
-    setIsEditService(false);
-  }, [
+  const {
     editFormAttributes,
-    formAttributes,
-    service.code,
-    setFormAttributes,
-    setIsEditService,
-  ]);
-
-  const handleFileChange = useCallback(
-    (e) => {
-      setEditFormAttributes({ ...editFormAttributes, files: e.target.files });
-    },
-    [editFormAttributes]
-  );
-
-  const getFileNames = useCallback(() => {
-    if (editFormAttributes.files) {
-      let names = [];
-      for (let i = 0; i < editFormAttributes.files.length; i++) {
-        names.push(editFormAttributes.files[i].name);
-      }
-      return names.join(", ");
-    }
-  }, [editFormAttributes.files]);
+    filePreviews,
+    handleFileChange,
+    getFileNames,
+    setAttribute,
+    onSaveChanges,
+  } = useEditFormAttributes(service, setIsEditService);
 
   return (
     <section className="flex flex-col gap-5">
@@ -53,12 +21,7 @@ export const RegularCleaningByHourJobEditForm = ({
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.locationType === "Villa"}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                locationType: "Villa",
-              })
-            }
+            onChange={(e) => setAttribute("locationType", "Villa")}
             type="radio"
             name="locationType"
             id="villa"
@@ -69,12 +32,7 @@ export const RegularCleaningByHourJobEditForm = ({
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.locationType === "Apartment"}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                locationType: "Apartment",
-              })
-            }
+            onChange={(e) => setAttribute("locationType", "Apartment")}
             type="radio"
             name="locationType"
             id="apartment"
@@ -85,12 +43,7 @@ export const RegularCleaningByHourJobEditForm = ({
         <span className="flex gap-3 items-center">
           <input
             checked={editFormAttributes.locationType === "Office"}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                locationType: "Office",
-              })
-            }
+            onChange={(e) => setAttribute("locationType", "Office")}
             type="radio"
             name="locationType"
             id="office"
@@ -112,12 +65,7 @@ export const RegularCleaningByHourJobEditForm = ({
                   editFormAttributes.numberCleaner === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
-                onClick={() =>
-                  setEditFormAttributes({
-                    ...editFormAttributes,
-                    numberCleaner: room.room,
-                  })
-                }
+                onClick={() => setAttribute("numberCleaner", room.room)}
               >
                 <h3 className="font-medium text-base text-center">
                   {room.room}
@@ -140,12 +88,7 @@ export const RegularCleaningByHourJobEditForm = ({
                   editFormAttributes.numberHours === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
-                onClick={() =>
-                  setEditFormAttributes({
-                    ...editFormAttributes,
-                    numberHours: room.room,
-                  })
-                }
+                onClick={() => setAttribute("numberHours", room.room)}
               >
                 <h3 className="font-medium text-base text-center">
                   {room.room}
@@ -162,12 +105,7 @@ export const RegularCleaningByHourJobEditForm = ({
         <span className="flex gap-3 items-center">
           <input
             value={editFormAttributes.provideSupplies}
-            onChange={(e) =>
-              setEditFormAttributes({
-                ...editFormAttributes,
-                provideSupplies: e.target.checked,
-              })
-            }
+            onChange={(e) => setAttribute("provideSupplies", e.target.checked)}
             type="checkbox"
             name="provideSupplies"
             id="provideSupplies"
@@ -192,6 +130,16 @@ export const RegularCleaningByHourJobEditForm = ({
         {editFormAttributes.files && (
           <p className="text-[#636363] text-sm">{getFileNames()}</p>
         )}
+        <div className="flex flex-wrap gap-2" id="filePreviews">
+          {filePreviews.map((preview, index) => (
+            <img
+              key={index}
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-20 h-20 object-cover rounded-lg"
+            />
+          ))}
+        </div>
       </section>
       <span className="flex items-center justify-end gap-3">
         <button
@@ -202,7 +150,7 @@ export const RegularCleaningByHourJobEditForm = ({
         </button>
         <button
           className="px-4 bg-[#00CF91] text-white font-medium text-base rounded-md py-3 hover:bg-opacity-90"
-          onClick={() => onSAveChanges()}
+          onClick={onSaveChanges}
         >
           Save Changes
         </button>

@@ -1,30 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import { useProgress } from "../../../../context/ProgressContext";
+import { useEditFormAttributes } from "../../../../Hooks";
 import { Rooms } from "../../../../Constants";
 
 export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
-  const [editFormAttributes, setEditFormAttributes] = useState({});
-  const { formAttributes, setFormAttributes } = useProgress();
-
-  useEffect(() => {
-    setEditFormAttributes({ ...service });
-  }, [service]);
-
-  const onSAveChanges = useCallback(() => {
-    setFormAttributes({
-      ...formAttributes,
-      subServices: formAttributes.subServices.map((ser) =>
-        ser.code === service.code ? editFormAttributes : ser
-      ),
-    });
-    setIsEditService(false);
-  }, [
-    editFormAttributes,
-    formAttributes,
-    service.code,
-    setFormAttributes,
-    setIsEditService,
-  ]);
+  const { editFormAttributes, setAttribute, onSaveChanges } =
+    useEditFormAttributes(service, setIsEditService);
 
   return (
     <div className="flex flex-col gap-7">
@@ -34,12 +13,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.roomType === "Kitchen"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  roomType: "Kitchen",
-                })
-              }
+              onChange={(e) => setAttribute("roomType", "Kitchen")}
               type="radio"
               name="roomType"
               id="kitchen"
@@ -50,12 +24,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.roomType === "Bathroom"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  roomType: "Bathroom",
-                })
-              }
+              onChange={(e) => setAttribute("roomType", "Bathroom")}
               type="radio"
               name="roomType"
               id="bathroom"
@@ -77,12 +46,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
                     editFormAttributes.numberItems === room.room &&
                     "bg-[#00CF91] text-white"
                   }  `}
-                  onClick={() =>
-                    setEditFormAttributes({
-                      ...editFormAttributes,
-                      numberItems: room.room,
-                    })
-                  }
+                  onClick={() => setAttribute("numberItems", room.room)}
                 >
                   <h3 className="font-medium text-base text-center">
                     {" "}
@@ -100,12 +64,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.locationType === "Villa"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  locationType: "Villa",
-                })
-              }
+              onChange={(e) => setAttribute("locationType", "Villa")}
               type="radio"
               name="locationType"
               id="villa"
@@ -116,12 +75,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.locationType === "Apartment"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  locationType: "Apartment",
-                })
-              }
+              onChange={(e) => setAttribute("locationType", "Apartment")}
               type="radio"
               name="locationType"
               id="apartment"
@@ -132,12 +86,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.locationType === "Office"}
-              onChange={(e) =>
-                setEditFormAttributes({
-                  ...editFormAttributes,
-                  locationType: "Office",
-                })
-              }
+              onChange={(e) => setAttribute("locationType", "Office")}
               type="radio"
               name="locationType"
               id="office"
@@ -155,7 +104,7 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           </button>
           <button
             className="px-4 bg-[#00CF91] text-white font-medium text-base rounded-md py-3 hover:bg-opacity-90"
-            onClick={() => onSAveChanges()}
+            onClick={onSaveChanges}
           >
             Save Changes
           </button>
