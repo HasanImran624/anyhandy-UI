@@ -33,7 +33,10 @@ import { ProgressAndServiceList } from "./ProgressAndServiceList";
 import clock from "../../Assets/clock.png";
 import cash from "../../Assets/cash.png";
 import { LOGIN_URL, SIGNUP_URL } from "../../Constants";
-import { useListCountriesAndCities } from "../../Queries";
+import {
+  useListCountriesAndCities,
+  useGetAddressByLatAndLon,
+} from "../../Queries";
 
 const Step3 = () => {
   const navigate = useNavigate();
@@ -46,6 +49,7 @@ const Step3 = () => {
   const [long, setLong] = useState(null);
   const [isSignUp, setIsSignup] = useState(false);
   const { data: listCountriesAndCities = [] } = useListCountriesAndCities();
+  const { data: formattedAddress } = useGetAddressByLatAndLon(lat, long);
 
   const {
     progress,
@@ -79,33 +83,23 @@ const Step3 = () => {
       alert("Geolocation is not supported by this browser.");
     }
   };
+
   const getCoordinates = (position) => {
     setLat(position.coords.latitude);
     setLong(position.coords.longitude);
   };
 
-  const getAddress = useCallback(() => {
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&sensor=false&key=${API_KEY}`
-    )
-      .then((response) => response.json())
-      .then((data) =>
-        setFormAttributes({
-          ...formAttributes,
-          location: {
-            ...formAttributes.location,
-            details: data.results[0].formatted_address,
-          },
-        })
-      )
-      .catch((error) => alert(error));
-  }, [formAttributes, lat, long, setFormAttributes]);
-
   useEffect(() => {
-    if (lat && long) {
-      getAddress();
+    if (lat && long && !!formattedAddress) {
+      setFormAttributes({
+        ...formAttributes,
+        location: {
+          ...formAttributes.location,
+          details: formattedAddress,
+        },
+      });
     }
-  }, [getAddress, lat, long]);
+  }, [formAttributes, formattedAddress, lat, long, setFormAttributes]);
 
   const handleLocationError = (error) => {
     switch (error.code) {

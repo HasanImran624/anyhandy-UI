@@ -571,3 +571,5 @@ export const Colors = [
   { color: "#FF0000" },
   { color: "#F4F3F3" },
 ];
+
+export const GEOLOCATION_API_KEY = 'AIzaSyCfVmmRxuCJlRx3-Pkxu1mnPgFPM95jSog'
