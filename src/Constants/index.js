@@ -33,7 +33,6 @@ export { PLumbingServices } from "./serviceConstants";
 export { Rooms } from "./serviceConstants";
 export { ServiceTypeCode } from "./serviceConstants";
 export { services } from "./serviceConstants";
-export { Cities } from "./serviceConstants";
 
 // urls
 export { LOGIN_URL } from "./urls";

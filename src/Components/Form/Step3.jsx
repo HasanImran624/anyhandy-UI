@@ -44,10 +44,16 @@ const Step3 = () => {
   const API_KEY = "AIzaSyCfVmmRxuCJlRx3-Pkxu1mnPgFPM95jSog";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
-  const [city, setCity] = useState();
-  const [country, setCountry] = useState();
   const [isSignUp, setIsSignup] = useState(false);
   const { data: listCountriesAndCities = [] } = useListCountriesAndCities();
+
+  const {
+    progress,
+    updateProgress,
+    resetAttributes,
+    formAttributes,
+    setFormAttributes,
+  } = useProgress();
 
   const { countries = [] } = useMemo(
     () => ({ countries: listCountriesAndCities.map((res) => res.name) }),
@@ -57,19 +63,11 @@ const Step3 = () => {
   const { cities = [] } = useMemo(
     () => ({
       cities: listCountriesAndCities
-        .find((res) => res.name === country)
+        .find((res) => res.name === formAttributes.location.country)
         ?.cities.map((cit) => cit.name),
     }),
-    [country, listCountriesAndCities]
+    [formAttributes.location.country, listCountriesAndCities]
   );
-
-  const {
-    progress,
-    updateProgress,
-    resetAttributes,
-    formAttributes,
-    setFormAttributes,
-  } = useProgress();
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -656,16 +654,15 @@ const Step3 = () => {
                 Select Country
               </label>
               <Dropdown
-                value={country}
+                value={formAttributes.location.country}
                 onChange={(e) => {
                   setFormAttributes({
                     ...formAttributes,
                     location: {
                       ...formAttributes.location,
-                      city: e.value.name,
+                      country: e.value,
                     },
                   });
-                  setCountry(e.value);
                 }}
                 options={countries}
                 placeholder="Select Country"
@@ -680,16 +677,15 @@ const Step3 = () => {
                 Select City
               </label>
               <Dropdown
-                value={city}
+                value={formAttributes.location.city}
                 onChange={(e) => {
                   setFormAttributes({
                     ...formAttributes,
                     location: {
                       ...formAttributes.location,
-                      city: e.value.name,
+                      city: e.value,
                     },
                   });
-                  setCity(e.value);
                 }}
                 options={cities}
                 placeholder="Select City"
