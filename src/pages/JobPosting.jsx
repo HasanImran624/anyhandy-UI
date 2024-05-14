@@ -1,6 +1,6 @@
 import { Footer } from "../Components/Footer/Footer";
 import { Navbar } from "../Components/Navbar/Navbar";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect, useState } from "react";
 import arrow from "../Assets/arrow.png";
 import art from "../Assets/art.png";
 import dimension from "../Assets/dimension.png";
@@ -51,6 +51,27 @@ const JobPosting = () => {
     (code) => services.find((ser) => ser.code === code),
     []
   );
+
+  const [filePreviews, setFilePreviews] = useState({});
+
+  useEffect(() => {
+    formAttributes.subServices.forEach((service) => {
+      const previews = [];
+      service.files?.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === service.files.length) {
+            setFilePreviews((prevState) => ({
+              ...prevState,
+              [service.uuid]: previews,
+            }));
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  }, [formAttributes.subServices]);
 
   const getNumberItem = useCallback((service) => {
     let numberItem = "";
@@ -244,13 +265,26 @@ const JobPosting = () => {
                   {service.name}
                 </h4>
                 {getNumberItem(service)}
+                <span className="flex items-center gap-2 pl-2">
+                  <p>{service.specialRequest}</p>
+                </span>
+                <span className="flex items-center gap-2">
+                  {filePreviews[service.uuid]?.map((preview, index) => (
+                    <img
+                      key={index}
+                      src={preview}
+                      alt={`Preview ${index}`}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                  ))}
+                </span>
               </div>
             );
           })}
         </span>
       );
     });
-  }, [formAttributes.subServices, getNumberItem]);
+  }, [filePreviews, formAttributes.subServices, getNumberItem]);
 
   const locaion = useMemo(() => {
     let locationTextArray = [];

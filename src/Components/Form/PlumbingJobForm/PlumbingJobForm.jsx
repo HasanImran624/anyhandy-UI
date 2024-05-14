@@ -199,7 +199,6 @@ export const PlumbingJobForm = () => {
                 <p className="text-[#636363] text-sm">{getFileNames()}</p>
               )}
               <div className="flex flex-wrap gap-2" id="filePreviews">
-                {/* Display file previews here */}
                 {filePreviews.map((preview, index) => (
                   <img
                     key={index}

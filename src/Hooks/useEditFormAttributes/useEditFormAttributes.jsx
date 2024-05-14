@@ -20,7 +20,7 @@ export const useEditFormAttributes = (service, setIsEditService) => {
       reader.readAsDataURL(file);
     });
   }, [service]);
-
+  console.log("previews", filePreviews);
   const onSaveChanges = useCallback(() => {
     setFormAttributes({
       ...formAttributes,
@@ -38,7 +38,8 @@ export const useEditFormAttributes = (service, setIsEditService) => {
   ]);
 
   const handleFileChange = useCallback(
-    (fileList) => {
+    (e) => {
+      const fileList = e.target.files;
       const modifiedFilesList = [];
       const previews = [];
       for (let i = 0; i < fileList.length; i++) {

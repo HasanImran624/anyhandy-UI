@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import art from "../../Assets/art.png";
@@ -41,6 +42,26 @@ import { ProgressAndServiceList } from "./ProgressAndServiceList";
 const Step4 = () => {
   const { progress, updateProgress, resetAttributes, formAttributes } =
     useProgress();
+  const [filePreviews, setFilePreviews] = useState({});
+
+  useEffect(() => {
+    formAttributes.subServices.forEach((service) => {
+      const previews = [];
+      service.files?.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previews.push(event.target.result);
+          if (previews.length === service.files.length) {
+            setFilePreviews((prevState) => ({
+              ...prevState,
+              [service.uuid]: previews,
+            }));
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  }, [formAttributes.subServices]);
 
   const navigate = useNavigate();
   const submitJob = useCallback(() => {
@@ -148,7 +169,7 @@ const Step4 = () => {
         break;
       case PaintingJobCode.INTERIOR:
         numberItem = service.numberItems + " interior";
-        area = service.sizeArea + " Sq. Ft.";
+        area = service.sizeArea ? service.sizeArea + " Sq. Ft." : "";
         color = service.paintColor;
         if (service.providePaint) {
           color = "Paint Provided";
@@ -254,7 +275,7 @@ const Step4 = () => {
           {icon}
           <h6>{numberItem}</h6>
         </span>
-        {showArea && (
+        {showArea && area && (
           <span className="flex items-center gap-2">
             <img src={dimension} alt="bed" className="pointer-events-none" />
             <h6>{area}</h6>
@@ -290,10 +311,23 @@ const Step4 = () => {
             {service.name}
           </h4>
           {getNumberItem(service)}
+          <span className="flex items-center gap-2 pl-2">
+            <p>{service.specialRequest}</p>
+          </span>
+          <span className="flex items-center gap-2">
+            {filePreviews[service.uuid]?.map((preview, index) => (
+              <img
+                key={index}
+                src={preview}
+                alt={`Preview ${index}`}
+                className="w-20 h-20 object-cover rounded-lg"
+              />
+            ))}
+          </span>
         </div>
       );
     });
-  }, [formAttributes.subServices, getNumberItem]);
+  }, [filePreviews, formAttributes.subServices, getNumberItem]);
 
   return (
     <>
