@@ -9,14 +9,14 @@ export function useListCountriesAndCities() {
     "useListCountriesAndCities",
     async function getActiveInsuranceProfiles() {
       const { data } = await axios.get(`${GET_LIST_COUNTRIES_CITIES}`, {
-        params: {
-          token,
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       return data;
     },
     {
-      enabled: !!token,
+      enabled: !!token, 
     }
   );
 }

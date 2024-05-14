@@ -69,7 +69,7 @@ const Step4 = () => {
       axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       navigate("/jobPosting");
