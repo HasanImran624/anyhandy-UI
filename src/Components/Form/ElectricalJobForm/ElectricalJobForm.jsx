@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { useProgress } from "../../../context/ProgressContext";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
-import { ElectricalJobs, Rooms } from "../../../Constants";
+import { ElectricalJobs, Rooms, ElectricalJobCodes } from "../../../Constants";
 
 export const ElectricalJobForm = () => {
   const navigate = useNavigate();
@@ -132,32 +132,37 @@ export const ElectricalJobForm = () => {
       {selectedSubElectricalJob.code && (
         <div className="flex flex-col gap-7">
           <div className="flex flex-col gap-2 font-medium text-base">
-            <h3 className="font-medium text-base text-[#0D0B01]">
-              Number of Items
-            </h3>
-            <span className="flex items-center gap-2 font-medium text-base">
-              {Rooms.map((room, index) => {
-                return (
-                  <span
-                    key={index}
-                    className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                      selectedAttributes.numberItems === room.room &&
-                      "bg-[#00CF91] text-white"
-                    }  `}
-                    onClick={() =>
-                      setSelectedAttributes({
-                        ...selectedAttributes,
-                        numberItems: room.room,
-                      })
-                    }
-                  >
-                    <h3 className="font-medium text-base text-center">
-                      {room.room}
-                    </h3>
-                  </span>
-                );
-              })}
-            </span>
+            {selectedSubElectricalJob.code !==
+              ElectricalJobCodes.ELECTRICAL_TROUBLESHOOT && (
+              <>
+                <h3 className="font-medium text-base text-[#0D0B01]">
+                  Number of Items
+                </h3>
+                <span className="flex items-center gap-2 font-medium text-base">
+                  {Rooms.map((room, index) => {
+                    return (
+                      <span
+                        key={index}
+                        className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                          selectedAttributes.numberItems === room.room &&
+                          "bg-[#00CF91] text-white"
+                        }  `}
+                        onClick={() =>
+                          setSelectedAttributes({
+                            ...selectedAttributes,
+                            numberItems: room.room,
+                          })
+                        }
+                      >
+                        <h3 className="font-medium text-base text-center">
+                          {room.room}
+                        </h3>
+                      </span>
+                    );
+                  })}
+                </span>
+              </>
+            )}
             <section className="flex flex-col gap-2">
               <span className="mt-3">
                 <textarea

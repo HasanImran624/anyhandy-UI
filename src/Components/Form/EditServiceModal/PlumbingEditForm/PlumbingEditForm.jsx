@@ -1,5 +1,5 @@
 import { useEditFormAttributes } from "../../../../Hooks";
-import { Rooms } from "../../../../Constants";
+import { Rooms, PlumbingServiceCode } from "../../../../Constants";
 
 export const PlumbingEditForm = ({ service, setIsEditService }) => {
   const {
@@ -13,33 +13,35 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
 
   return (
     <section className="flex flex-col gap-5">
-      <section className="flex flex-col gap-2 mt-3">
-        <div className="flex flex-col gap-7">
-          <div className="flex flex-col gap-2 font-medium text-base">
-            <h3 className="font-medium text-base text-[#0D0B01]">
-              Number of Items
-            </h3>
-            <span className="flex items-center gap-2 font-medium text-base">
-              {Rooms.map((room, index) => {
-                return (
-                  <span
-                    key={index}
-                    className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                      editFormAttributes.numberItems === room.room &&
-                      "bg-[#00CF91] text-white"
-                    }  `}
-                    onClick={() => setAttribute("items", room.numberItems)}
-                  >
-                    <h3 className="font-medium text-base text-center">
-                      {room.room}
-                    </h3>
-                  </span>
-                );
-              })}
-            </span>
+      {service.code !== PlumbingServiceCode.OTHERS && (
+        <section className="flex flex-col gap-2 mt-3">
+          <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-2 font-medium text-base">
+              <h3 className="font-medium text-base text-[#0D0B01]">
+                Number of Items
+              </h3>
+              <span className="flex items-center gap-2 font-medium text-base">
+                {Rooms.map((room, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
+                        editFormAttributes.numberItems === room.room &&
+                        "bg-[#00CF91] text-white"
+                      }  `}
+                      onClick={() => setAttribute("items", room.numberItems)}
+                    >
+                      <h3 className="font-medium text-base text-center">
+                        {room.room}
+                      </h3>
+                    </span>
+                  );
+                })}
+              </span>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
       <section className="flex flex-col gap-2 mt-3">
         <h3 className="font-medium text-base text-[#0D0B01]">Description</h3>
         <span className="mt-3">
