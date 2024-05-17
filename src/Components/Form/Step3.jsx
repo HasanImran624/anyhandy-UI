@@ -1,6 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "../../api/axios";
@@ -28,7 +28,7 @@ import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Dropdown } from "primereact/dropdown";
-import { useProgress } from "../../context/ProgressContext";
+import { useProgress, AuthContext } from "../../context";
 import { ProgressAndServiceList } from "./ProgressAndServiceList";
 import clock from "../../Assets/clock.png";
 import cash from "../../Assets/cash.png";
@@ -58,6 +58,7 @@ const Step3 = () => {
     formAttributes,
     setFormAttributes,
   } = useProgress();
+  const { setAuth } = useContext(AuthContext);
 
   const { countries = [] } = useMemo(
     () => ({ countries: listCountriesAndCities.map((res) => res.name) }),
@@ -262,9 +263,7 @@ const Step3 = () => {
           IsHandyman: true,
         };
         const response = await axios.post(LOGIN_URL, userData);
-        const jwt = response.data.token;
-        localStorage.setItem("jwt", jwt);
-        localStorage.setItem("name", response.data.username);
+        setAuth(response.data);
         setIsLogin(!isLogin);
       } catch (err) {
         if (!err.response) {

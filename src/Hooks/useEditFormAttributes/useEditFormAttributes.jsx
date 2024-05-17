@@ -20,7 +20,6 @@ export const useEditFormAttributes = (service, setIsEditService) => {
       reader.readAsDataURL(file);
     });
   }, [service]);
-  console.log("previews", filePreviews);
   const onSaveChanges = useCallback(() => {
     setFormAttributes({
       ...formAttributes,

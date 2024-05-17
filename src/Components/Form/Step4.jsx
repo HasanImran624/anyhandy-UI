@@ -19,13 +19,10 @@ import {
 import { TbWashDryP, TbAirConditioning } from "react-icons/tb";
 import { GiShears } from "react-icons/gi";
 import { RiFridgeFill } from "react-icons/ri";
-
-import axios from "../../api/axios";
 import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProgress } from "../../context/ProgressContext";
+import { useProgress } from "../../context";
 import {
-  SUBMIT_JOB_REQUEST_URL,
   PaintingJobCode,
   PlumbingServiceCode,
   HvacJobCodes,
@@ -38,10 +35,18 @@ import {
   ApplianceRepairJobCode,
 } from "../../Constants";
 import { ProgressAndServiceList } from "./ProgressAndServiceList";
+import { useSubmitJob, useEdittJob } from "../../mutations";
 
 const Step4 = () => {
-  const { progress, updateProgress, resetAttributes, formAttributes } =
-    useProgress();
+  const {
+    progress,
+    updateProgress,
+    resetAttributes,
+    formAttributes,
+    setFormAttributes,
+  } = useProgress();
+  const { mutateAsync: submitJob } = useSubmitJob();
+  const { mutateAsync: editJob } = useEdittJob();
   const [filePreviews, setFilePreviews] = useState({});
 
   useEffect(() => {
@@ -64,9 +69,8 @@ const Step4 = () => {
   }, [formAttributes.subServices]);
 
   const navigate = useNavigate();
-  const submitJob = useCallback(() => {
+  const onSubmitJob = useCallback(async () => {
     try {
-      const token = localStorage.getItem("jwt");
       const formData = new FormData();
       const subServices = [];
       let j = 0;
@@ -85,21 +89,30 @@ const Step4 = () => {
         ...formAttributes,
         subServices: subServices,
       };
+
       formData.append("form_attributes", JSON.stringify(requestFormAttributes));
       if (formAttributes.isEdit) {
+        const request = {
+          id: formAttributes.jobId,
+          form: formData,
+        };
+        await editJob(request);
       } else {
-        axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
+        const updatedData = await submitJob(formData);
+        setFormAttributes({
+          ...formAttributes,
+          jobId: updatedData.jobId,
+          location: {
+            ...formAttributes.location,
+            addressId: updatedData.location?.addressId,
           },
         });
       }
-      navigate("/jobPosting");
     } catch (error) {
       console.log(error);
     }
-  }, [formAttributes, navigate]);
+    navigate("/jobPosting");
+  }, [editJob, formAttributes, navigate, setFormAttributes, submitJob]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -379,7 +392,6 @@ const Step4 = () => {
                 <div className="flex flex-col justify-center items-start gap-5">
                   <span className="flex items-center">
                     <div className="flex items-center gap-2 w-44">
-                      {" "}
                       <CiCalendar size={25} /> Date
                     </div>
                     <div className="font-medium text-base">
@@ -432,7 +444,7 @@ const Step4 = () => {
           </button>
           <span className="flex items-center gap-5">
             <button
-              onClick={submitJob}
+              onClick={onSubmitJob}
               className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100"
             >
               Confirm And Post

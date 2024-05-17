@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./Package.css";
 import Filter from "../Filter/Filter";
 import { Category } from "./Category";
@@ -32,16 +32,7 @@ export const Package = () => {
 
   const url = `https://anyhand.co/package/GetPackageDetailsByMainCategory/${selectedFilter}`;
 
-  const handleFilterClick = (filter) => {
-    setSelectedFilter(filter);
-    fetchData();
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -49,7 +40,16 @@ export const Package = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  }, [url]);
+
+  const handleFilterClick = (filter) => {
+    setSelectedFilter(filter);
+    fetchData();
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
