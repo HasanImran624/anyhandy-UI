@@ -8,7 +8,7 @@ export function useEdittJob() {
     mutationFn: async (request) => {
       const { data } = await axios.put(
         `job/edit-job-post/${request.id}`,
-        request.formData,
+        request.form,
         {
           headers: {
             "Content-Type": "multipart/form-data",

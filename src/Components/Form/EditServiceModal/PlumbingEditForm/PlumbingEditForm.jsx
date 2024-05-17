@@ -29,7 +29,7 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
                         editFormAttributes.numberItems === room.room &&
                         "bg-[#00CF91] text-white"
                       }  `}
-                      onClick={() => setAttribute("items", room.numberItems)}
+                      onClick={() => setAttribute("numberItems", room.room)}
                     >
                       <h3 className="font-medium text-base text-center">
                         {room.room}
@@ -42,7 +42,7 @@ export const PlumbingEditForm = ({ service, setIsEditService }) => {
           </div>
         </section>
       )}
-      <section classNa  me="flex flex-col gap-2 mt-3">
+      <section classNa me="flex flex-col gap-2 mt-3">
         <h3 className="font-medium text-base text-[#0D0B01]">Description</h3>
         <span className="mt-3">
           <textarea
