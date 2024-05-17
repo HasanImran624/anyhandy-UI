@@ -32,7 +32,9 @@ const Step2 = () => {
               className="flex gap-3 w-fit cursor-pointer"
               onClick={() => {
                 updateProgress(progress - 1);
-                resetAttributes();
+                if (!formAttributes.isEdit) {
+                  resetAttributes();
+                }
               }}
             >
               <FaArrowLeft color="#00CF91" fontSize="1.5rem" />

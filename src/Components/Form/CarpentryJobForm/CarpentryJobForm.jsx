@@ -14,7 +14,7 @@ export const CarpentryJobForm = () => {
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [filePreviews, setFilePreviews] = useState([]);
   const fileInputRef = useRef(null);
-  const [id, setId] = useState(uuid().substring(0, 4));
+  const [id, setId] = useState(uuid());
 
   const {
     formAttributes,
@@ -30,7 +30,7 @@ export const CarpentryJobForm = () => {
     }
     setSelectedAttributes({});
     setFilePreviews([]);
-    setId(uuid().substring(0, 4));
+    setId(uuid());
   }, []);
 
   const handleFileChange = useCallback(
@@ -42,7 +42,7 @@ export const CarpentryJobForm = () => {
         const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${selectedSubCarpentryJobJob.code}_${id}`,
+          `${selectedSubCarpentryJobJob.code}_${id}_${file.name}`,
           {
             type: file.type,
           }
@@ -72,7 +72,7 @@ export const CarpentryJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name);
+        names.push(selectedAttributes.files[i].name.split('_')?.[2]);
       }
       return names.join(", ");
     }

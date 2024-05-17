@@ -20,7 +20,7 @@ export const ElectricalJobForm = () => {
     updateProgress,
     resetAttributes,
   } = useProgress();
-  const [id, setId] = useState(uuid().substring(0, 4));
+  const [id, setId] = useState(uuid());
 
   const handleReset = useCallback(() => {
     if (fileInputRef.current) {
@@ -28,7 +28,7 @@ export const ElectricalJobForm = () => {
     }
     setSelectedAttributes({});
     setFilePreviews([]);
-    setId(uuid().substring(0, 4));
+    setId(uuid());
   }, []);
 
   const addToList = useCallback(() => {
@@ -65,7 +65,7 @@ export const ElectricalJobForm = () => {
         const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${selectedSubElectricalJob.code}_${id}`,
+          `${selectedSubElectricalJob.code}_${id}_${file.name}`,
           {
             type: file.type,
           }
@@ -95,7 +95,7 @@ export const ElectricalJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name);
+        names.push(selectedAttributes.files[i].name.split("_")?.[2]);
       }
       return names.join(", ");
     }

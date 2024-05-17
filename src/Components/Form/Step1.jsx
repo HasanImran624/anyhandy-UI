@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { Tooltip } from "primereact/tooltip";
@@ -16,6 +17,38 @@ const Step1 = () => {
     setFormAttributes,
     resetAttributes,
   } = useProgress();
+
+  const onChangeMainService = useCallback(
+    (service) => {
+      if (!!formAttributes.isEdit) {
+        return;
+      }
+
+      setFormAttributes({
+        ...formAttributes,
+        selectedMainServiceCode: service.code,
+        mainServiceName: service.name,
+      });
+    },
+    [formAttributes, setFormAttributes]
+  );
+
+  const showTooltip = useCallback(
+    (service) => {
+      if (!formAttributes.isEdit) {
+        return true;
+      }
+
+      if (
+        !!formAttributes.isEdit &&
+        service.code === formAttributes.selectedMainServiceCode
+      ) {
+        return true;
+      }
+      return false;
+    },
+    [formAttributes.isEdit, formAttributes.selectedMainServiceCode]
+  );
 
   return (
     <div className="flex flex-col gap-10 px-5 py-10 sm_desktop:py-0">
@@ -60,14 +93,10 @@ const Step1 = () => {
                     <div
                       key={service.id}
                       name={service.uid}
-                      onClick={() =>
-                        setFormAttributes({
-                          ...formAttributes,
-                          selectedMainServiceCode: service.code,
-                          mainServiceName: service.name,
-                        })
-                      }
-                      className={`w-fit flex items-center justify-center gap-3 rounded-[50px] p-2 lg_mobile:p-3 border border-[#E1DFD7] cursor-pointer hover:bg-green-300  ${
+                      onClick={() => onChangeMainService(service)}
+                      className={`w-fit flex items-center justify-center gap-3 rounded-[50px] p-2 lg_mobile:p-3 border border-[#E1DFD7] cursor-pointer ${
+                        !!formAttributes.isEdit ? "" : "hover:bg-green-300"
+                      }  ${
                         formAttributes.selectedMainServiceCode === service.code
                           ? "bg-[#00CF91] text-white"
                           : "bg-white"
@@ -87,25 +116,27 @@ const Step1 = () => {
                       />
                     </div>
 
-                    <Tooltip
-                      target={`[name="${service.uid}"]`}
-                      className="bg-white min-w-52 border border-slate-200 rounded-md tooltip-shadow mt-2 text-base font-medium"
-                      autoHide={false}
-                      position={"bottom"}
-                      showDelay={100}
-                      hideDelay={100}
-                    >
-                      {service.subServices?.map((subService, index) => (
-                        <div key={index} className="shadow-2xl">
-                          <p
-                            data-pr-tooltip="sub-service"
-                            className="w-full bg-white hover:bg-green-100 transition ease-out duration-100 p-3"
-                          >
-                            {subService.name}
-                          </p>
-                        </div>
-                      ))}
-                    </Tooltip>
+                    {showTooltip(service) && (
+                      <Tooltip
+                        target={`[name="${service.uid}"]`}
+                        className="bg-white min-w-52 border border-slate-200 rounded-md tooltip-shadow mt-2 text-base font-medium"
+                        autoHide={false}
+                        position={"bottom"}
+                        showDelay={100}
+                        hideDelay={100}
+                      >
+                        {service.subServices?.map((subService, index) => (
+                          <div key={index} className="shadow-2xl">
+                            <p
+                              data-pr-tooltip="sub-service"
+                              className="w-full bg-white hover:bg-green-100 transition ease-out duration-100 p-3"
+                            >
+                              {subService.name}
+                            </p>
+                          </div>
+                        ))}
+                      </Tooltip>
+                    )}
                   </section>
                 ))}
               </section>

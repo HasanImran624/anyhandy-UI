@@ -25,7 +25,7 @@ export const HomeCleaningJobForm = () => {
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [filePreviews, setFilePreviews] = useState([]);
   const fileInputRef = useRef(null);
-  const [id, setId] = useState(uuid().substring(0, 4));
+  const [id, setId] = useState(uuid());
 
   const handleReset = useCallback(() => {
     if (fileInputRef.current) {
@@ -33,7 +33,7 @@ export const HomeCleaningJobForm = () => {
     }
     setSelectedAttributes({});
     setFilePreviews([]);
-    setId(uuid().substring(0, 4));
+    setId(uuid());
   }, []);
 
   const handleFileChange = useCallback(
@@ -45,7 +45,7 @@ export const HomeCleaningJobForm = () => {
         const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${selectedSubHomeCleaningJob.code}_${id}`,
+          `${selectedSubHomeCleaningJob.code}_${id}_${file.name}`,
           {
             type: file.type,
           }
@@ -75,7 +75,7 @@ export const HomeCleaningJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name);
+        names.push(selectedAttributes.files[i].name.split("_")?.[2]);
       }
       return names.join(", ");
     }

@@ -30,7 +30,6 @@ import { GiShears } from "react-icons/gi";
 import { RiFridgeFill } from "react-icons/ri";
 import {
   services,
-  SUBMIT_JOB_REQUEST_URL,
   PaintingJobCode,
   PlumbingServiceCode,
   HvacJobCodes,
@@ -45,7 +44,7 @@ import {
 
 const JobPosting = () => {
   const navigate = useNavigate();
-  const { updateProgress, formAttributes } = useProgress();
+  const { updateProgress, formAttributes, setFormAttributes } = useProgress();
 
   const getService = useCallback(
     (code) => services.find((ser) => ser.code === code),
@@ -306,6 +305,12 @@ const JobPosting = () => {
     formAttributes.location.details,
   ]);
 
+  const onEditClick = useCallback(() => {
+    updateProgress(1);
+    setFormAttributes({ ...formAttributes, isEdit: true });
+    navigate("/services");
+  }, [formAttributes, navigate, setFormAttributes, updateProgress]);
+
   return (
     <>
       <Navbar />
@@ -400,10 +405,7 @@ const JobPosting = () => {
               </span>
               <span
                 className="flex items-center gap-2 text-[#00CF91] cursor-pointer w-fit pb-1 border-b-2 border-transparent transition ease-in-out duration-200 hover:border-[#E3E3E3]"
-                onClick={() => {
-                  updateProgress(1);
-                  navigate("/services");
-                }}
+                onClick={onEditClick}
               >
                 <EditIcon />
                 Edit Details

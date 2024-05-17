@@ -86,13 +86,15 @@ const Step4 = () => {
         subServices: subServices,
       };
       formData.append("form_attributes", JSON.stringify(requestFormAttributes));
-
-      axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (formAttributes.isEdit) {
+      } else {
+        axios.post(SUBMIT_JOB_REQUEST_URL, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
       navigate("/jobPosting");
     } catch (error) {
       console.log(error);
@@ -429,14 +431,6 @@ const Step4 = () => {
             Cancel
           </button>
           <span className="flex items-center gap-5">
-            <button
-              onClick={() => {
-                updateProgress(progress - 1);
-              }}
-              className="font-semibold text-lg bg-white text-[#00CF91] p-4 rounded-md border borer-[#E1DFD7] hover:bg-green-50 outline-none focus:bg-green-100 transition-colors ease-et duration-200"
-            >
-              Edit Details
-            </button>
             <button
               onClick={submitJob}
               className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100"

@@ -25,7 +25,7 @@ export const PaintingJobForm = () => {
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [filePreviews, setFilePreviews] = useState([]);
   const fileInputRef = useRef(null);
-  const [id, setId] = useState(uuid().substring(0, 4));
+  const [id, setId] = useState(uuid());
 
   const handleReset = useCallback(() => {
     if (fileInputRef.current) {
@@ -33,7 +33,7 @@ export const PaintingJobForm = () => {
     }
     setSelectedAttributes({});
     setFilePreviews([]);
-    setId(uuid().substring(0, 4));
+    setId(uuid());
   }, []);
 
   const handleFileChange = useCallback(
@@ -45,7 +45,7 @@ export const PaintingJobForm = () => {
         const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${selectedSubPaintingJob.code}_${id}`,
+          `${selectedSubPaintingJob.code}_${id}_${file.name}`,
           {
             type: file.type,
           }
@@ -75,7 +75,7 @@ export const PaintingJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name);
+        names.push(selectedAttributes.files[i].name.split("_")?.[2]);
       }
       return names.join(", ");
     }
@@ -112,10 +112,13 @@ export const PaintingJobForm = () => {
     updateProgress(progress + 1);
   }, [addToList, progress, selectedSubPaintingJob.code, updateProgress]);
 
-  const onSubJobChange = useCallback((e) => {
-    setSelectedSubPaintingJob(e.value);
-    handleReset();
-  }, [handleReset]);
+  const onSubJobChange = useCallback(
+    (e) => {
+      setSelectedSubPaintingJob(e.value);
+      handleReset();
+    },
+    [handleReset]
+  );
 
   return (
     <>

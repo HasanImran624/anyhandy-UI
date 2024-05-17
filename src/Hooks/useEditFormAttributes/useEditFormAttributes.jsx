@@ -46,7 +46,7 @@ export const useEditFormAttributes = (service, setIsEditService) => {
         const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${service.code}_${service.uuid}`,
+          `${service.code}_${service.uuid}_${file.name}`,
           {
             type: file.type,
           }
@@ -72,7 +72,9 @@ export const useEditFormAttributes = (service, setIsEditService) => {
 
   const getFileNames = useCallback(() => {
     if (editFormAttributes.files) {
-      return editFormAttributes.files.map((file) => file.name).join(", ");
+      return editFormAttributes.files
+        .map((file) => file.name.split("_")?.[2])
+        .join(", ");
     }
   }, [editFormAttributes.files]);
 

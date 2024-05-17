@@ -25,14 +25,14 @@ export const PlumbingJobForm = () => {
     resetAttributes,
   } = useProgress();
 
-  const [id, setId] = useState(uuid().substring(0, 4));
+  const [id, setId] = useState(uuid());
   const handleReset = useCallback(() => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
     setSelectedAttributes({});
     setFilePreviews([]);
-    setId(uuid().substring(0, 4));
+    setId(uuid());
   }, []);
 
   const addToList = useCallback(() => {
@@ -70,7 +70,7 @@ export const PlumbingJobForm = () => {
         const file = fileList[i];
         const modifiedFile = new File(
           [file],
-          `${selectedSubPlumbingJob.code}_${id}`,
+          `${selectedSubPlumbingJob.code}_${id}_${file.name}`,
           {
             type: file.type,
           }
@@ -100,7 +100,7 @@ export const PlumbingJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name);
+        names.push(selectedAttributes.files[i].name.split('_')?.[2]);
       }
       return names.join(", ");
     }
