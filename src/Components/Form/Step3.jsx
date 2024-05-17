@@ -150,6 +150,14 @@ const Step3 = () => {
         return;
       }
     }
+
+    if (
+      !formAttributes.location?.addressType ||
+      !formAttributes.location?.details
+    ) {
+      setErrorText("*Select Location");
+      return;
+    }
     updateProgress(progress + 1);
   };
 

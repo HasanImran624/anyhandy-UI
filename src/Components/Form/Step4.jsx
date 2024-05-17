@@ -447,7 +447,7 @@ const Step4 = () => {
               onClick={onSubmitJob}
               className="font-semibold text-lg text-white bg-[#00CF91] rounded-md p-4 border borer-[#E1DFD7] hover:bg-[#1DA87E] outline-none focus:border-[#1DA87E] transition-colors ease-in duration-100"
             >
-              Confirm And Post
+              {!!formAttributes.isEdit ? "Edit And Post" : "Confirm And Post"}
             </button>
           </span>
         </span>
