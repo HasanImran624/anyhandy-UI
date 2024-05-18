@@ -91,12 +91,7 @@ export const CabinetPaintingJobEditForm = ({ service, setIsEditService }) => {
       <span className="mt-3">
         <textarea
           value={editFormAttributes.specialRequest}
-          onChange={(e) =>
-            setAttribute({
-              ...editFormAttributes,
-              specialRequest: e.target.value,
-            })
-          }
+          onChange={(e) => setAttribute("specialRequest", e.target.value)}
           name="specialRequest"
           id="specialRequest"
           rows="5"

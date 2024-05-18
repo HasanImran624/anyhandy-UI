@@ -1,5 +1,6 @@
 import { useCallback, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import { useProgress } from "../../../context/ProgressContext";
 import {
@@ -11,6 +12,7 @@ import {
 export const ApplienceRepairJobForm = () => {
   const navigate = useNavigate();
   const [selectedAttributes, setSelectedAttributes] = useState({});
+  const [uId, setUid] = useState(uuid())
   const {
     formAttributes,
     setFormAttributes,
@@ -29,10 +31,13 @@ export const ApplienceRepairJobForm = () => {
           code: ApplianceRepairJobCode.FIXING,
           name: ApplianceRepairJobNames.FIXING,
           isNew: !!formAttributes.isEdit ? true : false,
+          uuid: uId
         },
       ],
     });
-  }, [setFormAttributes, formAttributes, selectedAttributes]);
+    setSelectedAttributes({});
+    setUid(uuid())
+  }, [setFormAttributes, formAttributes, selectedAttributes, uId]);
 
   const handleNext = useCallback(() => {
     addToList();

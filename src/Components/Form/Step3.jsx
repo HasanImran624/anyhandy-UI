@@ -1105,9 +1105,11 @@ const Step3 = () => {
                     size={20}
                     color="#96A0B5"
                     className="cursor-pointer"
-                    onClick={() =>
-                      setFormAttributes({ ...formAttributes, location: {} })
-                    }
+                    onClick={() => {
+                      setFormAttributes({ ...formAttributes, location: {} });
+                      setLat(null);
+                      setLong(null);
+                    }}
                   />
                 </span>
               </span>
