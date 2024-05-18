@@ -104,7 +104,7 @@ const Step4 = () => {
           jobId: updatedData.jobId,
           location: {
             ...formAttributes.location,
-            addressId: updatedData.addressId,
+            addressId: updatedData.location?.addressId,
           },
         };
         setFormAttributes(updatedFormAttributes);
