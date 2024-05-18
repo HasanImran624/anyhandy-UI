@@ -43,6 +43,7 @@ export const PestControlJobbForm = () => {
           ...selectedAttributes,
           code: selectedSubPestControlJob.code,
           name: selectedSubPestControlJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

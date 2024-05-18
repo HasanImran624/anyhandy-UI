@@ -45,6 +45,7 @@ export const PlumbingJobForm = () => {
           uuid: id,
           code: selectedSubPlumbingJob.code,
           name: selectedSubPlumbingJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });
@@ -100,7 +101,7 @@ export const PlumbingJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name.split('_')?.[2]);
+        names.push(selectedAttributes.files[i].name.split("_")?.[2]);
       }
       return names.join(", ");
     }

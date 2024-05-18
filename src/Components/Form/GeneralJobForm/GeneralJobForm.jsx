@@ -87,6 +87,7 @@ export const GeneralJobForm = () => {
           uuid: id,
           code: selectedSubGeneralJob.code,
           name: selectedSubGeneralJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

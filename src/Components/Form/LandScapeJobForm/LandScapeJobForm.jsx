@@ -42,6 +42,7 @@ export const LandScapeJobForm = () => {
           uuid: id,
           code: selectedSubLandscapeJob.code,
           name: selectedSubLandscapeJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

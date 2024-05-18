@@ -91,6 +91,7 @@ export const PaintingJobForm = () => {
           uuid: id,
           code: selectedSubPaintingJob.code,
           name: selectedSubPaintingJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

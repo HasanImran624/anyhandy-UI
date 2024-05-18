@@ -41,6 +41,7 @@ export const ElectricalJobForm = () => {
           code: selectedSubElectricalJob.code,
           name: selectedSubElectricalJob.name,
           uuid: id,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

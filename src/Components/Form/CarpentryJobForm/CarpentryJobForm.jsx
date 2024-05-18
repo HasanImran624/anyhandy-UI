@@ -72,7 +72,7 @@ export const CarpentryJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name.split('_')?.[2]);
+        names.push(selectedAttributes.files[i].name.split("_")?.[2]);
       }
       return names.join(", ");
     }
@@ -88,6 +88,7 @@ export const CarpentryJobForm = () => {
           uuid: id,
           code: selectedSubCarpentryJobJob.code,
           name: selectedSubCarpentryJobJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

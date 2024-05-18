@@ -59,7 +59,6 @@ const Step3 = () => {
     setFormAttributes,
   } = useProgress();
   const { setAuth } = useContext(AuthContext);
-
   const { countries = [] } = useMemo(
     () => ({ countries: listCountriesAndCities.map((res) => res.name) }),
     [listCountriesAndCities]

@@ -91,6 +91,7 @@ export const HomeCleaningJobForm = () => {
           uuid: id,
           code: selectedSubHomeCleaningJob.code,
           name: selectedSubHomeCleaningJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

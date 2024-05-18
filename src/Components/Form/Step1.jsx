@@ -17,7 +17,6 @@ const Step1 = () => {
     setFormAttributes,
     resetAttributes,
   } = useProgress();
-
   const onChangeMainService = useCallback(
     (service) => {
       if (!!formAttributes.isEdit) {

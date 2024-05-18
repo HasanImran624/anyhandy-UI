@@ -48,7 +48,6 @@ const Step4 = () => {
   const { mutateAsync: submitJob } = useSubmitJob();
   const { mutateAsync: editJob } = useEdittJob();
   const [filePreviews, setFilePreviews] = useState({});
-
   useEffect(() => {
     formAttributes.subServices.forEach((service) => {
       const previews = [];
@@ -97,22 +96,23 @@ const Step4 = () => {
           form: formData,
         };
         await editJob(request);
-        
+        navigate("/jobPosting");
       } else {
         const updatedData = await submitJob(formData);
-        setFormAttributes({
+        const updatedFormAttributes = {
           ...formAttributes,
           jobId: updatedData.jobId,
           location: {
             ...formAttributes.location,
-            addressId: updatedData.location?.addressId,
+            addressId: updatedData.addressId,
           },
-        });
+        };
+        setFormAttributes(updatedFormAttributes);
+        navigate("/jobPosting");
       }
     } catch (error) {
       console.log(error);
     }
-    navigate("/jobPosting");
   }, [editJob, formAttributes, navigate, setFormAttributes, submitJob]);
 
   useEffect(() => {

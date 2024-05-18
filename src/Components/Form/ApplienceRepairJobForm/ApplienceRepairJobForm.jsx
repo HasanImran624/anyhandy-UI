@@ -11,7 +11,6 @@ import {
 export const ApplienceRepairJobForm = () => {
   const navigate = useNavigate();
   const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [errorText, setErrorText] = useState("");
   const {
     formAttributes,
     setFormAttributes,
@@ -19,14 +18,6 @@ export const ApplienceRepairJobForm = () => {
     updateProgress,
     progress,
   } = useProgress();
-
-  const alreadyAdded = useMemo(
-    () =>
-      !!formAttributes.subServices.find(
-        (s) => s.code === ApplianceRepairJobCode.FIXING
-      ),
-    [formAttributes.subServices]
-  );
 
   const addToList = useCallback(() => {
     setFormAttributes({
@@ -37,25 +28,16 @@ export const ApplienceRepairJobForm = () => {
           ...selectedAttributes,
           code: ApplianceRepairJobCode.FIXING,
           name: ApplianceRepairJobNames.FIXING,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });
   }, [setFormAttributes, formAttributes, selectedAttributes]);
 
   const handleNext = useCallback(() => {
-    if (!alreadyAdded) {
-      addToList();
-    }
-    updateProgress(progress + 1);
-  }, [addToList, alreadyAdded, progress, updateProgress]);
-
-  const add = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
     addToList();
-  }, [addToList, alreadyAdded]);
+    updateProgress(progress + 1);
+  }, [addToList, progress, updateProgress]);
 
   return (
     <div className="flex flex-col gap-7">
@@ -146,17 +128,9 @@ export const ApplienceRepairJobForm = () => {
             ></textarea>
           </span>
         </section>
-        {!!errorText && (
-          <span
-            style={{ color: "#dc2626" }}
-            className="font-semibold text-base"
-          >
-            {errorText}
-          </span>
-        )}
         <section
           className="flex gap-2 items-center mt-5 cursor-pointer"
-          onClick={add}
+          onClick={addToList}
         >
           <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
           <h4 className="font-semibold text-base">Add To the list</h4>

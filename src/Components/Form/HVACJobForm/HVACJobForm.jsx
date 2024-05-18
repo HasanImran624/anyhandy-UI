@@ -41,6 +41,7 @@ export const HVACJobForm = () => {
           uuid: id,
           code: selectedSubHAVCJob.code,
           name: selectedSubHAVCJob.name,
+          isNew: !!formAttributes.isEdit ? true : false,
         },
       ],
     });

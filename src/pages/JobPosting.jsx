@@ -45,7 +45,6 @@ import {
 const JobPosting = () => {
   const navigate = useNavigate();
   const { updateProgress, formAttributes, setFormAttributes } = useProgress();
-
   const getService = useCallback(
     (code) => services.find((ser) => ser.code === code),
     []
