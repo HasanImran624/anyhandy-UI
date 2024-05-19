@@ -43,7 +43,6 @@ const Step3 = () => {
   const [addLocation, setAddLocation] = useState(false);
   const [addLocationMenu, setAddLocationMenu] = useState(false);
   const [eye, setEye] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   const API_KEY = "AIzaSyCfVmmRxuCJlRx3-Pkxu1mnPgFPM95jSog";
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
@@ -58,7 +57,7 @@ const Step3 = () => {
     formAttributes,
     setFormAttributes,
   } = useProgress();
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth, isSignedIn } = useContext(AuthContext);
   const { countries = [] } = useMemo(
     () => ({ countries: listCountriesAndCities.map((res) => res.name) }),
     [listCountriesAndCities]
@@ -159,15 +158,6 @@ const Step3 = () => {
     }
     updateProgress(progress + 1);
   };
-
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -271,7 +261,6 @@ const Step3 = () => {
         };
         const response = await axios.post(LOGIN_URL, userData);
         setAuth(response.data);
-        setIsLogin(!isLogin);
       } catch (err) {
         if (!err.response) {
           Swal.fire({
@@ -281,7 +270,7 @@ const Step3 = () => {
             confirmButtonText: "Retry",
           }).then((result) => {
             if (result.isConfirmed) {
-              setIsLogin(!isLogin);
+              setAuth({});
             }
           });
         } else if (err.response.status === 401) {
@@ -291,7 +280,7 @@ const Step3 = () => {
             confirmButtonText: "Retry",
           }).then((result) => {
             if (result.isConfirmed) {
-              setIsLogin(!isLogin);
+              setAuth({});
             }
           });
         }
@@ -300,7 +289,7 @@ const Step3 = () => {
   });
   return (
     <>
-      {addLocation && !isLogin && isSignUp && (
+      {addLocation && !isSignedIn && isSignUp && (
         <>
           <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
             <div
@@ -486,7 +475,7 @@ const Step3 = () => {
           </section>
         </>
       )}
-      {addLocation && !isLogin && !isSignUp && (
+      {addLocation && !isSignedIn && !isSignUp && (
         <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
           <div
             className="w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20"
@@ -609,7 +598,7 @@ const Step3 = () => {
           </section>
         </section>
       )}
-      {addLocation && isLogin && (
+      {addLocation && isSignedIn && (
         <section className="w-screen h-screen flex items-center justify-center fixed top-0 left-0 z-10">
           <div
             className="w-screen h-screen bg-black bg-opacity-20 absolute top-0 left-0 z-20"
