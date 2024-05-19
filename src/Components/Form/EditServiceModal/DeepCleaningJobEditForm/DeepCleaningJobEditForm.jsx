@@ -92,7 +92,7 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
         </h3>
         <span className="flex gap-3 items-center">
           <input
-            value={editFormAttributes.provideSupplies}
+            checked={editFormAttributes.provideSupplies}
             onChange={(e) => setAttribute("provideSupplies", e.target.checked)}
             type="checkbox"
             name="provideSupplies"

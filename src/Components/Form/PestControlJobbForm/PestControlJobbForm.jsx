@@ -9,6 +9,7 @@ import { FliesControlJobForm } from "./FliesControlJobForm";
 import { BugConTrolJobForm } from "./BugConTrolJobForm";
 import { CockroachControlJobForm } from "./CockroachControlJobForm";
 import { RodentControlJobForm } from "./RodentControlJobForm";
+import { v4 as uuid } from "uuid";
 
 export const PestControlJobbForm = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const PestControlJobbForm = () => {
 
   const [errorText, setErrorText] = useState("");
   const [selectedAttributes, setSelectedAttributes] = useState({});
+  const [id, setId] = useState(uuid());
 
   const alreadyAdded = useMemo(
     () =>
@@ -41,6 +43,7 @@ export const PestControlJobbForm = () => {
         ...formAttributes.subServices,
         {
           ...selectedAttributes,
+          uuid: id,
           code: selectedSubPestControlJob.code,
           name: selectedSubPestControlJob.name,
           isNew: !!formAttributes.isEdit ? true : false,
@@ -49,9 +52,10 @@ export const PestControlJobbForm = () => {
     });
     setSelectedSubPestControlJob({});
     setSelectedAttributes({});
-    return true;
+    setId(uuid());
   }, [
     formAttributes,
+    id,
     selectedAttributes,
     selectedSubPestControlJob.code,
     selectedSubPestControlJob.name,
@@ -60,30 +64,15 @@ export const PestControlJobbForm = () => {
 
   const handleNext = useCallback(() => {
     if (selectedSubPestControlJob.code) {
-      if (!alreadyAdded) {
-        addToList();
-      }
+      addToList();
     }
     updateProgress(progress + 1);
-  }, [
-    addToList,
-    alreadyAdded,
-    progress,
-    selectedSubPestControlJob.code,
-    updateProgress,
-  ]);
-
-  const add = useCallback(() => {
-    if (alreadyAdded) {
-      setErrorText("* Service is already added");
-      return;
-    }
-    addToList();
-  }, [addToList, alreadyAdded]);
+  }, [addToList, progress, selectedSubPestControlJob.code, updateProgress]);
 
   const onSubJobChange = useCallback((e) => {
     setSelectedSubPestControlJob(e.value);
     setSelectedAttributes({});
+    setId(uuid());
   }, []);
 
   return (
@@ -141,25 +130,13 @@ export const PestControlJobbForm = () => {
       )}
 
       {!!selectedSubPestControlJob.code && (
-        <>
-          <section className="flex flex-col gap-2">
-            {!!errorText && (
-              <span
-                style={{ color: "#dc2626" }}
-                className="font-semibold text-base"
-              >
-                {errorText}
-              </span>
-            )}
-          </section>
-          <section
-            className="flex gap-2 items-center mt-5 cursor-pointer"
-            onClick={add}
-          >
-            <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
-            <h4 className="font-semibold text-base">Add To the list</h4>
-          </section>
-        </>
+        <section
+          className="flex gap-2 items-center mt-5 cursor-pointer"
+          onClick={addToList}
+        >
+          <ControlPointRoundedIcon style={{ fill: "#00CF91" }} />
+          <h4 className="font-semibold text-base">Add To the list</h4>
+        </section>
       )}
 
       <span className="w-full flex items-center justify-end gap-5">
