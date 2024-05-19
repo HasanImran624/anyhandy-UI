@@ -75,7 +75,9 @@ export const HomeCleaningJobForm = () => {
     if (selectedAttributes.files) {
       let names = [];
       for (let i = 0; i < selectedAttributes.files.length; i++) {
-        names.push(selectedAttributes.files[i].name.split("_")?.[2]);
+        names.push(
+          selectedAttributes.files[i].name.split("_")?.slice(2).join("_")
+        );
       }
       return names.join(", ");
     }

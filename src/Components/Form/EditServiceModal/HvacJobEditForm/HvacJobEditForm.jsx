@@ -28,7 +28,7 @@ export const HvacJobEditForm = ({ service, setIsEditService }) => {
                       editFormAttributes.numberItems === room.room &&
                       "bg-[#00CF91] text-white"
                     }  `}
-                    onClick={() => setAttribute("items", room.room)}
+                    onClick={() => setAttribute("numberItems", room.room)}
                   >
                     <h3 className="font-medium text-base text-center">
                       {room.room}
