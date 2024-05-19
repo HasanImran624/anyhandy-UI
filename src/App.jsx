@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Main } from "./pages/Main";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
@@ -13,9 +13,11 @@ import HeroProtectedRoutes from "./utils/HeroProtectedRoutes";
 import UserProtectedRoutes from "./utils/UserProtectedRoutes";
 import JobPosting from "./pages/JobPosting";
 import InviteHandyman from "./pages/InviteHandyman";
+import { AuthContext } from "./context";
 
 function App() {
   const queryClient = new QueryClient();
+  const { setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     const checkTokenExpiration = () => {
@@ -26,11 +28,18 @@ function App() {
         localStorage.removeItem("jwt");
         localStorage.removeItem("tokenExpiration");
         localStorage.removeItem("name");
+        setAuth({});
+      } else {
+        setAuth({
+          token: localStorage.getItem("jwt"),
+          expirationTime: expirationTime,
+          username: localStorage.getItem("name"),
+        });
       }
     };
 
     checkTokenExpiration();
-  }, []);
+  }, [setAuth]);
 
   return (
     <QueryClientProvider client={queryClient}>

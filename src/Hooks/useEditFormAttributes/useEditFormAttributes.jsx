@@ -71,9 +71,9 @@ export const useEditFormAttributes = (service, setIsEditService) => {
 
   const getFileNames = useCallback(() => {
     if (editFormAttributes.files) {
-      return editFormAttributes.files
-        .map((file) => file.name.split("_")?.slice(2).join("_")
-        .join(", ");
+      return editFormAttributes.files.map((file) =>
+        file.name.split("_")?.slice(2).join("_")
+      );
     }
   }, [editFormAttributes.files]);
 
