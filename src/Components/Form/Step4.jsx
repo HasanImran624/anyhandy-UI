@@ -8,6 +8,7 @@ import { CiMoneyBill } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { BiCabinet } from "react-icons/bi";
 import { BsDoorOpen } from "react-icons/bs";
+import { SiOpenbugbounty } from "react-icons/si";
 import {
   MdHomeWork,
   MdFence,
@@ -144,6 +145,8 @@ const Step4 = () => {
     let area = "";
     let color = "";
     let icon = "";
+    let roomType = "";
+    let roomTypeIcon = "";
     let showPaint = true;
     let showArea = true;
     switch (service.code) {
@@ -246,6 +249,8 @@ const Step4 = () => {
       case PestControlJobCode.RODENT:
       case PestControlJobCode.COCKROACH:
         numberItem = service.numberItems + " room";
+        roomType = service.roomType;
+        roomTypeIcon = roomType !== "" ? <SiOpenbugbounty size={25} /> : "";
         icon = <MdPestControl size={25} />;
         area = service.locationType;
         showPaint = false;
@@ -310,6 +315,12 @@ const Step4 = () => {
                 }}
               />
             )}
+          </span>
+        )}
+        {roomType !== "" && (
+          <span className="flex items-center gap-2">
+           {roomTypeIcon}
+           <h6>{roomType}</h6>
           </span>
         )}
       </div>
