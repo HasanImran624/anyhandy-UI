@@ -18,7 +18,7 @@ export const PressureWashingJobEditForm = ({ service, setIsEditService }) => {
             App. size area
           </h3>
           <input
-            type="text"
+            type="number"
             value={editFormAttributes.sizeArea}
             onChange={(e) => setAttribute("sizeArea", e.target.value)}
             name="areaSize"

@@ -15,7 +15,7 @@ export const LandScapingJobEditForm = ({ service, setIsEditService }) => {
       <section className="flex flex-col gap-2">
         <h3 className="font-medium text-base text-[#0D0B01]">App. size area</h3>
         <input
-          type="text"
+          type="number"
           name="areaSize"
           value={editFormAttributes.sizeArea}
           onChange={(e) => setAttribute("sizeArea", e.target.value)}

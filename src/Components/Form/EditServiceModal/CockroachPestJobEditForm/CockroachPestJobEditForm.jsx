@@ -64,7 +64,10 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.locationType === "Villa"}
-              onChange={(e) => setAttribute("locationType", "Villa")}
+              onChange={(e) => {
+                setAttribute("locationType", "Villa");
+                setAttribute("sizeArea", null);
+              }}
               type="radio"
               name="locationType"
               id="villa"
@@ -75,7 +78,10 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
           <span className="flex gap-3 items-center">
             <input
               checked={editFormAttributes.locationType === "Apartment"}
-              onChange={(e) => setAttribute("locationType", "Apartment")}
+              onChange={(e) => {
+                setAttribute("locationType", "Apartment");
+                setAttribute("sizeArea", null);
+              }}
               type="radio"
               name="locationType"
               id="apartment"
@@ -95,6 +101,21 @@ export const CockroachPestJobEditForm = ({ service, setIsEditService }) => {
             <label htmlFor="office">Office</label>
           </span>
         </section>
+        {editFormAttributes.locationType === "Office" && (
+          <section className="flex flex-col gap-3">
+            <h3 className="font-medium text-base text-[#0D0B01]">
+              App. size area
+            </h3>
+            <input
+              type="number"
+              value={editFormAttributes.sizeArea}
+              onChange={(e) => setAttribute("sizeArea", e.target.value)}
+              name="areaSize"
+              className="w-full bg-white rounded-lg p-3 border"
+              placeholder="Approximate area size e.g., 20"
+            />
+          </section>
+        )}
         <span className="flex items-center justify-end gap-3">
           <button
             className="px-4 bg-white text-black font-medium text-base rounded-md py-3 hover:bg-green-50 border"

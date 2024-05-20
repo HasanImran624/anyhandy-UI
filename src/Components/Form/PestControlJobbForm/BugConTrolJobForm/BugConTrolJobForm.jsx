@@ -47,6 +47,7 @@ export const BugConTrolJobForm = ({
                 setSelectedAttributes({
                   ...selectedAttributes,
                   locationType: "Villa",
+                  sizeArea: null,
                 })
               }
               type="radio"
@@ -63,6 +64,7 @@ export const BugConTrolJobForm = ({
                 setSelectedAttributes({
                   ...selectedAttributes,
                   locationType: "Apartment",
+                  sizeArea: null,
                 })
               }
               type="radio"
@@ -89,6 +91,26 @@ export const BugConTrolJobForm = ({
             <label htmlFor="office">Office</label>
           </span>
         </section>
+        {selectedAttributes.locationType === "Office" && (
+          <section className="flex flex-col gap-3">
+            <h3 className="font-medium text-base text-[#0D0B01]">
+              App. size area
+            </h3>
+            <input
+              type="number"
+              value={selectedAttributes.sizeArea}
+              onChange={(e) =>
+                setSelectedAttributes({
+                  ...selectedAttributes,
+                  sizeArea: e.target.value,
+                })
+              }
+              name="areaSize"
+              className="w-full bg-white rounded-lg p-3 border"
+              placeholder="Approximate area size e.g., 20"
+            />
+          </section>
+        )}
       </div>
     </div>
   );

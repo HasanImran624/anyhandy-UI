@@ -1,17 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import { AuthProvider } from './context/AuthProvider'
-import { ProgressProvider } from './context/ProgressContext'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <ProgressProvider>
-        <App />
-      </ProgressProvider>
-    </AuthProvider>
+    <App />
   </React.StrictMode>
-)
+);
