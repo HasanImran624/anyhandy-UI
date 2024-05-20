@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -17,19 +17,19 @@ import apple from "../../Assets/apple.png";
 import openEye from "../../Assets/openEye.png";
 import closeEye from "../../Assets/closeEye.png";
 import { LOGIN_URL, SIGNUP_URL } from "../../Constants";
+import { AuthContext } from "../../context";
 
 export const Navbar = () => {
-  const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [swal, setSwal] = useState(false);
   const [eye, setEye] = useState(false);
   const navigate = useNavigate();
+  const { setAuth, signOut } = useContext(AuthContext);
+  const fullName = localStorage.getItem("name");
 
   useEffect(() => {
-    const userName = localStorage.getItem("name");
-    setFullName(userName);
     if (isOpen || signUp || signIn || swal) {
       document.body.style.overflowY = "hidden";
     } else {
@@ -38,7 +38,7 @@ export const Navbar = () => {
     return () => {
       document.body.style.overflowY = "scroll";
     };
-  }, [isOpen, signUp, signIn]);
+  }, [isOpen, signUp, signIn, swal]);
 
   const signUpValidationSchema = yup.object().shape({
     name: yup
@@ -159,9 +159,7 @@ export const Navbar = () => {
           IsHandyman: true,
         };
         const response = await axios.post(LOGIN_URL, userData);
-        const jwt = response.data.token;
-        localStorage.setItem("jwt", jwt);
-        localStorage.setItem("name", response.data.username);
+        setAuth(response.data);
         setSignIn(!signIn);
         setSwal(true);
 
@@ -344,7 +342,7 @@ export const Navbar = () => {
                       )}
                   </span>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="w-full flex items-center justify-center bg-[#00CF91] text-white font-semibold text-base py-3 rounded-md"
@@ -557,17 +555,11 @@ export const Navbar = () => {
           <span className="border border-[#96a0b5] rounded-full w-10 h-10 flex items-center justify-center text-lg font-semibold cursor-pointer hover:text-[#00CF91] transition-colors ease-in-out duration-200">
             EN
           </span>
-          {fullName ? (
+          {!!fullName ? (
             <>
               <button
                 className="w-fit font-semibold font-Onest p-4 text-base text-black hover:text-[#00CF91] hover:shadow-none outline-none border border-transparent rounded-md hover:border-[#E1DFD7] transition-all ease-in-out duration-100 cursor-pointer"
-                onClick={() => {
-                  /* handle signout */
-                  localStorage.removeItem("jwt");
-                  localStorage.removeItem("name");
-                  setFullName(""); // Reset fullName state
-                  navigate("/");
-                }}
+                onClick={signOut}
               >
                 Sign Out
               </button>

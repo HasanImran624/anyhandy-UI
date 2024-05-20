@@ -1,4 +1,3 @@
-import { useEffect, useContext } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Main } from "./pages/Main";
 import { SignUp } from "./pages/SignUp";
@@ -13,6 +12,7 @@ import UserProtectedRoutes from "./utils/UserProtectedRoutes";
 import JobPosting from "./pages/JobPosting";
 import InviteHandyman from "./pages/InviteHandyman";
 import { AuthProvider, ProgressProvider } from "./context";
+import { TokenExpiration } from "./Hooks";
 
 function App() {
   const queryClient = new QueryClient();
@@ -22,6 +22,7 @@ function App() {
       <Router>
         <AuthProvider>
           <ProgressProvider>
+            <TokenExpiration />
             <ScrollRestore />
             <Routes>
               <Route path="/" element={<Main />} exact />
