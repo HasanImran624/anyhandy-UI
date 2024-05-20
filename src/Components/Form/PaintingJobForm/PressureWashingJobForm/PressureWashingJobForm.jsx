@@ -10,7 +10,7 @@ export const PressureWashingJobForm = ({
             App. size area
           </h3>
           <input
-            type="text"
+            type="number"
             name="areaSize"
             value={selectedAttributes.sizeArea}
             onChange={(e) =>

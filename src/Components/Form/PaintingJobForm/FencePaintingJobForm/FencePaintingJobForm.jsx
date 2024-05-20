@@ -12,7 +12,7 @@ export const FencePaintingJobForm = ({
             App. size area
           </h3>
           <input
-            type="text"
+            type="number"
             name="areaSize"
             value={selectedAttributes.sizeArea}
             onChange={(e) =>
