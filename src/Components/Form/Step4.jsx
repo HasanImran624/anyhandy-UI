@@ -9,6 +9,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { BiCabinet } from "react-icons/bi";
 import { BsDoorOpen } from "react-icons/bs";
 import { SiOpenbugbounty } from "react-icons/si";
+import { GiChickenOven } from "react-icons/gi";
 import {
   MdHomeWork,
   MdFence,
@@ -147,6 +148,8 @@ const Step4 = () => {
     let icon = "";
     let roomType = "";
     let roomTypeIcon = "";
+    let typeAppliance = "";
+    let typeApplianceIcon = "";
     let showPaint = true;
     let showArea = true;
     switch (service.code) {
@@ -264,9 +267,20 @@ const Step4 = () => {
         showPaint = false;
         break;
       case ApplianceRepairJobCode.FIXING:
+        typeAppliance = service.typeAppliance;
+        if ( typeAppliance === 'Fridge' ) {
+          typeApplianceIcon = <RiFridgeFill size={25} />;
+          icon = <RiFridgeFill size={25} />;
+        }
+        else if ( typeAppliance === 'Oven' ) {
+          typeApplianceIcon = <GiChickenOven size={25} />;
+          icon = <GiChickenOven size={25} />;
+        }
+        else {
+          icon = <RiFridgeFill size={25} />;
+        }
         numberItem = service.numberItems;
         showArea = false;
-        icon = <RiFridgeFill size={25} />;
         showPaint = false;
         break;
       case HomeCleaningJobCode.REGULAR:
@@ -321,6 +335,12 @@ const Step4 = () => {
           <span className="flex items-center gap-2">
            {roomTypeIcon}
            <h6>{roomType}</h6>
+          </span>
+        )}
+         {typeAppliance !== "" && (
+          <span className="flex items-center gap-2">
+           {typeApplianceIcon}
+           <h6>{typeAppliance}</h6>
           </span>
         )}
       </div>
