@@ -61,10 +61,10 @@ export const DeepCleaningJobEditForm = ({ service, setIsEditService }) => {
               <span
                 key={index}
                 className={`flex flex-1 items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer ${
-                  editFormAttributes.items === room.room &&
+                  editFormAttributes.numberItems === room.room &&
                   "bg-[#00CF91] text-white"
                 }  `}
-                onClick={() => setAttribute("items", room.room)}
+                onClick={() => setAttribute("numberItems", room.room)}
               >
                 <h3 className="font-medium text-base text-center">
                   {" "}
