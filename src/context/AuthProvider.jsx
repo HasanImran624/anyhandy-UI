@@ -1,9 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
   const navigate = useNavigate();
 
   const signOut = () => {
@@ -11,13 +10,16 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
+  const isSignedIn = useMemo(() => {
+    return !!localStorage.getItem("jwt");
+  }, []);
+
   const setAuth = (data) => {
     const expirationTime =
       data.expirationTime || new Date().getTime() + 30 * 60 * 1000;
     localStorage.setItem("tokenExpiration", expirationTime);
     localStorage.setItem("jwt", data.token);
     localStorage.setItem("name", data.username);
-    setIsSignedIn(!!data.token);
   };
 
   return (

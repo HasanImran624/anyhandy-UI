@@ -12,7 +12,7 @@ import {
 export const ApplienceRepairJobForm = () => {
   const navigate = useNavigate();
   const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [uId, setUid] = useState(uuid())
+  const [uId, setUid] = useState(uuid());
   const {
     formAttributes,
     setFormAttributes,
@@ -31,12 +31,12 @@ export const ApplienceRepairJobForm = () => {
           code: ApplianceRepairJobCode.FIXING,
           name: ApplianceRepairJobNames.FIXING,
           isNew: !!formAttributes.isEdit ? true : false,
-          uuid: uId
+          uuid: uId,
         },
       ],
     });
     setSelectedAttributes({});
-    setUid(uuid())
+    setUid(uuid());
   }, [setFormAttributes, formAttributes, selectedAttributes, uId]);
 
   const handleNext = useCallback(() => {
@@ -105,7 +105,7 @@ export const ApplienceRepairJobForm = () => {
                   }
                 >
                   <h3 className="font-medium text-base text-center">
-                    {room.room}{" "}
+                    {room.room}
                   </h3>
                 </span>
               );
@@ -120,7 +120,7 @@ export const ApplienceRepairJobForm = () => {
             <textarea
               name="specialRequest"
               id="specialRequest"
-              value={selectedAttributes.specialRequest}
+              value={selectedAttributes.specialRequest || ""}
               onChange={(e) =>
                 setSelectedAttributes({
                   ...selectedAttributes,
@@ -129,8 +129,7 @@ export const ApplienceRepairJobForm = () => {
               }
               rows="5"
               className="w-full border border-[#E0E5ED] rounded-xl p-5 outline-none focus:border-[#96A0B5] transition-Colors ease-linear duration-200 placeholder:text-[#96A0B5] resize-none cursor-pointer"
-              placeholder=""
-            ></textarea>
+            />
           </span>
         </section>
         <section

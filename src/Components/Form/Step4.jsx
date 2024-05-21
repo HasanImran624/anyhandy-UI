@@ -50,6 +50,8 @@ const Step4 = () => {
   const { mutateAsync: submitJob } = useSubmitJob();
   const { mutateAsync: editJob } = useEdittJob();
   const [filePreviews, setFilePreviews] = useState({});
+  const [errorText, setErrorText] = useState("");
+
   useEffect(() => {
     formAttributes.subServices.forEach((service) => {
       const previews = [];
@@ -70,7 +72,16 @@ const Step4 = () => {
   }, [formAttributes.subServices]);
 
   const navigate = useNavigate();
+
+  const validateSubServiceExistance = useCallback(() => {
+    return !!formAttributes.subServices.length;
+  }, [formAttributes.subServices.length]);
+
   const onSubmitJob = useCallback(async () => {
+    if (!validateSubServiceExistance()) {
+      setErrorText("Select any subservices to proceed");
+      return;
+    }
     try {
       const formData = new FormData();
       const subServices = [];
@@ -268,15 +279,13 @@ const Step4 = () => {
         break;
       case ApplianceRepairJobCode.FIXING:
         typeAppliance = service.typeAppliance;
-        if ( typeAppliance === 'Fridge' ) {
+        if (typeAppliance === "Fridge") {
           typeApplianceIcon = <RiFridgeFill size={25} />;
           icon = <RiFridgeFill size={25} />;
-        }
-        else if ( typeAppliance === 'Oven' ) {
+        } else if (typeAppliance === "Oven") {
           typeApplianceIcon = <GiChickenOven size={25} />;
           icon = <GiChickenOven size={25} />;
-        }
-        else {
+        } else {
           icon = <RiFridgeFill size={25} />;
         }
         numberItem = service.numberItems;
@@ -333,14 +342,14 @@ const Step4 = () => {
         )}
         {roomType !== "" && (
           <span className="flex items-center gap-2">
-           {roomTypeIcon}
-           <h6>{roomType}</h6>
+            {roomTypeIcon}
+            <h6>{roomType}</h6>
           </span>
         )}
-         {typeAppliance !== "" && (
+        {typeAppliance !== "" && (
           <span className="flex items-center gap-2">
-           {typeApplianceIcon}
-           <h6>{typeAppliance}</h6>
+            {typeApplianceIcon}
+            <h6>{typeAppliance}</h6>
           </span>
         )}
       </div>
@@ -459,6 +468,14 @@ const Step4 = () => {
                     <div className="font-medium text-base">{location}</div>
                   </span>
                 </div>
+                {!!errorText && (
+                  <span
+                    style={{ color: "#dc2626" }}
+                    className="font-semibold text-base"
+                  >
+                    {errorText}
+                  </span>
+                )}
               </div>
             </section>
           </section>

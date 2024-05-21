@@ -63,6 +63,8 @@ const Step3 = () => {
     [listCountriesAndCities]
   );
 
+  console.log("aaa", isSignedIn);
+
   const { cities = [] } = useMemo(
     () => ({
       cities: listCountriesAndCities
