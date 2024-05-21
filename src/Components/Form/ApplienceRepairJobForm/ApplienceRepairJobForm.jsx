@@ -40,9 +40,11 @@ export const ApplienceRepairJobForm = () => {
   }, [setFormAttributes, formAttributes, selectedAttributes, uId]);
 
   const handleNext = useCallback(() => {
-    addToList();
+    if (Object.keys(selectedAttributes).length) {
+      addToList();
+    }
     updateProgress(progress + 1);
-  }, [addToList, progress, updateProgress]);
+  }, [addToList, progress, selectedAttributes, updateProgress]);
 
   return (
     <div className="flex flex-col gap-7">
