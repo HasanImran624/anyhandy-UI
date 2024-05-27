@@ -57,13 +57,13 @@ const Step3 = () => {
     formAttributes,
     setFormAttributes,
   } = useProgress();
-  const { setAuth, isSignedIn } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
   const { countries = [] } = useMemo(
     () => ({ countries: listCountriesAndCities.map((res) => res.name) }),
     [listCountriesAndCities]
   );
 
-  console.log("aaa", isSignedIn);
+  const isSignedIn = localStorage.getItem("jwt");
 
   const { cities = [] } = useMemo(
     () => ({

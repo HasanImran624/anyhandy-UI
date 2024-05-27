@@ -2,7 +2,16 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context";
 
 export const TokenExpiration = () => {
-  const { signOut } = useContext(AuthContext);
+  const { signOut, setAuth } = useContext(AuthContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (!!token) {
+      const username = localStorage.getItem("name");
+      const expirationTime = localStorage.getItem("tokenExpiration");
+      setAuth({ username, token, expirationTime });
+    }
+  }, [setAuth]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
