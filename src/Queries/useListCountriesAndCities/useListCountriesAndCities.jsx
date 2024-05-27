@@ -6,7 +6,7 @@ export function useListCountriesAndCities() {
   const token = localStorage.getItem("jwt");
 
   return useQuery({
-    queryKey: "useListCountriesAndCities",
+    queryKey: ["useListCountriesAndCities"],
     queryFn: async () => {
       const { data } = await axios.get(`${GET_LIST_COUNTRIES_CITIES}`, {
         headers: {

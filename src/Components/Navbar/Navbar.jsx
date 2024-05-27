@@ -26,8 +26,7 @@ export const Navbar = () => {
   const [swal, setSwal] = useState(false);
   const [eye, setEye] = useState(false);
   const navigate = useNavigate();
-  const { setAuth, signOut } = useContext(AuthContext);
-  const fullName = localStorage.getItem("name");
+  const { setAuth, signOut, fullName } = useContext(AuthContext);
 
   useEffect(() => {
     if (isOpen || signUp || signIn || swal) {
